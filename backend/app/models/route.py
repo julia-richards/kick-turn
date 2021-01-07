@@ -1,4 +1,5 @@
 from .db import db
+from sqlalchemy.orm import relationship
 from ..models.plan import Plan
 
 

@@ -1,12 +1,13 @@
 from .db import db
-from ..models.plan import Plan
+from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from ..models.plan import Plan
 
 
 plans = db.Table('plans',
     db.Column('plans.id', db.Integer, db.ForeignKey('plans.id'), primary_key=True),
-    db.Column('users.id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
+    db.Column('users_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
     extend_existing=True
 )
 class User(db.Model, UserMixin):

@@ -5,6 +5,7 @@ import SignUpForm from "./components/auth/SignUpForm";
 import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import User from "./components/User";
+import PlanForm from "./components/PlanForm";
 import { authenticate } from "./services/auth";
 
 function App() {
@@ -26,25 +27,39 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
-      <NavBar setAuthenticated={setAuthenticated} />
-      <Route path="/login" exact={true}>
-        <LoginForm
-          authenticated={authenticated}
-          setAuthenticated={setAuthenticated}
-        />
-      </Route>
-      <Route path="/sign-up" exact={true}>
-        <SignUpForm authenticated={authenticated} setAuthenticated={setAuthenticated} />
-      </Route>
-      <ProtectedRoute path="/users/:userId" exact={true} authenticated={authenticated}>
-        <User />
-      </ProtectedRoute>
-      <ProtectedRoute path="/" exact={true} authenticated={authenticated}>
-        <h1>My Home Page</h1>
-      </ProtectedRoute>
-    </BrowserRouter>
-  );
+		<BrowserRouter>
+			<NavBar setAuthenticated={setAuthenticated} />
+			<Route path="/login" exact={true}>
+				<LoginForm
+					authenticated={authenticated}
+					setAuthenticated={setAuthenticated}
+				/>
+			</Route>
+			<Route path="/sign-up" exact={true}>
+				<SignUpForm
+					authenticated={authenticated}
+					setAuthenticated={setAuthenticated}
+				/>
+			</Route>
+			<ProtectedRoute
+				path="/users/:userId"
+				exact={true}
+				authenticated={authenticated}
+			>
+				<User />
+			</ProtectedRoute>
+			<ProtectedRoute path="/" exact={true} authenticated={authenticated}>
+				<h1>My Home Page</h1>
+			</ProtectedRoute>
+			<ProtectedRoute
+				path="/plans/new"
+				exact={true}
+				authenticated={authenticated}
+			>
+				<PlanForm />
+			</ProtectedRoute>
+		</BrowserRouter>
+	);
 }
 
 export default App;
