@@ -1,11 +1,11 @@
 import * as React from 'react';
 import ReactMapGL from 'react-map-gl';
-import { Editor, EditingMode, DrawLineStringMode, DrawPolygonMode } from 'react-map-gl-draw';
+import { Editor, EditingMode, DrawLineStringMode, DrawPointMode, MeasureDistanceMode, ElevationMode, features } from 'react-map-gl-draw';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const MODES = [
   { id: 'drawPolyline', text: 'Draw Route', handler: DrawLineStringMode },
-  // { id: 'drawPolygon', text: 'Draw Polygon', handler: DrawPolygonMode },
+  { id: 'drawPoint', text: 'Add Point', handler: DrawPointMode },
   { id: 'editing', text: 'Edit Route', handler: EditingMode },
 ];
 
@@ -60,6 +60,10 @@ function Map() {
             ))}
           </select>
         </div>
+        {/* <div style={{ position: 'absolute', top: 100, right: 5, maxWidth: '320px' }}>
+      <button type="button" onClick={() => console.log(features.deleteFeatures())}>Delete route</button>
+
+        </div> */}
       </ReactMapGL>
       <pre>
         features: {JSON.stringify(features, null, 2)}
