@@ -6,7 +6,9 @@ import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import User from "./components/User";
 import PlanForm from "./components/PlanForm";
+import Map from "./components/RoutePlan"
 import { authenticate } from "./services/auth";
+
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -57,6 +59,13 @@ function App() {
 				authenticated={authenticated}
 			>
 				<PlanForm />
+			</ProtectedRoute>
+      <ProtectedRoute
+				path="/routes/new"
+				exact={true}
+				authenticated={authenticated}
+			>
+				<Map />
 			</ProtectedRoute>
 		</BrowserRouter>
 	);

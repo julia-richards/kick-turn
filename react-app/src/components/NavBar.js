@@ -29,6 +29,11 @@ const NavBar = ({ setAuthenticated }) => {
 						New Tour Plan
 					</NavLink>
 				</li>
+				<li>
+					<NavLink to="/routes/new" exact={true} activeClassName="active">
+						New Route
+					</NavLink>
+				</li>
 			</ul>
 		</nav>
 	);
