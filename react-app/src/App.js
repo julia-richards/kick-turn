@@ -10,6 +10,7 @@ import Map from "./components/RoutePlan"
 import { authenticate } from "./services/auth";
 
 
+
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [loaded, setLoaded] = useState(false);
