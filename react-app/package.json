@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "http-proxy-middleware": "^1.0.5",
     "react": "^16.13.1",
+    "react-burger-menu": "^3.0.3",
     "react-dom": "^16.13.1",
     "react-map-gl": "^6.0.3",
     "react-map-gl-draw": "^0.21.1",
