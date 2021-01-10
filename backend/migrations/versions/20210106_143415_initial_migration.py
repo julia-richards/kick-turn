@@ -7,6 +7,8 @@ Create Date: 2021-01-06 14:34:15.742895
 """
 from alembic import op
 import sqlalchemy as sa
+from sqlalchemy.dialects.postgresql import JSONB
+
 
 
 # revision identifiers, used by Alembic.
@@ -31,11 +33,11 @@ def upgrade():
     )
     op.create_table('routes',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('geo_route', sa.String(length=255), nullable=False),
+    sa.Column('name', sa.String(length=255), nullable=False),
+    sa.Column('geo_features', JSONB(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('user_id')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('plans',
     sa.Column('id', sa.Integer(), nullable=False),

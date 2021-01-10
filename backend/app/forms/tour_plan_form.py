@@ -1,12 +1,11 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, DateField, TextAreaField, IntegerField, SelectField
 from wtforms.validators import DataRequired, Email, ValidationError
-from app.models import User
 
 
 class TourPlanForm(FlaskForm):
     date = DateField('date', validators=[DataRequired()])
-    avy_observations = TextAreaField('avalanche observations', validators=[DataRequired(), user_exists])
+    avy_observations = TextAreaField('avalanche observations', validators=[DataRequired()])
     snowpack_summary = TextAreaField('snowpack summary', validators=[DataRequired()]),
     temp_now = IntegerField('temperature now'),
     wind_sp_now = IntegerField('wind speed now'),
@@ -19,6 +18,7 @@ class TourPlanForm(FlaskForm):
     sky_cover_fore = StringField('sky cover forecast'),
     precip_fore = StringField('precipitation forecast'),
     weather_contribution = StringField('weather contribution', validators=[DataRequired()]),
+    trend = SelectField('trend', choices=[('Stepping Out', 'Stepping Out'), ('Improving', 'Improving'), ('Maintaining', 'Maintaining'), ('Deterioration', 'Deterioration')]),
     ates = SelectField('ATES (Avalanche Terrain Exposure Scale)', choices=[('Simple', 'Simple'), ('Challening', 'Challening'), ('Complex', 'Complex')], validators=[DataRequired()]),
     terrain_avoiding = StringField('terrain avoiding', validators=[DataRequired()]),
     obs_fore_summary = TextAreaField('observations and forecast summary', validators=[DataRequired()]),
