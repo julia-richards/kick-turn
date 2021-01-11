@@ -5,9 +5,9 @@ from flask_login import UserMixin
 from ..models.plan import Plan
 
 
-plans = db.Table('plans',
-    db.Column('plans.id', db.Integer, db.ForeignKey('plans.id'), primary_key=True),
-    db.Column('users_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
+user_plans = db.Table('user_plans',
+    db.Column('plan_id', db.Integer, db.ForeignKey('plans.id'), primary_key=True),
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
     extend_existing=True
 )
 class User(db.Model, UserMixin):
@@ -17,8 +17,9 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     avy_edu = db.Column(db.String(255))
     hashed_password = db.Column(db.String(255), nullable=False)
-    route = db.relationship("Route", backref='user')
-    # plan_id = db.relationship('Plan', secondary=plans, lazy='subquery', backref=db.backref('users', lazy=True))
+    routes = db.relationship("Route", backref='user', cascade="all, delete-orphan")
+    plans = db.relationship('Plan', secondary=user_plans, lazy='subquery', backref=db.backref('users', lazy=True))
+
 
     @property
     def password(self):

@@ -3,15 +3,15 @@ import Layout from "./Layout";
 import Seo from "./Seo";
 
 const initialAvyProblem = {
-  typeId: "",
-  aspect: "",
-  elevation: [],
-  danger_rating: "",
-  size: "",
-  likelihood: "",
-  weak_layer: "",
-  trend: "",
-  plans: "",
+	type_id: "",
+	aspect: "",
+	elevation: [],
+	danger_rating: "",
+	size: "",
+	likelihood: "",
+	weak_layer: "",
+	trend: "",
+	plans: "",
 };
 
 function PlanForm() {
@@ -261,24 +261,18 @@ function PlanForm() {
 					<label>Trend</label>
 					{["Improving", "Maintaining", "Deteriorating"].map(
 						(elOption, elOptionIndex) => {
-							const elFieldId = `${elOptionIndex}`;
-							const currentElValues = formValues.ates;
-							const isChecked = currentElValues.some((e) => e === elOption);
-							const onClick = () =>
-								updateFormValues(
-									"ates",
-									isChecked
-										? currentElValues.filter((e) => e !== elOption)
-										: [...currentElValues, elOption]
-								);
+							const elFieldId = `trend-${elOptionIndex}`;
+							const currentValue = formValues.trend;
+							const isChecked = currentValue === elOption;
+							const onChange = () => updateFormValues("trend", elOption);
 
 							return (
-								<div>
+								<div key={elFieldId}>
 									<input
 										type="radio"
 										id={elFieldId}
 										name={elFieldId}
-										onClick={onClick}
+										onChange={onChange}
 										checked={isChecked}
 									/>
 									<label htmlFor={elFieldId}>{elOption}</label>
@@ -291,7 +285,7 @@ function PlanForm() {
 					<label>Avalanche Terrain Exposure Scale</label>
 					{["Simple", "Challenging", "Complex"].map(
 						(elOption, elOptionIndex) => {
-							const elFieldId = `${elOptionIndex}`;
+							const elFieldId = `ates-${elOptionIndex}`;
 							const currentElValues = formValues.ates;
 							const isChecked = currentElValues.some((e) => e === elOption);
 							const onChange = () =>
@@ -303,7 +297,7 @@ function PlanForm() {
 								);
 
 							return (
-								<div>
+								<div key={elFieldId}>
 									<input
 										type="checkbox"
 										id={elFieldId}

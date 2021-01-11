@@ -36,7 +36,9 @@ class Plan(db.Model):
     tour_plan = db.Column(db.String(1000))
     emergency_plan = db.Column(db.String(1000))
     route_id = db.Column(db.Integer, db.ForeignKey('routes.id'), nullable=False, unique=True)
-    avy_problems = db.relationship("Problem", secondary=plan_problems, back_populates="plans", cascade="all")
+    avy_problems = db.relationship("Problem", secondary=plan_problems, back_populates="plans")
+   
+
 
     def to_dict(self):
         return {

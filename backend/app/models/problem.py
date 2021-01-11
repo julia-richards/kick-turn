@@ -7,7 +7,8 @@ class Problem(db.Model):
     __tablename__ = 'problems'
 
     id = db.Column(db.Integer, primary_key=True)
-    typeId = db.Column(db.String(150))
+    problem_type_id = db.Column(db.Integer, db.ForeignKey('problem_types.id'))
+    problem_type = relationship("ProblemType", back_populates="problems")
     aspect = db.Column(db.String(50), nullable=False)
     elevation = db.Column(db.Integer)
     danger_rating = db.Column(db.String(50), nullable=False)

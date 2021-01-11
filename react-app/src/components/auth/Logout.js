@@ -7,12 +7,12 @@ const Logout = () => {
 
   useEffect(() => {
 		(async () => {
-      if (!authenticated) return;
+			if (!authenticated) return;
 
-      await logout();
-      setAuthenticated(false);
+			await logout();
+			setAuthenticated(false);
 		})();
-  }, []);
+	}, [authenticated, setAuthenticated]);
 
   return <h4>Logging Out...</h4>;
 };
