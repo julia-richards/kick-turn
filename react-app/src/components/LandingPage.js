@@ -1,5 +1,4 @@
 import React from "react";
-import "../styles/landingPage.css";
 import Layout from "./Layout";
 
 const LandingPage = () => (

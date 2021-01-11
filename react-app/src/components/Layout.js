@@ -1,6 +1,6 @@
 import React from "react";
 import NavBar from "./NavBar";
-import "../styles/LandingPage.css";
+import "../styles/Layout.css";
 
 const Layout = ({ children }) => (
 	<div className="Layout">
