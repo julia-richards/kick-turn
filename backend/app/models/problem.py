@@ -10,7 +10,7 @@ class Problem(db.Model):
     problem_type_id = db.Column(db.Integer, db.ForeignKey('problem_types.id'))
     problem_type = relationship("ProblemType", back_populates="problems")
     aspect = db.Column(db.String(50), nullable=False)
-    elevation = db.Column(db.Integer)
+    elevation = db.Column(db.String(150))
     danger_rating = db.Column(db.String(50), nullable=False)
     size = db.Column(db.String(50), nullable=False)
     likelihood = db.Column(db.String(50), nullable=False)

@@ -13,7 +13,7 @@ plan_problems = db.Table(
 class Plan(db.Model):
     __tablename__ = 'plans'
 
-    id = db.Column(db.Integer, primary_key=True, unique=True)
+    id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Date, nullable=False)
     avy_observations = db.Column(db.String(500))
     snowpack_summary = db.Column(db.String(500))
@@ -35,9 +35,9 @@ class Plan(db.Model):
     mindset = db.Column(db.String(150))
     tour_plan = db.Column(db.String(1000))
     emergency_plan = db.Column(db.String(1000))
-    route_id = db.Column(db.Integer, db.ForeignKey('routes.id'), nullable=False, unique=True)
+    route_id = db.Column(db.Integer, db.ForeignKey('routes.id'))
     avy_problems = db.relationship("Problem", secondary=plan_problems, back_populates="plans")
-   
+
 
 
     def to_dict(self):

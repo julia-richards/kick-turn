@@ -12,8 +12,8 @@ plan_routes = Blueprint('plans', __name__)
 #     plans = Plan.query.filter_by(user_id)
 #     return {"plans": [plan for p in plans]}
 
-
-@plan_routes.route('/', methods=["POST"])
+# /api/plans
+@plan_routes.route('', methods=["POST"])
 @login_required
 def add_plan():
     form = TourPlanForm()
@@ -39,11 +39,11 @@ def add_plan():
                     obs_fore_summary=form.data["obs_fore_summary"],
                     mindset=form.data["mindset"],
                     tour_plan=form.data["tour_plan"],
-                    emergency_plan=form.data["emergency_plan"],
-                    user_id=current_user.id
+                    emergency_plan=form.data["emergency_plan"]
                 )
         db.session.add(plan)
         db.session.commit()
+        plan.users.append(current_user)
         return plan.to_dict()
     return {'errors': form.errors}, 422
 

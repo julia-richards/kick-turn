@@ -28,7 +28,7 @@ def upgrade():
     op.create_table('problems',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('aspect', sa.String(length=50), nullable=False),
-    sa.Column('elevation', sa.Integer(), nullable=True),
+    sa.Column('elevation', sa.String(length=150), nullable=True),
     sa.Column('danger_rating', sa.String(length=50), nullable=False),
     sa.Column('size', sa.String(length=50), nullable=False),
     sa.Column('likelihood', sa.String(length=50), nullable=False),
@@ -69,15 +69,9 @@ def upgrade():
     sa.Column('mindset', sa.String(length=150), nullable=True),
     sa.Column('tour_plan', sa.String(length=1000), nullable=True),
     sa.Column('emergency_plan', sa.String(length=1000), nullable=True),
-    sa.Column('route_id', sa.Integer(), nullable=False),
-    sa.Column('plans.id', sa.Integer(), nullable=False),
-    sa.Column('users_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['plans.id'], ['plans.id'], ),
+    sa.Column('route_id', sa.Integer()),
     sa.ForeignKeyConstraint(['route_id'], ['routes.id'], ),
-    sa.ForeignKeyConstraint(['users_id'], ['users.id'], ),
-    sa.PrimaryKeyConstraint('id', 'plans.id', 'users_id'),
-    sa.UniqueConstraint('id'),
-    sa.UniqueConstraint('route_id')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('plan_problems',
     sa.Column('plan_id', sa.Integer(), nullable=False),
