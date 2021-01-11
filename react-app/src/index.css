@@ -5,3 +5,8 @@ body{
   width: 100vh;
   font-family: 'Work Sans', Arial, Helvetica, sans-serif;
 }
+
+/* no dark purple if visited -- especially for menu */
+a:visited {
+  color: inherit;
+}
