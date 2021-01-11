@@ -1,49 +1,83 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { AuthProvider, useAuthenticated } from "./hooks";
 import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
-import NavBar from "./components/NavBar";
+import Logout from "./components/auth/Logout";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import LandingPage from "./components/LandingPage";
+import ProfilePage from "./components/ProfilePage";
 import User from "./components/User";
-import { authenticate } from "./services/auth";
+import PlanForm from "./components/PlanForm";
+import RouteForm from "./components/RouteForm";
+import RoutePage from "./components/RoutePage";
 
-function App() {
-  const [authenticated, setAuthenticated] = useState(false);
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    (async() => {
-      const user = await authenticate();
-      if (!user.errors) {
-        setAuthenticated(true);
-      }
-      setLoaded(true);
-    })();
-  }, []);
-
-  if (!loaded) {
-    return null;
-  }
+const Router = () => {
+	const [authenticated, setAuthenticated] = useAuthenticated();
 
   return (
     <BrowserRouter>
-      <NavBar setAuthenticated={setAuthenticated} />
-      <Route path="/login" exact={true}>
-        <LoginForm
+      <Switch>
+        <Route path="/login" exact>
+          <LoginForm />
+        </Route>
+        <Route path="/sign-up" exact>
+          <SignUpForm
+            authenticated={authenticated}
+            setAuthenticated={setAuthenticated}
+          />
+        </Route>
+
+        {authenticated ? (
+          <ProtectedRoute path="/" authenticated={authenticated} exact>
+            <ProfilePage />
+          </ProtectedRoute>
+        ) : (
+          <Route path="/" exact>
+            <LandingPage />
+          </Route>
+        )}
+				<ProtectedRoute
+          path="/logout"
           authenticated={authenticated}
-          setAuthenticated={setAuthenticated}
-        />
-      </Route>
-      <Route path="/sign-up" exact={true}>
-        <SignUpForm authenticated={authenticated} setAuthenticated={setAuthenticated} />
-      </Route>
-      <ProtectedRoute path="/users/:userId" exact={true} authenticated={authenticated}>
-        <User />
-      </ProtectedRoute>
-      <ProtectedRoute path="/" exact={true} authenticated={authenticated}>
-        <h1>My Home Page</h1>
-      </ProtectedRoute>
+          exact
+        >
+          <Logout />
+        </ProtectedRoute>
+        <ProtectedRoute
+          path="/users/:userId"
+          authenticated={authenticated}
+          exact
+        >
+          <User />
+        </ProtectedRoute>
+        <ProtectedRoute
+          path="/plans/new"
+          authenticated={authenticated}
+          exact
+        >
+          <PlanForm />
+        </ProtectedRoute>
+        <ProtectedRoute path="/routes/new" authenticated={authenticated} exact>
+          <RouteForm />
+        </ProtectedRoute>
+        <ProtectedRoute
+          path="/routes/:routeId"
+          authenticated={authenticated}
+          exact
+        >
+          <RoutePage />
+        </ProtectedRoute>
+      </Switch>
     </BrowserRouter>
+  );
+};
+
+const App = () => {
+  return (
+    <AuthProvider>
+      <Router />
+    </AuthProvider>
   );
 }
 

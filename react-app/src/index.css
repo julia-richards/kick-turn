@@ -1,1 +1,10 @@
 /* TODO Add site wide styles */
+body{
+  /* background-image: url("https://user-images.githubusercontent.com/43125443/104068182-b6106d80-51c1-11eb-9b39-7614e9406152.png"); */
+  font-family: 'Work Sans', Arial, Helvetica, sans-serif;
+}
+
+/* no dark purple if visited -- especially for menu */
+a:visited {
+  color: inherit;
+}

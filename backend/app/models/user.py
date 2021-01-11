@@ -1,12 +1,14 @@
 from .db import db
-from ..models.plan import Plan
+from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from ..models.plan import Plan
 
 
-plans = db.Table('plans',
-    db.Column('plan_id', db.Integer, db.ForeignKey('plan_id'), primary_key=True),
-    db.Column('user_id', db.Integer, db.ForeignKey('user_id'), primary_key=True)
+user_plans = db.Table('user_plans',
+    db.Column('plan_id', db.Integer, db.ForeignKey('plans.id'), primary_key=True),
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
+    extend_existing=True
 )
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -15,8 +17,9 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     avy_edu = db.Column(db.String(255))
     hashed_password = db.Column(db.String(255), nullable=False)
-    route_id = db.relationship("Route", backref='user')
-    plans = db.relationship('Plan', secondary=plans, lazy='subquery', backref=db.backref('users', lazy=True))
+    routes = db.relationship("Route", backref='user', cascade="all, delete-orphan")
+    plans = db.relationship('Plan', secondary=user_plans, lazy='subquery', backref=db.backref('users', lazy=True))
+
 
     @property
     def password(self):
@@ -35,6 +38,4 @@ class User(db.Model, UserMixin):
             "username": self.username,
             "email": self.email,
             "avy_edu": self.avy_edu,
-            "route": self.route_id,
-            "plans": self.plans
             }

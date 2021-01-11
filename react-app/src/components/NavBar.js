@@ -1,32 +1,39 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import LogoutButton from './auth/LogoutButton';
+import React from "react";
+import { NavLink } from "react-router-dom";
+import { push as Menu } from "react-burger-menu";
+import { useAuthenticated } from "../hooks";
 
-const NavBar = ({ setAuthenticated }) => {
+import "../styles/Menu.css";
+
+const MenuItem = ({ to, children }) => (
+  <li>
+    <NavLink to={to} exact activeClassName="active">
+      {children}
+    </NavLink>
+  </li>
+);
+
+const NavBar = (props) => {
+  const [authenticated] = useAuthenticated();
+
   return (
-    <nav>
-      <ul>
-        <li>
-          <NavLink to="/" exact={true} activeClassName="active">
-            Home
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/login" exact={true} activeClassName="active">
-            Login
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/sign-up" exact={true} activeClassName="active">
-            Sign Up
-          </NavLink>
-        </li>
-        <li>
-          <LogoutButton setAuthenticated={setAuthenticated} />
-        </li>
-      </ul>
-    </nav>
+    <Menu {...props}>
+      <MenuItem to="/">Home</MenuItem>
+      {authenticated ? (
+        <>
+          <MenuItem to="/plans/new">New Tour Plan</MenuItem>
+          <MenuItem to="/routes/new">New Route</MenuItem>
+					<MenuItem to="/logout">Logout</MenuItem>
+        </>
+      ) : (
+        <>
+          <MenuItem to="/login">Login</MenuItem>
+          <MenuItem to="/sign-up">Sign Up</MenuItem>
+        </>
+      )}
+    </Menu>
   );
-}
+};
+
 
 export default NavBar;
