@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getRoute } from "../services/routes";
 import { useFetchResult } from "../hooks";
 import Layout from "./Layout";
+import Seo from "./Seo";
 
 const RoutePage = () => {
 	const { routeId } = useParams();
@@ -26,10 +27,11 @@ const RoutePage = () => {
 	const { result: route } = state;
 
 	return (
-    <Layout>
-      <pre>{JSON.stringify(route, null, 2)}</pre>
-    </Layout>
-  );
+		<Layout>
+			<Seo title={route.name} />
+			<pre>{JSON.stringify(route, null, 2)}</pre>
+		</Layout>
+	);
 };
 
 export default RoutePage;

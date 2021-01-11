@@ -12,6 +12,7 @@ import {
 } from "react-map-gl-draw";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Layout from "./Layout";
+import Seo from "./Seo";
 import { addRoute } from "../services/routes";
 
 const MODES = [
@@ -61,54 +62,60 @@ function RouteForm() {
 	}
 
 	return (
-    <Layout>
-      <div style={{ width: "100%", height: 400 }}>
-        <ReactMapGL
-          {...viewport}
-          width="100%"
-          height="100%"
-          mapStyle={"mapbox://styles/mapbox/light-v9"}
-          onViewportChange={setViewport}
-        >
-          <Editor
-            // to make the lines/vertices easier to interact with
-            clickRadius={12}
-            mode={modeHandler}
-            onUpdate={(e) => setFeatures(e.data)}
-          />
-          <div
-            style={{ position: "absolute", top: 0, right: 5, maxWidth: "320px" }}
-          >
-            <select onChange={switchMode} value={modeId}>
-              <option value="">--Please choose a draw mode--</option>
-              {MODES.map((mode) => (
-                <option key={mode.id} value={mode.id}>
-                  {mode.text}
-                </option>
-              ))}
-            </select>
-          </div>
-          {/* <div style={{ position: 'absolute', top: 100, right: 5, maxWidth: '320px' }}>
+		<Layout>
+			<Seo title={"New Route"} />
+			<div style={{ width: "100%", height: 400 }}>
+				<ReactMapGL
+					{...viewport}
+					width="100%"
+					height="100%"
+					mapStyle={"mapbox://styles/mapbox/light-v9"}
+					onViewportChange={setViewport}
+				>
+					<Editor
+						// to make the lines/vertices easier to interact with
+						clickRadius={12}
+						mode={modeHandler}
+						onUpdate={(e) => setFeatures(e.data)}
+					/>
+					<div
+						style={{
+							position: "absolute",
+							top: 0,
+							right: 5,
+							maxWidth: "320px",
+						}}
+					>
+						<select onChange={switchMode} value={modeId}>
+							<option value="">--Please choose a draw mode--</option>
+							{MODES.map((mode) => (
+								<option key={mode.id} value={mode.id}>
+									{mode.text}
+								</option>
+							))}
+						</select>
+					</div>
+					{/* <div style={{ position: 'absolute', top: 100, right: 5, maxWidth: '320px' }}>
         <button type="button" onClick={() => console.log(features.deleteFeatures())}>Delete route</button>
 
           </div> */}
-        </ReactMapGL>
-        {/* <pre>features: {JSON.stringify(features, null, 2)}</pre> */}
-        <form onSubmit={handleSumbit}>
-          <div>
-            <label htmlFor="name">Route Name</label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-          <button type="submit">Save Route</button>
-        </form>
-      </div>
-    </Layout>
+				</ReactMapGL>
+				{/* <pre>features: {JSON.stringify(features, null, 2)}</pre> */}
+				<form onSubmit={handleSumbit}>
+					<div>
+						<label htmlFor="name">Route Name</label>
+						<input
+							id="name"
+							name="name"
+							type="text"
+							value={name}
+							onChange={(e) => setName(e.target.value)}
+						/>
+					</div>
+					<button type="submit">Save Route</button>
+				</form>
+			</div>
+		</Layout>
 	);
 }
 

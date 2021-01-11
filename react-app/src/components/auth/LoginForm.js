@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { useAuthenticated } from "../../hooks";
 import { login } from "../../services/auth";
+import Seo from "../Seo";
 
 const LoginForm = () => {
 	const [authenticated, setAuthenticated] = useAuthenticated();
@@ -32,6 +33,8 @@ const LoginForm = () => {
 	}
 
 	return (
+    <>
+    <Seo title="Login" />
 		<form onSubmit={onLogin}>
 			<div>
 				{errors.map((error) => (
@@ -60,6 +63,7 @@ const LoginForm = () => {
 				<button type="submit">Login</button>
 			</div>
 		</form>
+    </>
 	);
 };
 
