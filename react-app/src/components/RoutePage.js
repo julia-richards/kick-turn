@@ -2,6 +2,7 @@ import * as React from "react";
 import { useParams } from "react-router-dom";
 import { getRoute } from "../services/routes";
 import { useFetchResult } from "../hooks";
+import Layout from "./Layout";
 
 const RoutePage = () => {
 	const { routeId } = useParams();
@@ -9,22 +10,26 @@ const RoutePage = () => {
 	const state = useFetchResult({ fetchResult: fetchRoute });
 
 	if (state.isLoading && !state.hasFetched) {
-		return <h4>Loading...</h4>;
+		return <Layout><h4>Loading...</h4></Layout>;
 	}
 
 	if (state.isRejected) {
 		return (
-			<div>
+      <Layout>
 				<h1>Oh no!</h1>
 				<p>The following error occurred: {state.error.message}</p>
 				<p>Please refresh and try again.</p>
-			</div>
+      </Layout>
 		);
 	}
 
 	const { result: route } = state;
 
-	return <pre>{JSON.stringify(route, null, 2)}</pre>;
+	return (
+    <Layout>
+      <pre>{JSON.stringify(route, null, 2)}</pre>
+    </Layout>
+  );
 };
 
 export default RoutePage;

@@ -7,10 +7,6 @@ import { pushRotate as Menu } from 'react-burger-menu'
 
 
 const NavBar = ({ setAuthenticated }) => {
-
-  const showSettings = (e) => {
-    e.preventDefault()
-  }
   return (
      <Menu>
         <a id="home" className="menu-item" href="/">Home</a>
@@ -18,7 +14,6 @@ const NavBar = ({ setAuthenticated }) => {
         <a id="sign-up" className="menu-item" href="/sign-up">Sign Up</a>
         <a id="new-plan" className="menu-item" href="/plans/new">New Tour Plan</a>
         <a id="new-route" className="menu-item" href="/routes/new">New Route</a>
-        <a onClick={ showSettings } className="menu-item--small" href="">Settings</a>
       </Menu>
 		// <nav>
 		// 	<ul>

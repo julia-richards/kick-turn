@@ -1,0 +1,6 @@
+.Layout__main {
+  margin-left: 6rem; /* from Menu */
+  margin-left: 6rem;
+  width: calc(100vw - 6rem);
+  box-sizing: border-box;
+}

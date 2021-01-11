@@ -2,16 +2,14 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
-import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import LandingPage from "./components/LandingPage";
+import ProfilePage from "./components/ProfilePage";
 import User from "./components/User";
 import PlanForm from "./components/PlanForm";
 import RouteForm from "./components/RouteForm"
 import RoutePage from "./components/RoutePage"
-import Layout from "./components/Layout"
 import { authenticate } from "./services/auth";
-
-
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -33,7 +31,6 @@ function App() {
 
   return (
 		<BrowserRouter>
-			<NavBar setAuthenticated={setAuthenticated} />
 			<Switch>
 				<Route path="/login" exact={true}>
 					<LoginForm
@@ -47,16 +44,24 @@ function App() {
 						setAuthenticated={setAuthenticated}
 					/>
 				</Route>
+
+{authenticated ? <ProtectedRoute path="/" exact={true} authenticated={authenticated}>
+					<ProfilePage />
+
+				</ProtectedRoute> : <Route path="/" exact={true}>
+					<LandingPage
+						authenticated={authenticated}
+						setAuthenticated={setAuthenticated}
+					/>
+				</Route>}
+
+
 				<ProtectedRoute
 					path="/users/:userId"
 					exact={true}
 					authenticated={authenticated}
 				>
 					<User />
-				</ProtectedRoute>
-				<ProtectedRoute path="/" exact={true} authenticated={authenticated}>
-					<Layout />
-					<h1 style={{position: 'absolute', top: 10, right: 100 }}>Profile</h1>
 				</ProtectedRoute>
 				<ProtectedRoute
 					path="/plans/new"
@@ -65,11 +70,7 @@ function App() {
 				>
 					<PlanForm />
 				</ProtectedRoute>
-				<ProtectedRoute
-					path="/routes/new"
-					authenticated={authenticated}
-					exact
-				>
+				<ProtectedRoute path="/routes/new" authenticated={authenticated} exact>
 					<RouteForm />
 				</ProtectedRoute>
 				<ProtectedRoute
