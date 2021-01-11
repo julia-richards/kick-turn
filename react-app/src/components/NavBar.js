@@ -1,53 +1,39 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import LogoutButton from './auth/LogoutButton';
+import React from "react";
+import { NavLink } from "react-router-dom";
+import { push as Menu } from "react-burger-menu";
+import { useAuthenticated } from "../hooks";
 
 import "../styles/Menu.css";
-import { pushRotate as Menu } from 'react-burger-menu'
 
+const MenuItem = ({ to, children }) => (
+  <li>
+    <NavLink to={to} exact activeClassName="active">
+      {children}
+    </NavLink>
+  </li>
+);
 
-const NavBar = ({ setAuthenticated }) => {
+const NavBar = (props) => {
+  const [authenticated] = useAuthenticated();
+
   return (
-     <Menu>
-        <a id="home" className="menu-item" href="/">Home</a>
-        <a id="login" className="menu-item" href="/login">Login</a>
-        <a id="sign-up" className="menu-item" href="/sign-up">Sign Up</a>
-        <a id="new-plan" className="menu-item" href="/plans/new">New Tour Plan</a>
-        <a id="new-route" className="menu-item" href="/routes/new">New Route</a>
-      </Menu>
-		// <nav>
-		// 	<ul>
-		// 		<li>
-		// 			<NavLink to="/" exact={true} activeClassName="active">
-		// 				Home
-		// 			</NavLink>
-		// 		</li>
-		// 		<li>
-		// 			<NavLink to="/login" exact={true} activeClassName="active">
-		// 				Login
-		// 			</NavLink>
-		// 		</li>
-		// 		<li>
-		// 			<NavLink to="/sign-up" exact={true} activeClassName="active">
-		// 				Sign Up
-		// 			</NavLink>
-		// 		</li>
-		// 		<li>
-		// 			<LogoutButton setAuthenticated={setAuthenticated} />
-		// 		</li>
-		// 		<li>
-		// 			<NavLink to="/plans/new" exact={true} activeClassName="active">
-		// 				New Tour Plan
-		// 			</NavLink>
-		// 		</li>
-		// 		<li>
-		// 			<NavLink to="/routes/new" exact={true} activeClassName="active">
-		// 				New Route
-		// 			</NavLink>
-		// 		</li>
-		// 	</ul>
-		// </nav>
-	);
-}
+    <Menu {...props}>
+      <MenuItem to="/">Home</MenuItem>
+      {authenticated ? (
+        <>
+          <MenuItem to="/plans/new">New Tour Plan</MenuItem>
+          <MenuItem to="/routes/new">New Route</MenuItem>
+					<MenuItem to="/logout">Logout</MenuItem>
+        </>
+      ) : (
+        <>
+          <MenuItem to="/login">Login</MenuItem>
+          <MenuItem to="/sign-up">Sign Up</MenuItem>
+        </>
+      )}
+    </Menu>
+  );
+};
+
 
 export default NavBar;

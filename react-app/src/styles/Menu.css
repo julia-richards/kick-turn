@@ -56,6 +56,14 @@ Note: Beware of modifying this element as it can break the animations - you shou
   padding: 0.8em;
 }
 
+.bm-item-list li {
+  list-style-type: none;
+}
+
+.bm-item-list a {
+  color: inherit;
+}
+
 /* Individual item */
 .bm-item {
   display: inline-block;
