@@ -41,6 +41,11 @@ def add_plan():
                     tour_plan=form.data["tour_plan"],
                     emergency_plan=form.data["emergency_plan"]
                 )
+        # for problem in avy_problems:
+        #     create avy problem form to validate_on_submit
+        #     popuate new problem object for each el in array
+        #     problem_obj.plan = plan
+        #     db.session.add(problem_obj)
         db.session.add(plan)
         db.session.commit()
         plan.users.append(current_user)
