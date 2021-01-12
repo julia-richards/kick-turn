@@ -2,7 +2,7 @@ from .db import db
 from sqlalchemy.orm import relationship
 # from ..models.problem import Problem
 
-#TODO: change to one to many relationship
+# TODO: change to one to many relationship
 plan_problems = db.Table(
     "plan_problems",
     db.Model.metadata,
