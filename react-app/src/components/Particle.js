@@ -13,7 +13,7 @@ const Snow = () => {
 						},
 					},
 					size: {
-						value: 10,
+						value: 7,
 						random: true,
 					},
 					move: {
