@@ -1,25 +1,50 @@
 import React, { useState } from "react";
 import Layout from "./Layout";
 import Seo from "./Seo";
+import { Redirect } from "react-router-dom";
+import { Input, TextArea } from "./formComponents";
+import { addPlan } from "../services/plans";
 
 const initialAvyProblem = {
-	type_id: "",
-	aspect: "",
-	elevation: [],
-	danger_rating: "",
-	size: "",
-	likelihood: "",
-	weak_layer: "",
-	trend: "",
-	plans: "",
+  type_id: "",
+  aspect: "",
+  elevation: [],
+  danger_rating: "",
+  size: "",
+  likelihood: "",
+  weak_layer: "",
+  trend: "",
+  plans: "",
 };
 
 function PlanForm() {
   const [formValues, setFormValues] = useState({
     date: "2021-01-01",
     avy_problems: [],
-    ates: [],
-  });
+		ates: ["Simple"],
+		trend: "Improving",
+    avy_observations: "No avalanches this year",
+    snowpack_summary: "Super duper stable",
+    temp_now: "24",
+    wind_sp_now: "64",
+    wind_dir_now: "NW",
+    sky_cover_now: "OVC",
+    precip_now: "S1",
+    temp_fore: "32",
+    wind_sp_fore: "9",
+    wind_dir_fore: "NE",
+    sky_cover_fore: "Clear",
+    precip_fore: "12",
+    weather_contribution: "Snow is cool",
+    weather_summary: "It's dumping",
+    terrain_avoiding: "Anything that's not pow",
+    obs_fore_summary: "Nah bro",
+    mindset: "Stepping Out",
+    tour_plan: "shred gnar",
+    emergency_plan: "don't have one",
+	});
+	const [error, setError] = React.useState();
+  const [redirect, setRedirect] = React.useState();
 
   const updateFormValues = (fieldName, fieldValue) => {
     setFormValues({ ...formValues, [fieldName]: fieldValue });
@@ -34,328 +59,270 @@ function PlanForm() {
     );
   };
 
+  const handleSumbit = async (e) => {
+		e.preventDefault();
+		try {
+			const { id } = await addPlan(formValues);
+			setRedirect(`/plans/${id}`);
+		} catch (err) {
+			setError(err)
+		}
+  };
+
+  if (redirect) {
+    return <Redirect to={redirect} />;
+  }
+
   return (
-		<Layout>
-			<Seo title="New Tour Plan" />
-			<form
-				onSubmit={(e) => {
-					e.preventDefault();
-					alert(
-						`form submitted with values: ${JSON.stringify(formValues, null, 2)}`
-					);
-				}}
-			>
-				<div>
-					<label htmlFor="date">Date</label>
-					<input
-						name="date"
-						id="date"
-						type="date"
-						value={formValues.date}
-						onChange={(e) => updateFormValues("date", e.target.value)}
-					></input>
-				</div>
-				<div>
-					{formValues.avy_problems.map((problem, problemIndex) => (
-						<div key={problemIndex}>
-							Avalanche Problem {problemIndex + 1}
-							<div>
-								<label>Aspect</label>
-								<input
-									type="text"
-									name={`avy_problems[${problemIndex}].aspect`}
-									onChange={(e) =>
-										updateAvyProblem(problemIndex, "aspect", e.target.value)
-									}
-									value={formValues.avy_problems[problemIndex].aspect}
-								></input>
-							</div>
-							<div>
-								<label>Elevation</label>
-								{["Below Treeline", "Near Treeline", "Above Treeline"].map(
-									(elOption, elOptionIndex) => {
-										const elFieldId = `avy_problems[${problemIndex}].elevation-#${elOptionIndex}`;
-										const currentElValues =
-											formValues.avy_problems[problemIndex].elevation;
-										const isChecked = currentElValues.some(
-											(e) => e === elOption
-										);
-										const onChange = () =>
-											updateAvyProblem(
-												problemIndex,
-												"elevation",
-												isChecked
-													? currentElValues.filter((e) => e !== elOption)
-													: [...currentElValues, elOption]
-											);
+    <Layout>
+      <Seo title="New Tour Plan" />
+      <form onSubmit={handleSumbit}>
+				{!!error && <div><h3>Oh no!</h3><p>An error occurred: {error.message}</p>{error.body && <details><pre>{JSON.stringify(error, null, 2)}</pre></details>}</div>}
+				<Input
+					type="date"
+					name="date"
+					formValues={formValues}
+					setValue={updateFormValues}
+				/>
+        <div>
+          {formValues.avy_problems.map((problem, problemIndex) => (
+            <div key={problemIndex}>
+              Avalanche Problem {problemIndex + 1}
+              <div>
+                <label>Aspect</label>
+                <input
+                  type="text"
+                  name={`avy_problems[${problemIndex}].aspect`}
+                  onChange={(e) =>
+                    updateAvyProblem(problemIndex, "aspect", e.target.value)
+                  }
+                  value={formValues.avy_problems[problemIndex].aspect}
+                ></input>
+              </div>
+              <div>
+                <label>Elevation</label>
+                {["Below Treeline", "Near Treeline", "Above Treeline"].map(
+                  (elOption, elOptionIndex) => {
+                    const elFieldId = `avy_problems[${problemIndex}].elevation-#${elOptionIndex}`;
+                    const currentElValues =
+                      formValues.avy_problems[problemIndex].elevation;
+                    const isChecked = currentElValues.some(
+                      (e) => e === elOption
+                    );
+                    const onChange = () =>
+                      updateAvyProblem(
+                        problemIndex,
+                        "elevation",
+                        isChecked
+                          ? currentElValues.filter((e) => e !== elOption)
+                          : [...currentElValues, elOption]
+                      );
 
-										return (
-											<div>
-												<input
-													type="checkbox"
-													id={elFieldId}
-													name={elFieldId}
-													onChange={onChange}
-													checked={isChecked}
-												/>
-												<label htmlFor={elFieldId}>{elOption}</label>
-											</div>
-										);
-									}
-								)}
-							</div>
-							<pre>{JSON.stringify(problem)}</pre>
-							<button
-								type="button"
-								onClick={() =>
-									updateFormValues(
-										"avy_problems",
-										formValues.avy_problems.filter(
-											(_p, pIndex) => problemIndex !== pIndex
-										)
-									)
-								}
-							>
-								Remove Problem
-							</button>
-						</div>
-					))}
+                    return (
+                      <div>
+                        <input
+                          type="checkbox"
+                          id={elFieldId}
+                          name={elFieldId}
+                          onChange={onChange}
+                          checked={isChecked}
+                        />
+                        <label htmlFor={elFieldId}>{elOption}</label>
+                      </div>
+                    );
+                  }
+                )}
+              </div>
+              <pre>{JSON.stringify(problem)}</pre>
+              <button
+                type="button"
+                onClick={() =>
+                  updateFormValues(
+                    "avy_problems",
+                    formValues.avy_problems.filter(
+                      (_p, pIndex) => problemIndex !== pIndex
+                    )
+                  )
+                }
+              >
+                Remove Problem
+              </button>
+            </div>
+          ))}
 
-					<button
-						type="button"
-						onClick={() =>
-							updateFormValues("avy_problems", [
-								...formValues.avy_problems,
-								initialAvyProblem,
-							])
-						}
-					>
-						Add Avalanche Problem
-					</button>
-				</div>
-				<div>
-					<label>Avalanche Observations</label>
-					<textarea
-						name="avalanche observations"
-						id="avy_obs"
-						onChange={(e) =>
-							updateFormValues("avy_observations", e.target.value)
-						}
-					></textarea>
-				</div>
-				<div>
-					<label>Snowpack Summary</label>
-					<textarea
-						name="snowpack summary"
-						id="snowpack_summary"
-						placeholder="What snowpack factors concern me and why?"
-						onChange={(e) =>
-							updateFormValues("snowpack_summary", e.target.value)
-						}
-					></textarea>
-				</div>
-				<div>
-					<label>Temp (Nowcast)</label>
-					<input
-						type="number"
-						id="temp_now"
-						placeholder="°F"
-						onChange={(e) =>
-							updateFormValues("temp_now", `${e.target.value} °F`)
-						}
-					></input>
-				</div>
-				<div>
-					<label>Wind Speed (Nowcast)</label>
-					<input
-						type="number"
-						id="wind_sp_now"
-						placeholder="mph"
-						onChange={(e) =>
-							updateFormValues("wind_sp_now", `${e.target.value} mph`)
-						}
-					></input>
-				</div>
-				<div>
-					<label>Wind Direction (Nowcast)</label>
-					<input
-						type="text"
-						id="wind_dir_now"
-						onChange={(e) => updateFormValues("wind_dir_now", e.target.value)}
-					></input>
-				</div>
-				<div>
-					<label>Sky Cover (Nowcast)</label>
-					<input
-						type="text"
-						id="sky_cover_now"
-						onChange={(e) => updateFormValues("sky_cover_now", e.target.value)}
-					></input>
-				</div>
-				<div>
-					<label>Preciptiation (Nowcast)</label>
-					<input
-						type="text"
-						id="precip_now"
-						onChange={(e) => updateFormValues("precip_now", e.target.value)}
-					></input>
-				</div>
-				<div>
-					<label>Temp (Forecast)</label>
-					<input
-						type="number"
-						id="temp_fore"
-						placeholder="°F"
-						onChange={(e) =>
-							updateFormValues("temp_fore", `${e.target.value} °F`)
-						}
-					></input>
-				</div>
-				<div>
-					<label>Wind Speed (Forecast)</label>
-					<input
-						type="number"
-						id="wind_sp_fore"
-						placeholder="mph"
-						onChange={(e) =>
-							updateFormValues("wind_sp_fore", `${e.target.value} mph`)
-						}
-					></input>
-				</div>
-				<div>
-					<label>Wind Direction (Forecast)</label>
-					<input
-						type="text"
-						id="wind_dir_fore"
-						onChange={(e) => updateFormValues("wind_dir_fore", e.target.value)}
-					></input>
-				</div>
-				<div>
-					<label>Sky Cover (Forecast)</label>
-					<input
-						type="text"
-						id="sky_cover_fore"
-						onChange={(e) => updateFormValues("sky_cover_fore", e.target.value)}
-					></input>
-				</div>
-				<div>
-					<label>Preciptiation (Forecast)</label>
-					<input
-						type="text"
-						id="precip_fore"
-						onChange={(e) => updateFormValues("precip_fore", e.target.value)}
-					></input>
-				</div>
-				<div>
-					<label>Weather Contribution</label>
-					<textarea
-						name="weather contribution"
-						id="weather_contribution"
-						placeholder="What weather factors could affect snowpack today?"
-						onChange={(e) =>
-							updateFormValues("weather_contribution", e.target.value)
-						}
-					></textarea>
-				</div>
-				<div>
-					<label>Trend</label>
-					{["Improving", "Maintaining", "Deteriorating"].map(
-						(elOption, elOptionIndex) => {
-							const elFieldId = `trend-${elOptionIndex}`;
-							const currentValue = formValues.trend;
-							const isChecked = currentValue === elOption;
-							const onChange = () => updateFormValues("trend", elOption);
+          <button
+            type="button"
+            onClick={() =>
+              updateFormValues("avy_problems", [
+                ...formValues.avy_problems,
+                initialAvyProblem,
+              ])
+            }
+          >
+            Add Avalanche Problem
+          </button>
+        </div>
+        <TextArea
+          name="avy_observations"
+          label="Avalance Observations"
+          setValue={updateFormValues}
+          formValues={formValues}
+        />
+				<TextArea
+          name="snowpack_summary"
+          setValue={updateFormValues}
+					formValues={formValues}
+					hint={"What snowpack factors concern me and why?"}
+        />
+				<Input
+					type="number"
+					name="temp_now"
+					label="Temp (Nowcast)"
+					placeholder="°F"
+					formValues={formValues}
+					setValue={updateFormValues}
+				/>
+				<Input
+					type="number"
+					name="wind_sp_now"
+					label="Wind Speed (Nowcast)"
+					placeholder="mph"
+					formValues={formValues}
+					setValue={updateFormValues}
+				/>
+					<Input
+					type="text"
+					name="wind_dir_now"
+					label="Wind Direction (Nowcast)"
+					placeholder="N>S"
+					formValues={formValues}
+					setValue={updateFormValues}
+				/>
+				<Input
+					type="text"
+					name="sky_cover_now"
+					label="Sky Cover (Nowcast)"
+					placeholder="OVC"
+					formValues={formValues}
+					setValue={updateFormValues}
+				/>
+				<Input
+					type="text"
+					name="precip_now"
+					label="Preciptiation (Nowcast)"
+					placeholder="OVC"
+					formValues={formValues}
+					setValue={updateFormValues}
+				/>
+				<Input
+					type="number"
+					name="temp_fore"
+					label="Temp (Forecast)"
+					placeholder="°F"
+					formValues={formValues}
+					setValue={updateFormValues}
+				/>
+				<Input
+					type="number"
+					name="wind_sp_fore"
+					label="Wind Speed (Forecast)"
+					placeholder="mph"
+					formValues={formValues}
+					setValue={updateFormValues}
+				/>
+				<Input
+					type="text"
+					name="wind_dir_fore"
+					label="Wind Direction (Forecast)"
+					placeholder="N>S"
+					formValues={formValues}
+					setValue={updateFormValues}
+				/>
+				<Input
+					type="text"
+					name="sky_cover_fore"
+					label="Sky Cover (Forecast)"
+					placeholder="OVC"
+					formValues={formValues}
+					setValue={updateFormValues}
+				/>
+				<Input
+					type="text"
+					name="precip_fore"
+					label="Preciptiation (Forecast)"
+					placeholder="OVC"
+					formValues={formValues}
+					setValue={updateFormValues}
+				/>
 
-							return (
-								<div key={elFieldId}>
-									<input
-										type="radio"
-										id={elFieldId}
-										name={elFieldId}
-										onChange={onChange}
-										checked={isChecked}
-									/>
-									<label htmlFor={elFieldId}>{elOption}</label>
-								</div>
-							);
-						}
-					)}
-				</div>
-				<div>
-					<label>Avalanche Terrain Exposure Scale</label>
-					{["Simple", "Challenging", "Complex"].map(
-						(elOption, elOptionIndex) => {
-							const elFieldId = `ates-${elOptionIndex}`;
-							const currentElValues = formValues.ates;
-							const isChecked = currentElValues.some((e) => e === elOption);
-							const onChange = () =>
-								updateFormValues(
-									"ates",
-									isChecked
-										? currentElValues.filter((e) => e !== elOption)
-										: [...currentElValues, elOption]
-								);
 
-							return (
-								<div key={elFieldId}>
-									<input
-										type="checkbox"
-										id={elFieldId}
-										name={elFieldId}
-										onChange={onChange}
-										checked={isChecked}
-									/>
-									<label htmlFor={elFieldId}>{elOption}</label>
-								</div>
-							);
-						}
-					)}
-				</div>
-				<div>
-					<label>Terrain Avoiding </label>
-					<textarea
-						name="terrain avoiding"
-						id="terrain_avoiding"
-						placeholder="What terrain am I avoiding today and why?"
-						onChange={(e) =>
-							updateFormValues("terrain_avoiding", e.target.value)
-						}
-					></textarea>
-				</div>
-				<div>
-					<label>Observation and Forcast Discussion </label>
-					<textarea
-						name="obs_fore_summary"
-						id="obs_fore_summary"
-						placeholder="Synthesize your observations and the avalanche forecast and discuss with your partners."
-						onChange={(e) =>
-							updateFormValues("obs_fore_summary", e.target.value)
-						}
-					></textarea>
-				</div>
-				<div>
-					<label>Tour Plan</label>
-					<textarea
-						name="tour plan"
-						id="tour_plan"
-						placeholder="Tour Plan"
-						onChange={(e) => updateFormValues("tour_plan", e.target.value)}
-					></textarea>
-				</div>
-				<div>
-					<label>Emergency Plan</label>
-					<textarea
-						name="emergency plan"
-						id="emergency_plan"
-						placeholder="Plan in case of emergency"
-						onChange={(e) => updateFormValues("emergency_plan", e.target.value)}
-					></textarea>
-				</div>
+				<TextArea name="weather_contribution" formValues={formValues} setValue={updateFormValues} hint="What weather factors could affect snowpack today?" />
 
-				<button type="submit">Submit</button>
-			</form>
-		</Layout>
-	);
+        <div>
+          <label>Trend</label>
+          {["Improving", "Maintaining", "Deteriorating"].map(
+            (elOption, elOptionIndex) => {
+              const elFieldId = `trend-${elOptionIndex}`;
+              const currentValue = formValues.trend;
+              const isChecked = currentValue === elOption;
+              const onChange = () => updateFormValues("trend", elOption);
+
+              return (
+                <div key={elFieldId}>
+                  <input
+                    type="radio"
+                    id={elFieldId}
+                    name={elFieldId}
+                    onChange={onChange}
+                    checked={isChecked}
+                  />
+                  <label htmlFor={elFieldId}>{elOption}</label>
+                </div>
+              );
+            }
+          )}
+        </div>
+        <div>
+          <label>Avalanche Terrain Exposure Scale</label>
+          {["Simple", "Challenging", "Complex"].map(
+            (elOption, elOptionIndex) => {
+              const elFieldId = `ates-${elOptionIndex}`;
+              const currentElValues = formValues.ates;
+              const isChecked = currentElValues.some((e) => e === elOption);
+              const onChange = () =>
+                updateFormValues(
+                  "ates",
+                  isChecked
+                    ? currentElValues.filter((e) => e !== elOption)
+                    : [...currentElValues, elOption]
+                );
+
+              return (
+                <div key={elFieldId}>
+                  <input
+                    type="checkbox"
+                    id={elFieldId}
+                    name={elFieldId}
+                    onChange={onChange}
+                    checked={isChecked}
+                  />
+                  <label htmlFor={elFieldId}>{elOption}</label>
+                </div>
+              );
+            }
+          )}
+        </div>
+				<TextArea name="terrain_avoiding" formValues={formValues} setValue={updateFormValues} hint="What terrain am I avoiding today and why?"/>
+				<TextArea name="obs_fore_summary" label="Observation and Forcast Discussion" formValues={formValues} setValue={updateFormValues} hint="Synthesize your observations and the avalanche forecast and discuss with your partners." />
+				<TextArea name="tour_plan" formValues={formValues} setValue={updateFormValues} />
+				<TextArea name="emergency_plan" formValues={formValues} setValue={updateFormValues} hint="Plan in case of emergency" />
+
+        <button type="submit">
+          Submit
+        </button>
+      </form>
+    </Layout>
+  );
 }
 
 export default PlanForm;
