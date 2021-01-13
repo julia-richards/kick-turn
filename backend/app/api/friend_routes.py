@@ -14,7 +14,9 @@ def potentialFriends():
     Lists friend options
     """
     query = "%{}%".format(request.args.get('query'))
-    users = User.query.filter(User.username.ilike(query)) # TODO: filter out self, existing friends
+    ignore_ids = [friend.friend_id for friend in current_user.friends] # skip friends
+    ignore_ids.append(current_user.id) # skip self
+    users = User.query.filter(User.username.ilike(query)).filter(User.id.notin_(ignore_ids)).limit(5).all()
     res = {"options": [{"label": user.username, "value": user.id} for user in users]}
     return res, 200
 
