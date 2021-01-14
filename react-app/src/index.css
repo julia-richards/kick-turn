@@ -1,7 +1,12 @@
+html, body {
+  margin: 0;
+}
+
 /* TODO Add site wide styles */
 body{
   --light-blue: #B5C2DB;
   --light-green:#A3BFC0;
+  --light-purple: #d4c6e6;
   font-family: 'Work Sans', Arial, Helvetica, sans-serif;
 }
 
