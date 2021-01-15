@@ -6,7 +6,11 @@ import { faEraser } from "@fortawesome/free-solid-svg-icons";
 const FriendItem = ({ friend, onDeleteFriendClick }) => {
   if (friend.deletedMessage) {
     return (
-      <li key={friend.id} className="my-friends__list__item">
+      <li
+        key={friend.id}
+        className="my-friends__list__item"
+        style={{ opacity: 0.7 }}
+      >
         <div className="picture-frame">
           <img
             className="profile-pic"
