@@ -1,9 +1,9 @@
 import React from "react";
 import "../styles/Button.css";
 
-const Button = ({ type = "primary", children, ...props }) => {
+const Button = ({ kind = "primary", children, ...props }) => {
   return (
-    <button className={`button ${!!type ? `button--${type}` : ""}`} {...props}>
+    <button className={`button ${!!kind ? `button--${kind}` : ""}`} {...props}>
       {children}
     </button>
   );

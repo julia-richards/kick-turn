@@ -48,7 +48,7 @@ const FriendItem = ({ friend, onDeleteFriendClick }) => {
         </p>
         <Button
           id="remove-button"
-          type={!!friend.isDeleting ? "disabled" : "danger"}
+          kind={!!friend.isDeleting ? "disabled" : "danger"}
           onClick={() => onDeleteFriendClick(friend.id)}
         >
           {!!friend.isDeleting ? "Removing..." : "Remove Friend"}

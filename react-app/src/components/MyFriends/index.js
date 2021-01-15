@@ -18,7 +18,7 @@ const MyFriends = () => {
         <header className="my-friends__header">
           <h1>My Friends</h1>
           <Button
-            type="disabled"
+            kind="disabled"
             style={{ padding: ".25rem .5rem" }}
             onClick={() => {}}
           >
@@ -76,7 +76,7 @@ const MyFriends = () => {
         <h1>My Friends</h1>
         {!isAddOpen && (
           <Button
-            type="primary"
+            kind="primary"
             style={{ padding: ".25rem .5rem" }}
             onClick={() => setIsAddOpen(true)}
           >

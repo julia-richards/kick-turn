@@ -48,7 +48,7 @@ const AddFriend = ({ onCloseClick, onAddSuccess }) => {
             {!friend ? "Add Friend" : `Add ${friend.label}`}
           </Button>
           <Button
-            type="danger"
+            kind="danger"
             onClick={onCloseClick}
             style={{ padding: ".75rem" }}
           >
