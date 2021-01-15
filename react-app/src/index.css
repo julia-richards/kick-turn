@@ -1,17 +1,19 @@
-html, body {
+html,
+body {
   margin: 0;
 }
 
 /* TODO Add site wide styles */
-body{
-  --light-blue: #B5C2DB;
-  --light-green:#A3BFC0;
+body {
+  --light-blue: #b5c2db;
+  --light-green: #a3bfc0;
   --light-purple: #d4c6e6;
-  font-family: 'Work Sans', Arial, Helvetica, sans-serif;
+  font-family: "Work Sans", Arial, Helvetica, sans-serif;
+  background: #fafbfb;
 }
 
-#root{
-  height: 100%
+#root {
+  height: 100%;
 }
 
 /* no dark purple if visited -- especially for menu */

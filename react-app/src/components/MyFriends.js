@@ -4,7 +4,7 @@ import { getFriendOptions, addFriend, getMyFriends } from "../services/friends";
 import { useFetchResult } from "../hooks";
 import Button from "./Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faPerson } from "@fortawesome/free-solid-svg-icons";
 
 import "../styles/MyFriends.css";
 
@@ -136,8 +136,31 @@ const MyFriends = () => {
           style={isLoading ? { opacity: 0.8 } : {}}
         >
           {friends.map((friend) => (
-            <li key={friend.id}>
-              <pre>{JSON.stringify(friend)}</pre>
+            <li key={friend.id} className="my-friends__list__item">
+              <div className="picture-frame">
+                <img
+                  className="profile-pic"
+                  alt="Profile Pic"
+                  src="https://s3.amazonaws.com/website-assets-staging-2a039c6324/profile_pics/354/original/beacon.jpg?1557823635"
+                />
+              </div>
+              <div className="text">
+                <h2>{friend.username}</h2>
+
+                <p>
+                  <strong>Avalanche Education </strong>
+                  {friend.avy_edu}
+                </p>
+                <p>
+                  <strong>Email </strong>
+                  <a
+                    href={`mailto:${friend.email}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    {friend.email}
+                  </a>
+                </p>
+              </div>
             </li>
           ))}
         </ul>
