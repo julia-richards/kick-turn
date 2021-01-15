@@ -22,6 +22,17 @@ def create():
     db.session.commit()
     return route.to_dict(), 200
 
+# /api/routes
+@geo_routes.route('', methods=["GET"])
+@login_required
+def listMyRoutes():
+    """
+    Lists all of users routes
+    """
+    routes = Route.query.filter_by(user_id=current_user.id).all()
+    res = { "routes": [route.to_dict() for route in routes]}
+    return res, 200
+
 
 # /api/routes/:routeId
 @geo_routes.route('/<int:id>', methods=["GET"])

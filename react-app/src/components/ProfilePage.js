@@ -6,9 +6,8 @@ import Layout from "./Layout";
 import Seo from "./Seo";
 import MyFriends from "./MyFriends";
 import MyTours from "./MyTours";
+import MyRoutes from "./MyRoutes";
 import "../styles/Profile.css";
-
-const MyRoutes = () => <h1>MyRoutes</h1>;
 
 // TODO: pick actual icons
 const tabs = [

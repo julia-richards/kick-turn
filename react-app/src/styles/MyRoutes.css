@@ -1,0 +1,55 @@
+.my-routes {
+  max-width: 720px;
+  margin: 2rem auto;
+}
+
+.my-routes__header {
+  display: flex;
+  flex-flow: row wrap;
+  margin-bottom: 1rem;
+}
+
+.my-routes .my-routes__header h1 {
+  font-size: 28px;
+  line-height: 32px;
+  margin: 0 0.5rem 0 0;
+}
+
+.my-routes__list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.route-item {
+  margin: 0;
+  padding: 1.15rem;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px;
+  background-color: #fff;
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "map text"; /* TODO update me! */
+  grid-column-gap: 3rem;
+}
+
+.route-item:not(:first-of-type) {
+  margin-top: 1rem;
+}
+
+.route-item .map {
+  grid-area: image;
+}
+
+.route-item .text {
+  grid-area: text;
+}
+
+.route-item #remove-button {
+  display: none;
+}
+
+.route-item:hover #remove-button {
+  display: block;
+}
