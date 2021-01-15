@@ -4,6 +4,9 @@ import Seo from "./Seo";
 import { Redirect } from "react-router-dom";
 import { Input, TextArea } from "./formComponents";
 import { addPlan } from "../services/plans";
+import Button from "./Button";
+
+import "../styles/PlanForm.css";
 
 const initialAvyProblem = {
   type_id: "",
@@ -21,8 +24,8 @@ function PlanForm() {
   const [formValues, setFormValues] = useState({
     date: "2021-01-01",
     avy_problems: [],
-		ates: ["Simple"],
-		trend: "Improving",
+    ates: ["Simple"],
+    trend: "Improving",
     avy_observations: "No avalanches this year",
     snowpack_summary: "Super duper stable",
     temp_now: "24",
@@ -42,8 +45,8 @@ function PlanForm() {
     mindset: "Stepping Out",
     tour_plan: "shred gnar",
     emergency_plan: "don't have one",
-	});
-	const [error, setError] = React.useState();
+  });
+  const [error, setError] = React.useState();
   const [redirect, setRedirect] = React.useState();
 
   const updateFormValues = (fieldName, fieldValue) => {
@@ -60,13 +63,13 @@ function PlanForm() {
   };
 
   const handleSumbit = async (e) => {
-		e.preventDefault();
-		try {
-			const { id } = await addPlan(formValues);
-			setRedirect(`/plans/${id}`);
-		} catch (err) {
-			setError(err)
-		}
+    e.preventDefault();
+    try {
+      const { id } = await addPlan(formValues);
+      setRedirect(`/plans/${id}`);
+    } catch (err) {
+      setError(err);
+    }
   };
 
   if (redirect) {
@@ -76,18 +79,31 @@ function PlanForm() {
   return (
     <Layout>
       <Seo title="New Tour Plan" />
-      <form onSubmit={handleSumbit}>
-				{!!error && <div><h3>Oh no!</h3><p>An error occurred: {error.message}</p>{error.body && <details><pre>{JSON.stringify(error, null, 2)}</pre></details>}</div>}
-				<Input
-					type="date"
-					name="date"
-					formValues={formValues}
-					setValue={updateFormValues}
-				/>
+      <form onSubmit={handleSumbit} className="plan-form">
+        <header className="plan-form__header">
+          <h1>New Tour Plan</h1>
+        </header>
+        {!!error && (
+          <div>
+            <h3>Oh no!</h3>
+            <p>An error occurred: {error.message}</p>
+            {error.body && (
+              <details>
+                <pre>{JSON.stringify(error, null, 2)}</pre>
+              </details>
+            )}
+          </div>
+        )}
+        <Input
+          type="date"
+          name="date"
+          formValues={formValues}
+          setValue={updateFormValues}
+        />
         <div>
           {formValues.avy_problems.map((problem, problemIndex) => (
-            <div key={problemIndex}>
-              Avalanche Problem {problemIndex + 1}
+            <div key={problemIndex} className="avalance-problem-container">
+              <h3>Avalanche Problem {problemIndex + 1}</h3>
               <div>
                 <label>Aspect</label>
                 <input
@@ -119,7 +135,7 @@ function PlanForm() {
                       );
 
                     return (
-                      <div>
+                      <div className="input-container input-container--checkbox">
                         <input
                           type="checkbox"
                           id={elFieldId}
@@ -134,8 +150,9 @@ function PlanForm() {
                 )}
               </div>
               <pre>{JSON.stringify(problem)}</pre>
-              <button
+              <Button
                 type="button"
+                kind="danger"
                 onClick={() =>
                   updateFormValues(
                     "avy_problems",
@@ -146,12 +163,13 @@ function PlanForm() {
                 }
               >
                 Remove Problem
-              </button>
+              </Button>
             </div>
           ))}
 
-          <button
+          <Button
             type="button"
+            style={{ marginBottom: 10 }}
             onClick={() =>
               updateFormValues("avy_problems", [
                 ...formValues.avy_problems,
@@ -160,7 +178,7 @@ function PlanForm() {
             }
           >
             Add Avalanche Problem
-          </button>
+          </Button>
         </div>
         <TextArea
           name="avy_observations"
@@ -168,95 +186,110 @@ function PlanForm() {
           setValue={updateFormValues}
           formValues={formValues}
         />
-				<TextArea
+        <TextArea
           name="snowpack_summary"
           setValue={updateFormValues}
-					formValues={formValues}
-					hint={"What snowpack factors concern me and why?"}
+          formValues={formValues}
+          hint={"What snowpack factors concern me and why?"}
         />
-				<Input
-					type="number"
-					name="temp_now"
-					label="Temp (Nowcast)"
-					placeholder="°F"
-					formValues={formValues}
-					setValue={updateFormValues}
-				/>
-				<Input
-					type="number"
-					name="wind_sp_now"
-					label="Wind Speed (Nowcast)"
-					placeholder="mph"
-					formValues={formValues}
-					setValue={updateFormValues}
-				/>
-					<Input
-					type="text"
-					name="wind_dir_now"
-					label="Wind Direction (Nowcast)"
-					placeholder="N>S"
-					formValues={formValues}
-					setValue={updateFormValues}
-				/>
-				<Input
-					type="text"
-					name="sky_cover_now"
-					label="Sky Cover (Nowcast)"
-					placeholder="OVC"
-					formValues={formValues}
-					setValue={updateFormValues}
-				/>
-				<Input
-					type="text"
-					name="precip_now"
-					label="Preciptiation (Nowcast)"
-					placeholder="OVC"
-					formValues={formValues}
-					setValue={updateFormValues}
-				/>
-				<Input
-					type="number"
-					name="temp_fore"
-					label="Temp (Forecast)"
-					placeholder="°F"
-					formValues={formValues}
-					setValue={updateFormValues}
-				/>
-				<Input
-					type="number"
-					name="wind_sp_fore"
-					label="Wind Speed (Forecast)"
-					placeholder="mph"
-					formValues={formValues}
-					setValue={updateFormValues}
-				/>
-				<Input
-					type="text"
-					name="wind_dir_fore"
-					label="Wind Direction (Forecast)"
-					placeholder="N>S"
-					formValues={formValues}
-					setValue={updateFormValues}
-				/>
-				<Input
-					type="text"
-					name="sky_cover_fore"
-					label="Sky Cover (Forecast)"
-					placeholder="OVC"
-					formValues={formValues}
-					setValue={updateFormValues}
-				/>
-				<Input
-					type="text"
-					name="precip_fore"
-					label="Preciptiation (Forecast)"
-					placeholder="OVC"
-					formValues={formValues}
-					setValue={updateFormValues}
-				/>
 
+        <div className="weather weather--now">
+          <h3>Nowcast</h3>
+          <div className="weather__grid">
+            <Input
+              type="number"
+              name="temp_now"
+              label="Temperature"
+              placeholder="°F"
+              formValues={formValues}
+              setValue={updateFormValues}
+            />
+            <Input
+              type="number"
+              name="wind_sp_now"
+              label="Wind Speed"
+              placeholder="mph"
+              formValues={formValues}
+              setValue={updateFormValues}
+            />
+            <Input
+              type="text"
+              name="wind_dir_now"
+              label="Wind Direction"
+              placeholder="N>S"
+              formValues={formValues}
+              setValue={updateFormValues}
+            />
+            <Input
+              type="text"
+              name="sky_cover_now"
+              label="Sky Cover"
+              placeholder="OVC"
+              formValues={formValues}
+              setValue={updateFormValues}
+            />
+            <Input
+              type="text"
+              name="precip_now"
+              label="Preciptiation"
+              placeholder="OVC"
+              formValues={formValues}
+              setValue={updateFormValues}
+            />
+          </div>
+        </div>
+        <div className="weather weather--forecast">
+          <h3>Forecast</h3>
+          <div className="weather__grid">
+            <Input
+              type="number"
+              name="temp_fore"
+              label="Temperature"
+              placeholder="°F"
+              formValues={formValues}
+              setValue={updateFormValues}
+            />
+            <Input
+              type="number"
+              name="wind_sp_fore"
+              label="Wind Speed"
+              placeholder="mph"
+              formValues={formValues}
+              setValue={updateFormValues}
+            />
+            <Input
+              type="text"
+              name="wind_dir_fore"
+              label="Wind Direction"
+              placeholder="N>S"
+              formValues={formValues}
+              setValue={updateFormValues}
+            />
+            <Input
+              type="text"
+              name="sky_cover_fore"
+              label="Sky Cover"
+              placeholder="OVC"
+              formValues={formValues}
+              setValue={updateFormValues}
+            />
+            <Input
+              type="text"
+              name="precip_fore"
+              label="Preciptiation"
+              placeholder="OVC"
+              formValues={formValues}
+              setValue={updateFormValues}
+            />
+          </div>
+        </div>
 
-				<TextArea name="weather_contribution" formValues={formValues} setValue={updateFormValues} hint="What weather factors could affect snowpack today?" />
+        <TextArea
+          name="weather_contribution"
+          formValues={formValues}
+          setValue={updateFormValues}
+          hint="What weather factors could affect snowpack today?"
+        />
 
         <div>
           <label>Trend</label>
@@ -268,7 +301,10 @@ function PlanForm() {
               const onChange = () => updateFormValues("trend", elOption);
 
               return (
-                <div key={elFieldId}>
+                <div
+                  key={elFieldId}
+                  className="input-container input-container--radio"
+                >
                   <input
                     type="radio"
                     id={elFieldId}
@@ -298,7 +334,7 @@ function PlanForm() {
                 );
 
               return (
-                <div key={elFieldId}>
+                <div className="input-container input-container--checkbox">
                   <input
                     type="checkbox"
                     id={elFieldId}
@@ -312,14 +348,32 @@ function PlanForm() {
             }
           )}
         </div>
-				<TextArea name="terrain_avoiding" formValues={formValues} setValue={updateFormValues} hint="What terrain am I avoiding today and why?"/>
-				<TextArea name="obs_fore_summary" label="Observation and Forcast Discussion" formValues={formValues} setValue={updateFormValues} hint="Synthesize your observations and the avalanche forecast and discuss with your partners." />
-				<TextArea name="tour_plan" formValues={formValues} setValue={updateFormValues} />
-				<TextArea name="emergency_plan" formValues={formValues} setValue={updateFormValues} hint="Plan in case of emergency" />
+        <TextArea
+          name="terrain_avoiding"
+          formValues={formValues}
+          setValue={updateFormValues}
+          hint="What terrain am I avoiding today and why?"
+        />
+        <TextArea
+          name="obs_fore_summary"
+          label="Observation and Forcast Discussion"
+          formValues={formValues}
+          setValue={updateFormValues}
+          hint="Synthesize your observations and the avalanche forecast and discuss with your partners."
+        />
+        <TextArea
+          name="tour_plan"
+          formValues={formValues}
+          setValue={updateFormValues}
+        />
+        <TextArea
+          name="emergency_plan"
+          formValues={formValues}
+          setValue={updateFormValues}
+          hint="Plan in case of emergency"
+        />
 
-        <button type="submit">
-          Submit
-        </button>
+        <Button type="submit">Submit</Button>
       </form>
     </Layout>
   );

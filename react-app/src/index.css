@@ -20,3 +20,27 @@ body {
 a:visited {
   color: inherit;
 }
+
+/* form styling */
+label {
+  font-weight: bold;
+}
+
+.input-container.input-container--checkbox label,
+.input-container.input-container--radio label {
+  font-weight: normal;
+}
+
+input,
+textarea {
+  font-family: "Work Sans", Arial, Helvetica, sans-serif;
+  margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+textarea {
+  padding: 6px;
+  line-height: 1.15;
+}
