@@ -45,8 +45,8 @@
   margin: 0 auto;
   overflow: hidden;
   position: relative;
-  width: 150px; /* TODO: add media query to resize image ..? */
-  height: 150px; /* TODO: add media query to resize image ..? */
+  width: 172px; /* TODO: add media query to resize image ..? */
+  height: 172px; /* TODO: add media query to resize image ..? */
 }
 
 .profile-pic {
@@ -69,6 +69,14 @@
 
 .my-friends__list__item .text {
   grid-area: text;
+}
+
+.my-friends__list__item #remove-button {
+  display: none;
+}
+
+.my-friends__list__item:hover #remove-button {
+  display: block;
 }
 
 .add-friend-form {

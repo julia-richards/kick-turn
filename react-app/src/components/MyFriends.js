@@ -212,6 +212,7 @@ const MyFriends = () => {
                     </a>
                   </p>
                   <Button
+                    id="remove-button"
                     type={!!friend.isDeleting ? "disabled" : "danger"}
                     onClick={() => onDeleteFriendClick(friend.id)}
                   >
