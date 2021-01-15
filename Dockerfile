@@ -5,6 +5,7 @@ COPY react-app/. .
 
 # You have to set this because it should be set during build time.
 ENV REACT_APP_BASE_URL="https://kickturn.herokuapp.com"
+ENV REACT_APP_MAPBOX_ACCESS_TOKEN=pk.eyJ1IjoianVscmljaGFyZHMiLCJhIjoiY2pyaW8xOWdoMDN3bzQ5bzgzZHl4ZXdkOSJ9.F6goFIL7cndj-wWSvu17Mw
 
 # Build our React App
 RUN npm install

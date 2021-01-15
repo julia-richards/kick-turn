@@ -1,10 +1,13 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
+import ReactMapGL from "react-map-gl";
 import { getRoute } from "../services/routes";
 import { useFetchResult } from "../hooks";
 import Layout from "./Layout";
 import Seo from "./Seo";
 import "../styles/RoutePage.css";
+
+const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
 const RoutePage = () => {
   const { routeId } = useParams();
@@ -45,10 +48,18 @@ const RoutePage = () => {
             <li>add users...</li>
           </ol>
         </div>
-        <div className="route-page__map">
+        <div className="route-page__map" style={{ width: "100%", height: 400 }}>
           <pre>
             route.geo_features: {JSON.stringify(route.geo_features, null, 2)}
           </pre>
+          <ReactMapGL
+            {...viewport}
+            width="100%"
+            height="100%"
+            mapStyle={"mapbox://styles/mapbox/light-v9"}
+            onViewportChange={setViewport}
+            mapboxApiAccessToken={MAPBOX_TOKEN}
+          ></ReactMapGL>
         </div>
       </div>
     </Layout>
