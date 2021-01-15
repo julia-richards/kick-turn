@@ -32,6 +32,8 @@ const DEFAULT_VIEWPORT = {
   zoom: 12,
 };
 
+const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
+
 function RouteForm() {
   const [viewport, setViewport] = React.useState(DEFAULT_VIEWPORT);
   const [modeId, setModeId] = React.useState("drawPolyline");
@@ -86,6 +88,7 @@ function RouteForm() {
             height="100%"
             mapStyle={"mapbox://styles/mapbox/light-v9"}
             onViewportChange={setViewport}
+            mapboxApiAccessToken={MAPBOX_TOKEN}
           >
             <Editor
               // to make the lines/vertices easier to interact with
