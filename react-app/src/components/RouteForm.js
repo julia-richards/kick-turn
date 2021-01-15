@@ -70,13 +70,13 @@ function RouteForm() {
         <Seo title={"New Route"} />
         <div className="route__form">
           <form onSubmit={handleSumbit}>
-            <h1>New Route</h1>
+            <h1>Add Route</h1>
             <Input
               name="name"
               formValues={{ name }}
               onChange={(e) => setName(e.target.value)}
             />
-            <Button type="submit">Save Route</Button>
+            <Button type="submit">Add Route</Button>
           </form>
         </div>
         <div className="route__form-map" style={{ width: "100%", height: 400 }}>

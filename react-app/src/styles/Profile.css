@@ -27,7 +27,7 @@
 }
 
 .tab-menu__link:hover {
-  color: #2684ff; /* matches react-select */
+  color: var(--primary-light);
 }
 
 .tab-menu__link:focus {
@@ -35,8 +35,8 @@
 }
 
 .tab-menu__link.tab-menu__link--active {
-  border-top: 1px solid #0a42a1;
-  color: #0a42a1;
+  border-top: 1px solid var(--primary-dark);
+  color: var(--primary-dark);
   margin-top: -1px;
 }
 

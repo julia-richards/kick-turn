@@ -24,7 +24,7 @@
 .tour-plan-item {
   margin: 0;
   padding: 1.15rem;
-  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px;
+  box-shadow: var(--box-shadow);
   background-color: #fff;
   width: 100%;
 

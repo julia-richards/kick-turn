@@ -31,38 +31,38 @@
 
 .button.button--primary,
 .link-button {
-  background-color: #2684ff;
+  background-color: var(--primary-light);
 }
 
 .button.button--primary:hover,
 .link-button:hover {
-  background-color: #0a42a1;
+  background-color: var(--primary-dark);
 }
 
 .button.button--primary:focus,
 .button.button--primary:active,
 .link-button:focus,
 .link-button:active {
-  outline-color: #0a42a1;
+  outline-color: var(--primary-dark);
 }
 
 .button.button--danger {
-  background-color: #f76464;
+  background-color: var(--danger-light);
 }
 
 .button.button--danger:hover {
-  background-color: #791414;
+  background-color: var(--danger-dark);
 }
 
 .button.button--danger:focus,
 .button.button--danger:active {
-  outline-color: #791414;
+  outline-color: var(--danger-dark);
 }
 
 .button.button--disabled,
 .button:disabled,
 .button.button--disabled:hover,
 .button:disabled:hover {
-  background-color: #b7bfc6;
+  background-color: var(--disabled-light);
   cursor: not-allowed;
 }

@@ -1,0 +1,14 @@
+.signup-form {
+  box-sizing: border-box;
+  max-width: 360px;
+  width: 100%;
+  margin: 5rem auto 0;
+  padding: 3rem;
+  border: 1px solid var(--light-green);
+  box-shadow: var(--box-shadow);
+  border-radius: 2px;
+}
+
+.signup-form .errors-container {
+  margin-bottom: 10px;
+}

@@ -162,7 +162,7 @@ function PlanForm() {
                   )
                 }
               >
-                Remove Problem
+                Remove Problem {problemIndex + 1}
               </Button>
             </div>
           ))}

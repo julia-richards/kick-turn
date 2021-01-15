@@ -8,8 +8,22 @@ body {
   --light-blue: #b5c2db;
   --light-green: #a3bfc0;
   --light-purple: #d4c6e6;
+
+  --primary-light: #2684ff; /* matches react-select */
+  --primary-dark: #0a42a1;
+  --danger-light: #f76464;
+  --danger-dark: #791414;
+  --disabled-light: #b7bfc6;
+
+  --box-shadow: 0 7px 30px -10px rgba(150, 170, 180, 0.5);
+
   font-family: "Work Sans", Arial, Helvetica, sans-serif;
-  background: #fafbfb;
+  background: #fafafa;
+
+  /* background-image: url("https://as2.ftcdn.net/jpg/02/42/05/65/500_F_242056526_r3YayFrAk0qQNJV2MZwONEA0jrpQDQGv.jpg"); */
+  background-image: url("https://gobloom.io/images/geometry2.png");
+
+  color: #333;
 }
 
 #root {
@@ -40,7 +54,13 @@ textarea {
 input[type="text"],
 input[type="number"],
 input[type="date"],
+input[type="email"],
+input[type="password"],
 textarea {
   padding: 6px;
   line-height: 1.15;
+}
+
+form small {
+  margin: 4px 0 6px;
 }

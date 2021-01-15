@@ -54,8 +54,8 @@ def add_plan():
         #     problem_obj.plan = plan
         #     db.session.add(problem_obj)
         db.session.add(plan)
-        db.session.commit()
         plan.users.append(current_user)
+        db.session.commit()
         return plan.to_dict()
     return {'errors': form.errors}, 422
 

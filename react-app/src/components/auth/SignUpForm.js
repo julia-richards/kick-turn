@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Redirect } from 'react-router-dom';
-import { signUp } from '../../services/auth';
+import { Redirect } from "react-router-dom";
+import { signUp } from "../../services/auth";
 import Seo from "../Seo";
+import "../../styles/SignUpForm.css";
 
-const SignUpForm = ({authenticated, setAuthenticated}) => {
+const SignUpForm = ({ authenticated, setAuthenticated }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [education, setEducation] = useState({});
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
 
@@ -27,6 +29,12 @@ const SignUpForm = ({authenticated, setAuthenticated}) => {
     setEmail(e.target.value);
   };
 
+  const updateEducation = (e) => {
+    setEducation({
+      [e.target.id]: e.target.checked,
+    });
+  };
+
   const updatePassword = (e) => {
     setPassword(e.target.value);
   };
@@ -42,7 +50,7 @@ const SignUpForm = ({authenticated, setAuthenticated}) => {
   return (
     <>
       <Seo title="Sign Up" />
-      <form onSubmit={onSignUp}>
+      <form className="signup-form" onSubmit={onSignUp}>
         <div>
           <label>User Name</label>
           <input
@@ -60,6 +68,31 @@ const SignUpForm = ({authenticated, setAuthenticated}) => {
             onChange={updateEmail}
             value={email}
           ></input>
+        </div>
+        <div>
+          <label>Avalanche Education</label>
+          {[
+            "Recreational Level 1",
+            "Recreational Level 2",
+            "Avalanche Rescue",
+            "Professional AvSAR",
+            "Professional 1",
+            "Professional 2",
+          ].map((elOption, elOptionIndex) => {
+            const elFieldId = `${elOptionIndex}`;
+
+            return (
+              <div className="input-container input-container--checkbox">
+                <input
+                  type="checkbox"
+                  id={elFieldId}
+                  name={elFieldId}
+                  onChange={updateEducation}
+                />
+                <label htmlFor={elFieldId}>{elOption}</label>
+              </div>
+            );
+          })}
         </div>
         <div>
           <label>Password</label>

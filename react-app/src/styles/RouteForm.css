@@ -21,5 +21,6 @@
 
 .route__form-map {
   margin-top: 3em;
-  box-shadow: 21px 14px 33px grey;
+  /* box-shadow: 21px 14px 33px grey; */
+  box-shadow: var(--box-shadow);
 }

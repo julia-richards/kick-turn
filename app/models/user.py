@@ -7,8 +7,8 @@ from ..models.plan import Plan
 
 user_plans = db.Table('user_plans',
     db.Model.metadata,
-    db.Column('plan_id', db.Integer, db.ForeignKey('plans.id'), primary_key=True),
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
+    db.Column('plan_id', db.Integer, db.ForeignKey('plans.id', ondelete="CASCADE"), primary_key=True),
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id', ondelete="CASCADE"), primary_key=True),
     extend_existing=True
 )
 
@@ -21,7 +21,7 @@ class User(db.Model, UserMixin):
     avy_edu = db.Column(db.String(255))
     hashed_password = db.Column(db.String(255), nullable=False)
     routes = db.relationship("Route", backref='user', cascade="all, delete-orphan")
-    plans = db.relationship('Plan', secondary=user_plans, lazy='subquery', backref=db.backref('users', lazy=True))
+    plans = db.relationship('Plan', secondary=user_plans, lazy='subquery', backref=db.backref('users', lazy=True, cascade="all,delete"))
     friends = relationship('Friend', backref='Friend.friend_id', primaryjoin='User.id==Friend.user_id', lazy='dynamic')
 
 

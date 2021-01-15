@@ -49,5 +49,5 @@ def downgrade():
     op.alter_column('problem_types', 'name',
                existing_type=sa.VARCHAR(length=255),
                nullable=False)
-    op.drop_table('friend')
+    op.drop_table('friends')
     # ### end Alembic commands ###
