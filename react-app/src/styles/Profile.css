@@ -1,58 +1,66 @@
-.tabs {
-  width: 80%;
-}
-
-.tab-header {
-  margin: 0 20px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.tab-header > li {
-  width: 100%;
-  border-top: 2px solid black;
-  border-left: 1px solid black;
-  border-right: 1px solid black;
-  border-bottom: 2px solid black;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  list-style-type: none;
-  padding: 5px;
-  text-align: center;
-  cursor: pointer;
-  background-color: lightskyblue;
-}
-
-.tab-header > li:first-child {
-  border-left: 2px solid black;
-}
-
-.tab-header > li:last-child {
-  border-right: 2px solid black;
-}
-
-.tab-header > li:hover {
-  background-color: lightblue;
-  color: white;
-}
-
-.tab-header > li.active {
-  color: white;
-  font-weight: bold;
-  background-color: lightblue;
-  border-bottom: 0px;
-}
-
-.tab-content {
-  font-weight: bold;
-  color: white;
-  height: 50em;
-  margin: 0 20px;
-  border-left: 2px solid black;
-  border-bottom: 2px solid black;
-  border-right: 2px solid black;
-  display: flex;
+.tab-menu {
+  border-top: 1px solid #efefef;
   align-items: center;
+  color: #999;
+  max-width: 900px;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  font-size: 16px;
+  font-weight: 600;
   justify-content: center;
-  background-color: lightblue;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.tab-menu__link {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  height: 52px;
+  min-width: 60px;
+  padding: 0 8px;
+  justify-content: center;
+  text-transform: uppercase;
+  align-items: center;
+  text-decoration: none;
+}
+
+.tab-menu__link:hover {
+  color: #2684ff; /* matches react-select */
+}
+
+.tab-menu__link:focus {
+  color: #32c1ff;
+}
+
+.tab-menu__link.tab-menu__link--active {
+  border-top: 1px solid #0a42a1;
+  color: #0a42a1;
+  margin-top: -1px;
+}
+
+.tab-menu__link__label {
+  margin-left: 0.25rem;
+}
+
+@media screen and (max-width: 735px) {
+  .tab-menu__link {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: row;
+    height: 44px;
+  }
+  .tab-menu__link__label {
+    display: none;
+  }
+  .tab-menu__link__icon {
+    font-size: 1.25rem;
+  }
+}
+
+@media screen and (min-width: 736px) {
+  .tab-menu__link:not(:last-child) {
+    margin-right: 40px;
+  }
 }

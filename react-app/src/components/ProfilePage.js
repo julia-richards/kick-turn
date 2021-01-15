@@ -1,5 +1,10 @@
 import React from "react";
 import { Switch, Route, NavLink, Redirect } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSnowflake,
+  faTemperatureLow,
+} from "@fortawesome/free-solid-svg-icons";
 import Layout from "./Layout";
 import Seo from "./Seo";
 import MyFriends from "./MyFriends";
@@ -9,9 +14,19 @@ const MyTours = () => <h1>MyTours</h1>;
 const MyRoutes = () => <h1>MyRoutes</h1>;
 
 const tabs = [
-  { title: "Tour Plans", route: "tours", Component: MyTours },
-  { title: "Routes", route: "routes", Component: MyRoutes },
-  { title: "Friends", route: "friends", Component: MyFriends },
+  {
+    title: "Tour Plans",
+    route: "tours",
+    Component: MyTours,
+    icon: faSnowflake,
+  },
+  { title: "Routes", route: "routes", Component: MyRoutes, icon: faSnowflake },
+  {
+    title: "Friends",
+    route: "friends",
+    Component: MyFriends,
+    icon: faSnowflake,
+  },
 ];
 
 const FallbackRoute = () => <Redirect to={`/my/${tabs[0].route}`} />;
@@ -24,14 +39,14 @@ const ProfilePage = () => (
         {tabs.map((folder) => (
           <NavLink
             to={`/my/${folder.route}`}
-            style={{
-              display: "inline-block",
-              height: "100%",
-              width: "100%",
-            }}
+            className="tab-menu__link"
+            activeClassName="tab-menu__link--active"
             key={folder.route}
           >
-            {folder.title}
+            <span className="tab-menu__link__icon">
+              <FontAwesomeIcon icon={folder.icon} />
+            </span>
+            <span className="tab-menu__link__label">{folder.title}</span>
           </NavLink>
         ))}
       </nav>
