@@ -1,10 +1,5 @@
 import React from "react";
-import {
-	BrowserRouter as Router,
-	Switch,
-	Route,
-	NavLink,
-} from "react-router-dom";
+import { Switch, Route, NavLink } from "react-router-dom";
 import Layout from "./Layout";
 import Seo from "./Seo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -29,32 +24,30 @@ const ProfilePage = () => (
 			<FontAwesomeIcon icon={faUserCircle} />
 		</h1>
 
-		<Router>
-			<div>
-				<div className="tabs">
-					<ul className="tab-header">
-						{tabs.map((folder) => {
-							return (
-								<li key={folder.route}>
-									<NavLink to={`/my/${folder.route}`} style={{   display: "inline-block", height: "100%", width: "100%"   }}>
-										{folder.title}
-									</NavLink>
-								</li>
-							);
-						})}
-					</ul>
-					<Switch>
-						{tabs.map((folder) => {
-							return (
-								<Route path={`/my/${folder.route}`} key={folder.route}>
-									<folder.Component />
-								</Route>
-							);
-						})}
-					</Switch>
-				</div>
+		<div>
+			<div className="tabs">
+				<ul className="tab-header">
+					{tabs.map((folder) => {
+						return (
+							<li key={folder.route}>
+								<NavLink to={`/my/${folder.route}`} style={{   display: "inline-block", height: "100%", width: "100%"   }}>
+									{folder.title}
+								</NavLink>
+							</li>
+						);
+					})}
+				</ul>
+				<Switch>
+					{tabs.map((folder) => {
+						return (
+							<Route path={`/my/${folder.route}`} key={folder.route}>
+								<folder.Component />
+							</Route>
+						);
+					})}
+				</Switch>
 			</div>
-		</Router>
+		</div>
 	</Layout>
 );
 
