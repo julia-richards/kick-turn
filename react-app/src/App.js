@@ -13,59 +13,59 @@ import RouteForm from "./components/RouteForm";
 import RoutePage from "./components/RoutePage";
 
 const Router = () => {
-	const [authenticated, setAuthenticated] = useAuthenticated();
+  const [authenticated, setAuthenticated] = useAuthenticated();
 
   return (
-		<BrowserRouter>
-			<Switch>
-				<Route path="/login" exact>
-					<LoginForm />
-				</Route>
-				<Route path="/sign-up" exact>
-					<SignUpForm
-						authenticated={authenticated}
-						setAuthenticated={setAuthenticated}
-					/>
-				</Route>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/login" exact>
+          <LoginForm />
+        </Route>
+        <Route path="/sign-up" exact>
+          <SignUpForm
+            authenticated={authenticated}
+            setAuthenticated={setAuthenticated}
+          />
+        </Route>
 
-				{authenticated ? (
-					<ProtectedRoute path="/" authenticated={authenticated} exact>
-						<Redirect to="/my/tours" />
-					</ProtectedRoute>
-				) : (
-					<Route path="/" exact>
-						<LandingPage />
-					</Route>
-				)}
-				<ProtectedRoute path="/logout" authenticated={authenticated} exact>
-					<Logout />
-				</ProtectedRoute>
-				<ProtectedRoute path="/my" authenticated={authenticated}>
-					<ProfilePage />
-				</ProtectedRoute>
-				<ProtectedRoute
-					path="/users/:userId"
-					authenticated={authenticated}
-					exact
-				>
-					<User />
-				</ProtectedRoute>
-				<ProtectedRoute path="/plans/new" authenticated={authenticated} exact>
-					<PlanForm />
-				</ProtectedRoute>
-				<ProtectedRoute path="/routes/new" authenticated={authenticated} exact>
-					<RouteForm />
-				</ProtectedRoute>
-				<ProtectedRoute
-					path="/routes/:routeId"
-					authenticated={authenticated}
-					exact
-				>
-					<RoutePage />
-				</ProtectedRoute>
-			</Switch>
-		</BrowserRouter>
-	);
+        {authenticated ? (
+          <ProtectedRoute path="/" authenticated={authenticated} exact>
+            <Redirect to="/my/tours" />
+          </ProtectedRoute>
+        ) : (
+          <Route path="/" exact>
+            <LandingPage />
+          </Route>
+        )}
+        <ProtectedRoute path="/logout" authenticated={authenticated} exact>
+          <Logout />
+        </ProtectedRoute>
+        <ProtectedRoute path="/my" authenticated={authenticated}>
+          <ProfilePage />
+        </ProtectedRoute>
+        <ProtectedRoute
+          path="/users/:userId"
+          authenticated={authenticated}
+          exact
+        >
+          <User />
+        </ProtectedRoute>
+        <ProtectedRoute path="/plans/new" authenticated={authenticated} exact>
+          <PlanForm />
+        </ProtectedRoute>
+        <ProtectedRoute path="/routes/new" authenticated={authenticated} exact>
+          <RouteForm />
+        </ProtectedRoute>
+        <ProtectedRoute
+          path="/routes/:routeId"
+          authenticated={authenticated}
+          exact
+        >
+          <RoutePage />
+        </ProtectedRoute>
+      </Switch>
+    </BrowserRouter>
+  );
 };
 
 const App = () => {
@@ -74,6 +74,6 @@ const App = () => {
       <Router />
     </AuthProvider>
   );
-}
+};
 
 export default App;
