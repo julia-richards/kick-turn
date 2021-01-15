@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { AuthProvider, useAuthenticated } from "./hooks";
 import LoginForm from "./components/auth/LoginForm";
-import AddFriend from "./components/AddFriend";
 import SignUpForm from "./components/auth/SignUpForm";
 import Logout from "./components/auth/Logout";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
@@ -63,9 +62,6 @@ const Router = () => {
 					exact
 				>
 					<RoutePage />
-				</ProtectedRoute>
-				<ProtectedRoute path="/friends/new" authenticated={authenticated} exact>
-					<AddFriend />
 				</ProtectedRoute>
 			</Switch>
 		</BrowserRouter>

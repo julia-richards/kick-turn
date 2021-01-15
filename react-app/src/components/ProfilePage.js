@@ -4,12 +4,11 @@ import Layout from "./Layout";
 import Seo from "./Seo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-
+import MyFriends from "./MyFriends";
 import "../styles/Profile.css";
 
 const MyTours = () => <h1>MyTours</h1>;
 const MyRoutes = () => <h1>MyRoutes</h1>;
-const MyFriends = () => <h1>MyFriends</h1>;
 
 const tabs = [
 	{ title: "Tour Plans", route: "tours", Component: MyTours },
