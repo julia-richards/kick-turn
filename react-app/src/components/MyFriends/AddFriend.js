@@ -52,7 +52,7 @@ const AddFriend = ({ onCloseClick, onAddSuccess }) => {
             onClick={onCloseClick}
             style={{ padding: ".75rem" }}
           >
-            Cancel
+            Hide Form
           </Button>
         </div>
       </div>
