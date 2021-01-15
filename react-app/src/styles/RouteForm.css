@@ -1,20 +1,25 @@
-#background{
+/* #background {
   background: linear-gradient(90deg, var(--light-green) 30%, white 70%);
-}
-.route{
+} */
+
+.route {
+  max-width: 960px;
+  width: 100%;
+  margin: 2rem auto;
   display: grid;
   grid-template-columns: 1fr 3fr;
+  grid-gap: 2rem;
 }
 
-.route__form{
-  background-color: #EEEDED;
-  padding: 1.5em;
+.route__form {
   margin-top: 3em;
+  /* background-color: #eeeded;
+  padding: 1.5em;
   margin-right: 3em;
-  box-shadow: 21px 14px 33px grey;
+  box-shadow: 21px 14px 33px grey; */
 }
 
-.route__form-map{
+.route__form-map {
   margin-top: 3em;
   box-shadow: 21px 14px 33px grey;
 }
