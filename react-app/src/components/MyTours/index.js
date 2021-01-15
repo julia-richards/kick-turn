@@ -9,7 +9,9 @@ import "../../styles/MyTours.css";
 const TourPlanHeader = () => (
   <header className="my-tour-plans__header">
     <h1>My Tour Plans</h1>
-    <Link to="/plans/new">Add Tour Plan +</Link>
+    <Link to="/plans/new" className="link-button">
+      Add Tour Plan +
+    </Link>
   </header>
 );
 

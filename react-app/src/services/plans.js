@@ -18,21 +18,12 @@ export const getMyTourPlans = () =>
     },
   })
     .then(checkStatus)
-    .then(parseJSON);
+    .then(parseJSON)
+    .then((res) => res.plans);
 
 export const deleteTourPlan = (planId) =>
   fetch(`/api/plans/${planId}`, {
     method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then(checkStatus)
-    .then(parseJSON);
-
-// TODO: relocate me?
-export const getPlan = (planId) =>
-  fetch(`/api/routes/${planId}`, {
     headers: {
       "Content-Type": "application/json",
     },

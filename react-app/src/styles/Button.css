@@ -1,5 +1,6 @@
-.button {
-  padding: 0.25rem 0.5rem;
+.button,
+.link-button {
+  padding: 0.5rem;
   border-radius: 4px;
   border: 0;
   font-weight: 600;
@@ -9,21 +10,39 @@
   transition: ease background-color 300ms;
 }
 
-.button:hover {
+.link-button {
+  align-self: center;
+}
+
+.link-button,
+.link-button:hover {
+  text-decoration: none;
+}
+
+.link-button:visited {
+  color: #fff;
+}
+
+.button:hover,
+.link-button:hover {
   text-decoration: none;
   color: #fff;
 }
 
-.button.button--primary {
+.button.button--primary,
+.link-button {
   background-color: #2684ff;
 }
 
-.button.button--primary:hover {
+.button.button--primary:hover,
+.link-button:hover {
   background-color: #0a42a1;
 }
 
 .button.button--primary:focus,
-.button.button--primary:active {
+.button.button--primary:active,
+.link-button:focus,
+.link-button:active {
   outline-color: #0a42a1;
 }
 
