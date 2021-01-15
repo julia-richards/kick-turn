@@ -14,6 +14,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import Layout from "./Layout";
 import Seo from "./Seo";
 import { addRoute } from "../services/routes";
+import "../styles/RouteForm.css"
 
 const MODES = [
 	{ id: "drawPolyline", text: "Draw Route", handler: DrawLineStringMode },
@@ -62,9 +63,27 @@ function RouteForm() {
 	}
 
 	return (
+		<div id='background'>
 		<Layout>
+			<div className='route'>
 			<Seo title={"New Route"} />
-			<div style={{ width: "100%", height: 400 }}>
+			<div className='route__form'>
+			<form onSubmit={handleSumbit}>
+					<div>
+						<label htmlFor="name">Route Name</label>
+						<input
+							id="name"
+							name="name"
+							type="text"
+							value={name}
+							onChange={(e) => setName(e.target.value)}
+						/>
+					</div>
+					<button type="submit">Save Route</button>
+				</form>
+			</div>
+			<div className="route__form-map" style={{ width: "80%", height: 400 }}>
+
 				<ReactMapGL
 					{...viewport}
 					width="100%"
@@ -101,21 +120,12 @@ function RouteForm() {
           </div> */}
 				</ReactMapGL>
 				{/* <pre>features: {JSON.stringify(features, null, 2)}</pre> */}
-				<form onSubmit={handleSumbit}>
-					<div>
-						<label htmlFor="name">Route Name</label>
-						<input
-							id="name"
-							name="name"
-							type="text"
-							value={name}
-							onChange={(e) => setName(e.target.value)}
-						/>
-					</div>
-					<button type="submit">Save Route</button>
-				</form>
+
 			</div>
+			</div>
+
 		</Layout>
+		</div>
 	);
 }
 

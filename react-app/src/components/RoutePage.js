@@ -4,6 +4,7 @@ import { getRoute } from "../services/routes";
 import { useFetchResult } from "../hooks";
 import Layout from "./Layout";
 import Seo from "./Seo";
+import "../styles/Routes.css"
 
 const RoutePage = () => {
 	const { routeId } = useParams();
@@ -29,7 +30,9 @@ const RoutePage = () => {
 	return (
 		<Layout>
 			<Seo title={route.name} />
+			<div className='routes'>
 			<pre>{JSON.stringify(route, null, 2)}</pre>
+			</div>
 		</Layout>
 	);
 };
