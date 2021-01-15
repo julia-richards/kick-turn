@@ -5,9 +5,9 @@ import { faSnowflake } from "@fortawesome/free-solid-svg-icons";
 import Layout from "./Layout";
 import Seo from "./Seo";
 import MyFriends from "./MyFriends";
+import MyTours from "./MyTours";
 import "../styles/Profile.css";
 
-const MyTours = () => <h1>MyTours</h1>;
 const MyRoutes = () => <h1>MyRoutes</h1>;
 
 // TODO: pick actual icons

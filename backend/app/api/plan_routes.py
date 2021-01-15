@@ -12,6 +12,13 @@ plan_routes = Blueprint('plans', __name__)
 #     plans = Plan.query.filter_by(user_id)
 #     return {"plans": [plan for p in plans]}
 
+# api/plans
+@plan_routes.route('', methods=["GET"])
+@login_required
+def listMyPlans():
+    plans = Plan.query.filter(Plan.id.in_([plan.id for plan in current_user.plans])).all()
+    return {"plans": [plan for p in plans]}
+
 # /api/plans
 @plan_routes.route('', methods=["POST"])
 @login_required
@@ -51,7 +58,6 @@ def add_plan():
         plan.users.append(current_user)
         return plan.to_dict()
     return {'errors': form.errors}, 422
-
 
 # @plan_routes.route('/<int:id>', methods=["GET", "POST", "DELETE"])
 # @login_required
