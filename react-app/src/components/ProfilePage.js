@@ -51,13 +51,11 @@ const ProfilePage = () => (
         ))}
       </nav>
       <Switch>
-        {tabs.map((folder) => {
-          return (
-            <Route path={`/my/${folder.route}`} key={folder.route}>
-              <folder.Component />
-            </Route>
-          );
-        })}
+        {tabs.map((folder) => (
+          <Route path={`/my/${folder.route}`} key={folder.route}>
+            <folder.Component />
+          </Route>
+        ))}
         <Route component={FallbackRoute} />
       </Switch>
     </div>
