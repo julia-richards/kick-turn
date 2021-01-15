@@ -5,19 +5,6 @@ from app.models import db, Friend, User
 
 friend_routes = Blueprint('friends', __name__)
 
-# /api/friends/
-@friend_routes.route('/', methods=["GET"])
-@login_required
-def userFriends():
-    """
-    Lists all user friends
-    """
-    friend_user_ids = [friend.friend_id for friend in current_user.friends]
-    users = User.query.filter(User.id.in_(friend_user_ids)).all()
-    res = {"friends": [user.to_dict() for user in users]}
-    return res, 200
-
-
 # /api/friends/options
 @friend_routes.route('/options', methods=["GET"])
 @login_required
@@ -47,3 +34,15 @@ def addFriend():
     db.session.add(friend)
     db.session.commit()
     return friend.to_dict(), 200
+
+# /api/friends
+@friend_routes.route('', methods=["GET"])
+@login_required
+def userFriends():
+    """
+    Lists all user friends
+    """
+    friend_user_ids = [friend.friend_id for friend in current_user.friends]
+    users = User.query.filter(User.id.in_(friend_user_ids)).all()
+    res = {"friends": [user.to_dict() for user in users]}
+    return res, 200

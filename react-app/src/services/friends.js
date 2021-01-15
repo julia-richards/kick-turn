@@ -25,7 +25,7 @@ export const getFriendOptions = (query) => {
 };
 
 export const getMyFriends = () =>
-  fetch(`/api/friends/`, {
+  fetch(`/api/friends`, {
     headers: {
       "Content-Type": "application/json",
     },
