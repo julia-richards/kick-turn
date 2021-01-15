@@ -71,6 +71,10 @@
   grid-area: text;
 }
 
+.add-friend-form {
+  margin-bottom: 2rem;
+}
+
 .add-friend-form__fields {
   display: flex;
   flex-direction: row wrap;

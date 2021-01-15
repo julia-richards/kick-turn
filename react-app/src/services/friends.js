@@ -33,3 +33,13 @@ export const getMyFriends = () =>
     .then(checkStatus)
     .then(parseJSON)
     .then((res) => res.friends);
+
+export const deleteFriend = (friendId) =>
+  fetch(`/api/friends/${friendId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(checkStatus)
+    .then(parseJSON);

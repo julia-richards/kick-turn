@@ -1,10 +1,15 @@
 import React, { useCallback, useState } from "react";
 import AsyncSelect from "react-select/async";
-import { getFriendOptions, addFriend, getMyFriends } from "../services/friends";
+import {
+  getFriendOptions,
+  addFriend,
+  getMyFriends,
+  deleteFriend,
+} from "../services/friends";
 import { useFetchResult } from "../hooks";
 import Button from "./Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle, faPerson } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faEraser } from "@fortawesome/free-solid-svg-icons";
 
 import "../styles/MyFriends.css";
 
@@ -108,7 +113,32 @@ const MyFriends = () => {
     );
   }
 
-  const { result: friends, isLoading, triggerRefetch } = state;
+  const {
+    result: friends,
+    isLoading,
+    triggerRefetch,
+    onError,
+    updateResult,
+  } = state;
+
+  const onDeleteFriendClick = async (friendId) => {
+    updateResult(
+      friends.map((f) => (f.id === friendId ? { ...f, isDeleting: true } : f))
+    );
+    try {
+      const { message } = await deleteFriend(friendId);
+      updateResult(
+        friends.map((f) =>
+          f.id === friendId ? { ...f, deletedMessage: message } : f
+        )
+      );
+      setTimeout(() => {
+        triggerRefetch();
+      }, 1000);
+    } catch (e) {
+      onError(e);
+    }
+  };
 
   return (
     <div className="my-friends">
@@ -135,34 +165,62 @@ const MyFriends = () => {
           className="my-friends__list"
           style={isLoading ? { opacity: 0.8 } : {}}
         >
-          {friends.map((friend) => (
-            <li key={friend.id} className="my-friends__list__item">
-              <div className="picture-frame">
-                <img
-                  className="profile-pic"
-                  alt="Profile Pic"
-                  src="https://s3.amazonaws.com/website-assets-staging-2a039c6324/profile_pics/354/original/beacon.jpg?1557823635"
-                />
-              </div>
-              <div className="text">
-                <h2>{friend.username}</h2>
+          {friends.map((friend) => {
+            if (friend.deletedMessage) {
+              return (
+                <li key={friend.id} className="my-friends__list__item">
+                  <div className="picture-frame">
+                    <img
+                      className="profile-pic"
+                      alt="Profile Pic"
+                      src="https://s3.amazonaws.com/website-assets-staging-2a039c6324/profile_pics/354/original/beacon.jpg?1557823635"
+                    />
+                  </div>
+                  <div className="text">
+                    <p style={{ color: "red" }}>
+                      <FontAwesomeIcon icon={faEraser} />
+                      {` ${friend.deletedMessage}`}
+                    </p>
+                  </div>
+                </li>
+              );
+            }
 
-                <p>
-                  <strong>Avalanche Education </strong>
-                  {friend.avy_edu}
-                </p>
-                <p>
-                  <strong>Email </strong>
-                  <a
-                    href={`mailto:${friend.email}`}
-                    style={{ textDecoration: "none" }}
+            return (
+              <li key={friend.id} className="my-friends__list__item">
+                <div className="picture-frame">
+                  <img
+                    className="profile-pic"
+                    alt="Profile Pic"
+                    src="https://s3.amazonaws.com/website-assets-staging-2a039c6324/profile_pics/354/original/beacon.jpg?1557823635"
+                  />
+                </div>
+                <div className="text">
+                  <h2>{friend.username}</h2>
+
+                  <p>
+                    <strong>Avalanche Education </strong>
+                    {friend.avy_edu}
+                  </p>
+                  <p>
+                    <strong>Email </strong>
+                    <a
+                      href={`mailto:${friend.email}`}
+                      style={{ textDecoration: "none" }}
+                    >
+                      {friend.email}
+                    </a>
+                  </p>
+                  <Button
+                    type={!!friend.isDeleting ? "disabled" : "danger"}
+                    onClick={() => onDeleteFriendClick(friend.id)}
                   >
-                    {friend.email}
-                  </a>
-                </p>
-              </div>
-            </li>
-          ))}
+                    {!!friend.isDeleting ? "Removing..." : "Remove Friend"}
+                  </Button>
+                </div>
+              </li>
+            );
+          })}
         </ul>
       ) : (
         <p>

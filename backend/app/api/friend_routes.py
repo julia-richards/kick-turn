@@ -46,3 +46,17 @@ def userFriends():
     users = User.query.filter(User.id.in_(friend_user_ids)).all()
     res = {"friends": [user.to_dict() for user in users]}
     return res, 200
+
+# /api/friends/:friend_id
+@friend_routes.route('/<int:friend_id>', methods=["DELETE"])
+@login_required
+def deleteFriend(friend_id):
+    """
+    Removes friend from user by friend id
+    """
+    friend_join = Friend.query.get({"user_id": current_user.id, "friend_id": friend_id})
+    name = friend_join.friend.username
+    db.session.delete(friend_join)
+    db.session.commit()
+    res = {"message": '{} has been removed.'.format(name)}
+    return res, 200
