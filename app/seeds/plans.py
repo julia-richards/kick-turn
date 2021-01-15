@@ -9,5 +9,5 @@ from app.models import db, Plan
 # the auto incrementing primary key
 def undo_plans():
     # db.session.execute('TRUNCATE plan_problems CASCADE')
-    db.session.execute('TRUNCATE plans, plan_problems;')
+    db.session.execute('TRUNCATE plans, plan_problems CASCADE')
     db.session.commit()

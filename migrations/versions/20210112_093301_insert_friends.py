@@ -34,7 +34,6 @@ def upgrade():
                nullable=True)
     op.create_foreign_key(None, 'user_plans', 'users', ['user_id'], ['id'])
     op.create_foreign_key(None, 'user_plans', 'plans', ['plan_id'], ['id'])
-    op.add_column('user_plans', sa.Column('id', sa.INTEGER(), autoincrement=True, nullable=False))
     # ### end Alembic commands ###
 
 
