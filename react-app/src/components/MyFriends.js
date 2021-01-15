@@ -1,19 +1,21 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import AsyncSelect from "react-select/async";
-import { getFriendOptions, addFriend } from "../services/friends";
+import { getFriendOptions, addFriend, getMyFriends } from "../services/friends";
+import { useFetchResult } from "../hooks";
 import Button from "./Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
 import "../styles/MyFriends.css";
 
-const AddFriend = ({ onCloseClick }) => {
+const AddFriend = ({ onCloseClick, onAddSuccess }) => {
   const [friend, setFriend] = useState(null);
   const [successMsg, setSuccessMsg] = useState(null);
 
   const handleSubmit = async () => {
     const res = await addFriend({ friend_id: friend.value });
     setFriend(null); // clear from select
+    onAddSuccess();
     setSuccessMsg(`You are now friends with ${res.friend.username}!`);
     // clear message after wait
     setTimeout(() => {
@@ -24,7 +26,7 @@ const AddFriend = ({ onCloseClick }) => {
   return (
     <div className="add-friend-form">
       <header className="add-friend-form__header">
-        <h2>Add Friend</h2>
+        <h2>Add Friends</h2>
       </header>
       <div className="add-friend-form__fields">
         <AsyncSelect
@@ -71,7 +73,42 @@ const AddFriend = ({ onCloseClick }) => {
 };
 
 const MyFriends = () => {
-  const [isAddOpen, setIsAddOpen] = React.useState(false);
+  const [isAddOpen, setIsAddOpen] = useState(false);
+  const fetchFriends = useCallback(() => getMyFriends(), []);
+  const state = useFetchResult({ fetchResult: fetchFriends });
+
+  if (state.isLoading && !state.hasFetched) {
+    return (
+      <div className="my-friends">
+        <header className="my-friends__header">
+          <h1>My Friends</h1>
+          <Button
+            type="disabled"
+            style={{ padding: ".25rem .5rem" }}
+            onClick={() => {}}
+          >
+            Add Friends +
+          </Button>
+        </header>
+        <h4>Loading...</h4>
+      </div>
+    );
+  }
+
+  if (state.isRejected) {
+    return (
+      <div className="my-friends">
+        <header className="my-friends__header">
+          <h1>My Friends</h1>
+        </header>
+        <h1>Oh no!</h1>
+        <p>The following error occurred: {state.error.message}</p>
+        <p>Please refresh and try again.</p>
+      </div>
+    );
+  }
+
+  const { result: friends, isLoading, triggerRefetch } = state;
 
   return (
     <div className="my-friends">
@@ -83,11 +120,35 @@ const MyFriends = () => {
             style={{ padding: ".25rem .5rem" }}
             onClick={() => setIsAddOpen(true)}
           >
-            Add Friend +
+            Add Friends +
           </Button>
         )}
       </header>
-      {isAddOpen && <AddFriend onCloseClick={() => setIsAddOpen(false)} />}
+      {isAddOpen && (
+        <AddFriend
+          onCloseClick={() => setIsAddOpen(false)}
+          onAddSuccess={triggerRefetch}
+        />
+      )}
+      {!!friends.length ? (
+        <ul
+          className="my-friends__list"
+          style={isLoading ? { opacity: 0.8 } : {}}
+        >
+          {friends.map((friend) => (
+            <li key={friend.id}>
+              <pre>{JSON.stringify(friend)}</pre>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>
+          No friends on file, yet{" "}
+          <span role="img" title="skier">
+            ⛷
+          </span>
+        </p>
+      )}
     </div>
   );
 };
