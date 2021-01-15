@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, NavLink } from "react-router-dom";
+import { Switch, Route, NavLink, Redirect } from "react-router-dom";
 import Layout from "./Layout";
 import Seo from "./Seo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,6 +17,8 @@ const tabs = [
 	{ title: "Friends", route: "friends", Component: MyFriends },
 ];
 
+const FallbackRoute = () => <Redirect to={`/my/${tabs[0].route}`} />;
+
 const ProfilePage = () => (
 	<Layout>
 		<Seo title="Home" />
@@ -30,7 +32,14 @@ const ProfilePage = () => (
 					{tabs.map((folder) => {
 						return (
 							<li key={folder.route}>
-								<NavLink to={`/my/${folder.route}`} style={{   display: "inline-block", height: "100%", width: "100%"   }}>
+								<NavLink
+									to={`/my/${folder.route}`}
+									style={{
+										display: "inline-block",
+										height: "100%",
+										width: "100%",
+									}}
+								>
 									{folder.title}
 								</NavLink>
 							</li>
@@ -45,6 +54,7 @@ const ProfilePage = () => (
 							</Route>
 						);
 					})}
+					<Route component={FallbackRoute} />
 				</Switch>
 			</div>
 		</div>
