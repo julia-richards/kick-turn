@@ -4,6 +4,7 @@
   width: 100%;
   margin: 5rem auto 0;
   padding: 3rem;
+  background-color: #fff;
   border: 1px solid var(--light-green);
   box-shadow: var(--box-shadow);
   border-radius: 2px;

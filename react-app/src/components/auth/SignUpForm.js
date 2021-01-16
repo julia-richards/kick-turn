@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { signUp } from "../../services/auth";
 import Seo from "../Seo";
 import Button from "../Button";
@@ -162,6 +162,11 @@ const SignUpForm = ({ authenticated, setAuthenticated }) => {
           required
         />
         <Button type="submit">Sign Up</Button>
+        <p>
+          Already have an account?
+          <br />
+          <Link to="/login">Login</Link> before the next storm!
+        </p>
       </form>
     </>
   );
