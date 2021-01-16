@@ -1,13 +1,14 @@
 import { checkStatus, parseJSON } from "./helpers";
 
-export const authenticate = () =>
-  fetch("/api/auth/", {
+export const authenticate = async () => {
+  const response = await fetch("/api/auth/", {
     headers: {
       "Content-Type": "application/json",
     },
-  })
-    .then(checkStatus)
-    .then(parseJSON);
+  });
+
+  return response.json();
+};
 
 export const login = async (email, password) => {
   const response = await fetch("/api/auth/login", {
