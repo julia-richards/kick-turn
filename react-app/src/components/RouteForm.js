@@ -86,7 +86,7 @@ function RouteForm() {
             {...viewport}
             width="100%"
             height="100%"
-            mapStyle={"mapbox://styles/mapbox/light-v9"}
+            mapStyle="mapbox://styles/mapbox/light-v9"
             onViewportChange={setViewport}
             mapboxApiAccessToken={MAPBOX_TOKEN}
           >
