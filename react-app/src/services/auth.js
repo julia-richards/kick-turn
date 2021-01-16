@@ -1,5 +1,3 @@
-import { checkStatus, parseJSON } from "./helpers";
-
 export const authenticate = async () => {
   const response = await fetch("/api/auth/", {
     headers: {

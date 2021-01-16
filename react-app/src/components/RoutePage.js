@@ -1,13 +1,13 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
-import ReactMapGL from "react-map-gl";
+// import ReactMapGL from "react-map-gl";
 import { getRoute } from "../services/routes";
 import { useFetchResult } from "../hooks";
 import Layout from "./Layout";
 import Seo from "./Seo";
 import "../styles/RoutePage.css";
 
-const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
+// const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
 const RoutePage = () => {
   const { routeId } = useParams();

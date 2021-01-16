@@ -17,7 +17,7 @@ const LandingPage = () => (
       <Seo title={"Kick Turn"} />
       <div className="landing__elements">
         <div className="landing__elements-welcome">
-          <img src={fadedMap} />
+          <img alt="background map" src={fadedMap} />
           <h1>Plan a Tour</h1>
           <p>Assess avalanche conditions</p>
           <p>Map your route</p>

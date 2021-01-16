@@ -6,9 +6,9 @@ import {
   EditingMode,
   DrawLineStringMode,
   DrawPointMode,
-  MeasureDistanceMode,
-  ElevationMode,
-  features,
+  // MeasureDistanceMode,
+  // ElevationMode,
+  // features,
 } from "react-map-gl-draw";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Layout from "./Layout";
