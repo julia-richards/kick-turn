@@ -12,6 +12,8 @@ import PlanForm from "./components/PlanForm";
 import RouteForm from "./components/RouteForm";
 import RoutePage from "./components/RoutePage";
 
+import Maps from "./components/Maps";
+
 const Router = () => {
   const [authenticated, setAuthenticated] = useAuthenticated();
 
@@ -26,6 +28,10 @@ const Router = () => {
             authenticated={authenticated}
             setAuthenticated={setAuthenticated}
           />
+        </Route>
+
+        <Route path="/maps" exact>
+          <Maps />
         </Route>
 
         {authenticated ? (
