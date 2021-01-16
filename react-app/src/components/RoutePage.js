@@ -52,14 +52,14 @@ const RoutePage = () => {
           <pre>
             route.geo_features: {JSON.stringify(route.geo_features, null, 2)}
           </pre>
-          <ReactMapGL
+          {/* <ReactMapGL
             {...viewport}
             width="100%"
             height="100%"
             mapStyle={"mapbox://styles/mapbox/light-v9"}
             onViewportChange={setViewport}
             mapboxApiAccessToken={MAPBOX_TOKEN}
-          ></ReactMapGL>
+          ></ReactMapGL> */}
         </div>
       </div>
     </Layout>
