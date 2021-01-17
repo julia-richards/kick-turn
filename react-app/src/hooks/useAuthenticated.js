@@ -15,21 +15,13 @@ const AuthProvider = (props) => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      try {
-        const user = await authenticate();
-        if (!user.errors) {
-          setAuthenticated(true);
-        }
-      } catch (_e) {
-        console.log("not logged in per", _e);
+      const user = await authenticate();
+      if (!user.errors) {
+        setAuthenticated(true);
       }
+      setLoaded(true);
     };
-    try {
-      checkAuth();
-    } catch (e) {
-      console.log("ETF");
-    }
-    setLoaded(true);
+    checkAuth();
   }, []);
 
   let providedValue = useMemo(() => [authenticated, setAuthenticated], [
