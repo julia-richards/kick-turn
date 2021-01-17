@@ -5,6 +5,7 @@ import MapGL, {
   ScaleControl,
   GeolocateControl,
 } from "react-map-gl";
+import WithEditor from "./WithEditor";
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -36,20 +37,22 @@ const scaleControlStyle = {
   padding: "10px",
 };
 
-const Map = () => {
-  const [viewport, setViewport] = useState({
-    latitude: 6.30953127139638,
-    longitude: 14.808780033196266,
-    zoom: 2.8,
-    bearing: 0,
-    pitch: 0,
-  });
+const DEFAULT_VIEWPORT = {
+  longitude: -107.7232762,
+  latitude: 37.8964126,
+  zoom: 10,
+  bearing: 0,
+  pitch: 0,
+};
+
+const Map1 = () => {
+  const [viewport, setViewport] = useState(DEFAULT_VIEWPORT);
 
   return (
     <MapGL
       {...viewport}
-      width="50vw"
-      height="50vw"
+      width="100%"
+      height="100%"
       mapStyle="mapbox://styles/mapbox/satellite-streets-v11"
       onViewportChange={setViewport}
       mapboxApiAccessToken={MAPBOX_TOKEN}
@@ -69,5 +72,80 @@ const Map = () => {
     </MapGL>
   );
 };
+
+const Map2 = () => {
+  const [viewport, setViewport] = useState(DEFAULT_VIEWPORT);
+
+  return (
+    <MapGL
+      {...viewport}
+      width="100%"
+      height="100%"
+      mapStyle="mapbox://styles/mapbox/light-v9"
+      onViewportChange={setViewport}
+      mapboxApiAccessToken={MAPBOX_TOKEN}
+    >
+      <div style={geolocateStyle}>
+        <GeolocateControl />
+      </div>
+      <div style={fullscreenControlStyle}>
+        <FullscreenControl />
+      </div>
+      <div style={navStyle}>
+        <NavigationControl />
+      </div>
+      <div style={scaleControlStyle}>
+        <ScaleControl />
+      </div>
+    </MapGL>
+  );
+};
+
+const Map3 = () => {
+  const [viewport, setViewport] = useState(DEFAULT_VIEWPORT);
+
+  return (
+    <MapGL
+      {...viewport}
+      width="100%"
+      height="100%"
+      mapStyle="mapbox://styles/mapbox/light-v10"
+      onViewportChange={setViewport}
+      mapboxApiAccessToken={MAPBOX_TOKEN}
+    >
+      <div style={geolocateStyle}>
+        <GeolocateControl />
+      </div>
+      <div style={fullscreenControlStyle}>
+        <FullscreenControl />
+      </div>
+      <div style={navStyle}>
+        <NavigationControl />
+      </div>
+      <div style={scaleControlStyle}>
+        <ScaleControl />
+      </div>
+    </MapGL>
+  );
+};
+
+const Map = () => (
+  <div
+    style={{
+      display: "grid",
+      gridTemplateColumns: "repeat(2, 1fr)",
+      gridAutoRows: 400,
+      margin: "2rem auto",
+      gridGap: "2rem",
+      minWidth: "100vw",
+      minHeight: "100vh",
+    }}
+  >
+    <Map1 />
+    <Map2 />
+    <Map3 />
+    <WithEditor />
+  </div>
+);
 
 export default Map;
