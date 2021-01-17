@@ -28,7 +28,7 @@ const WithEditor = () => {
   const [modeHandler, setModeHandler] = React.useState(
     new DrawLineStringMode()
   );
-  const [name, setName] = React.useState("");
+  // const [name, setName] = React.useState("");
   const [features, setFeatures] = React.useState();
 
   const switchMode = (evt) => {

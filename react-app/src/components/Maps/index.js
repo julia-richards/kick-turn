@@ -81,7 +81,7 @@ const Map2 = () => {
       {...viewport}
       width="100%"
       height="100%"
-      mapStyle="mapbox://styles/mapbox/light-v9"
+      mapStyle="mapbox://styles/mapbox/streets-v11" // "mapbox://styles/mapbox/light-v9"
       onViewportChange={setViewport}
       mapboxApiAccessToken={MAPBOX_TOKEN}
     >
