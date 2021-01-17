@@ -74,6 +74,7 @@ const WithEditor = () => {
           ))}
         </select>
       </div>
+      <pre>{JSON.stringify(features, null, 2)}</pre>
     </ReactMapGL>
   );
 };

@@ -81,7 +81,7 @@ const Map2 = () => {
       {...viewport}
       width="100%"
       height="100%"
-      mapStyle="mapbox://styles/mapbox/streets-v11" // "mapbox://styles/mapbox/light-v9"
+      mapStyle="mapbox://styles/mapbox/light-v9"
       onViewportChange={setViewport}
       mapboxApiAccessToken={MAPBOX_TOKEN}
     >
@@ -129,6 +129,62 @@ const Map3 = () => {
   );
 };
 
+const DarkMap = () => {
+  const [viewport, setViewport] = useState(DEFAULT_VIEWPORT);
+
+  return (
+    <MapGL
+      {...viewport}
+      width="100%"
+      height="100%"
+      mapStyle="mapbox://styles/mapbox/dark-v10"
+      onViewportChange={setViewport}
+      mapboxApiAccessToken={MAPBOX_TOKEN}
+    >
+      <div style={geolocateStyle}>
+        <GeolocateControl />
+      </div>
+      <div style={fullscreenControlStyle}>
+        <FullscreenControl />
+      </div>
+      <div style={navStyle}>
+        <NavigationControl />
+      </div>
+      <div style={scaleControlStyle}>
+        <ScaleControl />
+      </div>
+    </MapGL>
+  );
+};
+
+const OutdoorsMap = () => {
+  const [viewport, setViewport] = useState(DEFAULT_VIEWPORT);
+
+  return (
+    <MapGL
+      {...viewport}
+      width="100%"
+      height="100%"
+      mapStyle="mapbox://styles/mapbox/outdoors-v11"
+      onViewportChange={setViewport}
+      mapboxApiAccessToken={MAPBOX_TOKEN}
+    >
+      <div style={geolocateStyle}>
+        <GeolocateControl />
+      </div>
+      <div style={fullscreenControlStyle}>
+        <FullscreenControl />
+      </div>
+      <div style={navStyle}>
+        <NavigationControl />
+      </div>
+      <div style={scaleControlStyle}>
+        <ScaleControl />
+      </div>
+    </MapGL>
+  );
+};
+
 const Map = () => (
   <div
     style={{
@@ -144,6 +200,8 @@ const Map = () => (
     <Map1 />
     <Map2 />
     <Map3 />
+    <DarkMap />
+    <OutdoorsMap />
     <WithEditor />
   </div>
 );
