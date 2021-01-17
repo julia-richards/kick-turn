@@ -10,7 +10,6 @@ import {
   // ElevationMode,
   // features,
 } from "react-map-gl-draw";
-import "mapbox-gl/dist/mapbox-gl.css";
 import Layout from "./Layout";
 import Seo from "./Seo";
 import Button from "./Button";
