@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Layout from "./Layout";
 import Seo from "./Seo";
 import "../styles/LandingPage.css";
@@ -22,7 +23,9 @@ const LandingPage = () => (
           <p>Assess avalanche conditions</p>
           <p>Map your route</p>
           <p>Collaborate with ski partners</p>
-          <button className="welcome__signup-button">Go Skiing</button>
+          <Link to="login" className="welcome__signup-link">
+            Go Skiing
+          </Link>
         </div>
         <div className="landing__elements-weather">
           <div className="landing__elements-weather__snow">

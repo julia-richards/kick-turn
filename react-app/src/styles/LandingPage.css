@@ -35,7 +35,7 @@
   z-index: -1;
 }
 
-.welcome__signup-button {
+.welcome__signup-link {
   display: inline-block;
   position: relative;
   text-decoration: none;
@@ -52,7 +52,7 @@
   margin-top: 25px;
 }
 
-.welcome__signup-button:before {
+.welcome__signup-link:before {
   content: "";
   display: block;
   width: 84%;
@@ -65,7 +65,7 @@
   transition: all 0.3s ease;
 }
 
-.welcome__signup-button:after {
+.welcome__signup-link:after {
   content: "";
   display: block;
   background-image: url(https://www.cssdesignawards.com/imgs/arrow-right.svg);
@@ -80,11 +80,11 @@
   transition: all 100ms ease;
 }
 
-.welcome__signup-button:hover:before {
+.welcome__signup-link:hover:before {
   height: 25%;
 }
 
-.welcome__signup-button:active:after {
+.welcome__signup-link:active:after {
   right: -15px;
 }
 
