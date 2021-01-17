@@ -7,12 +7,13 @@ import MapGL, {
 } from "react-map-gl";
 import WithEditor from "./WithEditor";
 
-// try https://github.com/visgl/react-map-gl/issues/1266#issuecomment-758139857
-// a 'cleaner' version of https://github.com/mapbox/mapbox-gl-js/issues/10173#issuecomment-753662795
+// see https://github.com/mapbox/mapbox-gl-js/issues/10173#issuecomment-753662795
 import "mapbox-gl/dist/mapbox-gl.css";
-import mapboxgl from "mapbox-gl/dist/mapbox-gl";
-import MapboxWorker from "mapbox-gl/dist/mapbox-gl-csp-worker";
-mapboxgl.workerClass = MapboxWorker;
+import mapboxgl from "mapbox-gl";
+
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 

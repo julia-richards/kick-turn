@@ -18,6 +18,14 @@ import { Input } from "./formComponents";
 import { addRoute } from "../services/routes";
 import "../styles/RouteForm.css";
 
+// see https://github.com/mapbox/mapbox-gl-js/issues/10173#issuecomment-753662795
+import "mapbox-gl/dist/mapbox-gl.css";
+import mapboxgl from "mapbox-gl";
+
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
+
 const MODES = [
   { id: "drawPolyline", text: "Draw Route", handler: DrawLineStringMode },
   { id: "drawPoint", text: "Add Point", handler: DrawPointMode },
