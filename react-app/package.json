@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^7.1.2",
     "http-proxy-middleware": "^1.0.5",
     "husky": "^4.3.7",
+    "immutable": "^4.0.0-rc.12",
     "lint-staged": "^10.5.3",
     "prettier": "^2.2.1",
     "query-string": "^6.13.8",

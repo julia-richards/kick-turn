@@ -1,7 +1,11 @@
 import React from "react";
 import { Switch, Route, NavLink, Redirect } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSnowflake } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSnowflake,
+  faRoute,
+  faUserFriends,
+} from "@fortawesome/free-solid-svg-icons";
 import Layout from "./Layout";
 import Seo from "./Seo";
 import MyFriends from "./MyFriends";
@@ -17,12 +21,12 @@ const tabs = [
     Component: MyTours,
     icon: faSnowflake,
   },
-  { title: "Routes", route: "routes", Component: MyRoutes, icon: faSnowflake },
+  { title: "Routes", route: "routes", Component: MyRoutes, icon: faRoute },
   {
     title: "Friends",
     route: "friends",
     Component: MyFriends,
-    icon: faSnowflake,
+    icon: faUserFriends,
   },
 ];
 

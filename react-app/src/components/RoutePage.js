@@ -6,6 +6,7 @@ import { useFetchResult } from "../hooks";
 import Layout from "./Layout";
 import Seo from "./Seo";
 import "../styles/RoutePage.css";
+import MyMap from "./Maps/MyMap.js";
 
 // const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -52,14 +53,7 @@ const RoutePage = () => {
           <pre>
             route.geo_features: {JSON.stringify(route.geo_features, null, 2)}
           </pre>
-          {/* <ReactMapGL
-            {...viewport}
-            width="100%"
-            height="100%"
-            mapStyle={"mapbox://styles/mapbox/light-v9"}
-            onViewportChange={setViewport}
-            mapboxApiAccessToken={MAPBOX_TOKEN}
-          ></ReactMapGL> */}
+          <MyMap />
         </div>
       </div>
     </Layout>
