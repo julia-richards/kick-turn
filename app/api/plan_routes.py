@@ -70,6 +70,18 @@ def add_plan():
         return plan.to_dict()
     return {'errors': form.errors}, 422
 
+
+# /api/routes/:planId
+@plan_routes.route('/<int:id>', methods=["GET"])
+@login_required
+def get(id):
+    """
+    Gets plan by ID
+    """
+    plan = Plan.query.get(id)
+    return plan.to_dict(), 200
+
+
 # @plan_routes.route('/<int:id>', methods=["GET", "POST", "DELETE"])
 # @login_required
 # def update_song(id):

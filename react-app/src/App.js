@@ -9,6 +9,7 @@ import LandingPage from "./components/LandingPage";
 import ProfilePage from "./components/ProfilePage";
 import User from "./components/User";
 import PlanForm from "./components/PlanForm";
+import PlanPage from "./components/PlanPage";
 import RouteForm from "./components/RouteForm";
 import RoutePage from "./components/RoutePage";
 
@@ -58,6 +59,13 @@ const Router = () => {
         </ProtectedRoute>
         <ProtectedRoute path="/plans/new" authenticated={authenticated} exact>
           <PlanForm />
+        </ProtectedRoute>
+        <ProtectedRoute
+          path="/plans/:planId"
+          authenticated={authenticated}
+          exact
+        >
+          <PlanPage />
         </ProtectedRoute>
         <ProtectedRoute path="/routes/new" authenticated={authenticated} exact>
           <RouteForm />

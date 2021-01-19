@@ -11,6 +11,15 @@ export const addPlan = (params) =>
     .then(checkStatus)
     .then(parseJSON);
 
+export const getPlan = (planId) =>
+  fetch(`/api/plans/${planId}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(checkStatus)
+    .then(parseJSON);
+
 export const getMyTourPlans = () =>
   fetch(`/api/plans`, {
     headers: {
