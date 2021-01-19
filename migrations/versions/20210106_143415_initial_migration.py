@@ -27,8 +27,7 @@ def upgrade():
     )
     op.create_table('problems',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('aspect', sa.String(length=50), nullable=False),
-    sa.Column('elevation', sa.String(length=150), nullable=True),
+    sa.Column('aspect_elevation', JSONB(), nullable=False),
     sa.Column('danger_rating', sa.String(length=50), nullable=False),
     sa.Column('size', sa.String(length=50), nullable=False),
     sa.Column('likelihood', sa.String(length=50), nullable=False),

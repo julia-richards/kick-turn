@@ -72,6 +72,6 @@ class Plan(db.Model):
            "emergency_plan": self.emergency_plan,
            "route_id": self.route_id,
            "route": self.route and self.route.to_dict(),
-           "avy_problems": self.avy_problems,
+           "avy_problems": [problem.to_dict() for problem in self.avy_problems],
            "users": [user.to_dict() for user in self.users if user]
             }

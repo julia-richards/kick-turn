@@ -8,6 +8,38 @@
   margin-bottom: 10px;
 }
 
+.avalance-problem-container .avalance-problem-container__header {
+  display: flex;
+  align-items: center;
+}
+
+.avalance-problem-container .avalance-problem-container__header h3 {
+  margin-right: 10px;
+}
+
+.avalance-problem-container .avalance-problem-container__header button {
+  padding: 0.5rem;
+}
+
+.avalance-problem-container .avalance-problem-container__fields {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-gap: 2rem;
+  grid-template-areas: matrix options;
+}
+
+.avalance-problem-container__fields__radio-container .options-container {
+  display: flex;
+  flex-flow: row wrap;
+  margin-top: 5px;
+}
+
+.avalance-problem-container__fields__radio-container
+  .options-container
+  .input-container {
+  margin-right: 10px;
+}
+
 .plan-form .AsyncSelect {
   margin: 5px auto 10px;
 }

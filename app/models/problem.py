@@ -16,3 +16,13 @@ class Problem(db.Model):
     likelihood = db.Column(db.String(50), nullable=False)
     weak_layer = db.Column(db.String(50))
     plans = db.relationship("Plan", secondary=plan_problems, back_populates="avy_problems")
+
+    def to_dict(self):
+        return {
+           "id": self.id,
+           "problem_type": self.problem_type.to_dict(),
+           "aspect_elevation": self.aspect_elevation,
+           "size": self.size,
+           "likelihood": self.likelihood,
+           "weak_layer": self.weak_layer
+        }

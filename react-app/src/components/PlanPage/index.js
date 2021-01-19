@@ -4,6 +4,7 @@ import { getPlan } from "../../services/plans";
 import { useFetchResult } from "../../hooks";
 import Layout from "../Layout";
 import Seo from "../Seo";
+import AvyProblemList from "./AvyProblemList";
 import FriendList from "./FriendList";
 import RouteDisplay from "./RouteDisplay";
 import "../../styles/PlanPage.css";
@@ -28,7 +29,7 @@ const snowpackFields = [
   { attr: "trend", label: "Trend" },
   { attr: "snowpack_summary", label: "Summary" },
   { attr: "obs_fore_summary", label: "Observation and Forecast Summary" },
-  { attr: "avy_observations", label: "Avalance Observations" },
+  { attr: "avy_observations", label: "Avalanche Observations" },
   { attr: "weather_contribution", label: "Weather Contribution" },
 ];
 
@@ -37,9 +38,6 @@ const humanFields = [
   { attr: "tour_plan", label: "Tour Plan" },
   { attr: "emergency_plan", label: "Emergency Plan" },
 ];
-
-// TODO:
-// "avy_problems",
 
 const PlanPage = () => {
   const { planId } = useParams();
@@ -147,7 +145,14 @@ const PlanPage = () => {
           </div>
         </div>
         <div className="plan-page__route">
-          <RouteDisplay route={plan.route} />
+          {!!plan.route ? (
+            <RouteDisplay route={plan.route} />
+          ) : (
+            <p>
+              <strong>Route</strong> not assigned
+            </p>
+          )}
+          <AvyProblemList avyProblems={plan.avy_problems} />
           <FriendList friends={plan.users} />
         </div>
       </div>

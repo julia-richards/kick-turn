@@ -57,10 +57,13 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 .bm-item-list li {
   list-style-type: none;
+  margin-bottom: 1.15rem;
 }
 
 .bm-item-list a {
   color: inherit;
+  font-size: 1.25rem;
+  text-decoration: none;
 }
 
 /* Individual item */

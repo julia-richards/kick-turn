@@ -3,12 +3,21 @@ import { Link } from "react-router-dom";
 import StaticMap from "../Maps/StaticMap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExpandArrowsAlt } from "@fortawesome/free-solid-svg-icons";
+
 const TourPlanItem = ({ tour }) => {
   return (
     <li className="tour-plan-item">
       <div className="tour-plan-item__text">
         <h2>{tour.date}</h2>
         <p>{tour.tour_plan}</p>
+        {!!tour.avy_problems?.length && (
+          <div style={{ marginTop: 10 }}>
+            <strong>Avalanche Problems</strong>
+            <p>
+              {tour.avy_problems.map((p) => p.problem_type.name).join(", ")}
+            </p>
+          </div>
+        )}
         <Link to={`/plans/${tour.id}`} className="link-button">
           <FontAwesomeIcon icon={faExpandArrowsAlt} /> View
         </Link>

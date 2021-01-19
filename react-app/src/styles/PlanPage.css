@@ -25,3 +25,19 @@
 .plan-page__route header h3 {
   margin-right: 1rem;
 }
+
+.plan-page__route .avy-problems-list ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.plan-page__route .avy-problems-list .avy-problems-list__item {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  grid-gap: 2rem;
+  margin-bottom: 1rem;
+  padding: 1.15rem;
+  background-color: #fff;
+  box-shadow: var(--box-shadow);
+}

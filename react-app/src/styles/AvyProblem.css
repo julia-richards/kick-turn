@@ -1,0 +1,19 @@
+.avy-problem .avy-problem__shape {
+  fill: #fff;
+  stroke: #231f20;
+  stroke-miterlimit: 10;
+  stroke-width: 2;
+}
+
+.avy-problem .avy-problem__shape.avy-problem__shape--filled {
+  fill: var(--primary-light);
+}
+
+.avy-problem .avy-problem__label {
+  fill: #231f20;
+}
+
+.avy-problem.avy-problem--interactive .avy-problem__shape:hover {
+  fill: var(--light-blue);
+  cursor: pointer;
+}

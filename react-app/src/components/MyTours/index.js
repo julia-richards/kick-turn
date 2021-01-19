@@ -77,6 +77,7 @@ const MyTourPlans = () => {
         >
           {tours.map((tour) => (
             <TourPlanItem
+              key={tour.id}
               tour={tour}
               onDeleteTourPlanClick={onDeleteTourPlanClick}
             />

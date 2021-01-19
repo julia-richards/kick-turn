@@ -27,7 +27,30 @@ const StaticMap = ({ features, defaultViewport, style = { height: 400 } }) => {
         mapboxApiAccessToken={MAPBOX_TOKEN}
       >
         <Controls />
-        <Editor mode={ViewMode} features={features} />
+        <Editor
+          mode={ViewMode}
+          features={features}
+          featureStyle={({ feature, index, state }) =>
+            feature.geometry.type === "LineString" && state === "INACTIVE"
+              ? {
+                  stroke: "var(--primary-dark)",
+                  strokeDasharray: "4, 2",
+                  strokeWidth: 2,
+                  fill: "none",
+                  fillOpacity: 1,
+                }
+              : feature.geometry.type === "Point" && state === "INACTIVE"
+              ? {
+                  stroke: "var(--primary-dark)",
+                  strokeDasharray: "4, 2",
+                  strokeWidth: 2,
+                  fill: "var(--primary-light)",
+                  fillOpacity: 0.4,
+                  r: 8,
+                }
+              : {}
+          }
+        />
       </ReactMapGL>
     </div>
   );

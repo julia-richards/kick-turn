@@ -31,9 +31,20 @@ def listMyRoutes():
     Lists all of users routes
     """
     routes = Route.query.filter_by(user_id=current_user.id).all()
-    res = { "routes": [route.to_dict() for route in routes]}
+    res = {"routes": [route.to_dict() for route in routes]}
     return res, 200
 
+# /api/routes/options
+@geo_routes.route('/options', methods=["GET"])
+@login_required
+def myRouteOptions():
+    """
+    Lists all of users routes w/ filter query
+    """
+    query = "%{}%".format(request.args.get('query'))
+    routes = Route.query.filter(Route.name.ilike(query)).filter_by(user_id=current_user.id).all()
+    res = {"options": [{'label': route.name, 'value': route.id} for route in routes]}
+    return res, 200
 
 # /api/routes/:routeId
 @geo_routes.route('/<int:id>', methods=["GET"])
@@ -42,8 +53,8 @@ def get(id):
     Gets route by ID
     """
     route = Route.query.get(id)
-    # TODO: send plans
-    return route.to_dict(), 200
+    res = {**route.to_dict(), "plans": [plan.to_dict() for plan in route.plans]}
+    return res, 200
 
 # /api/routes/:routeId
 @geo_routes.route('/<int:id>', methods=["DELETE"])

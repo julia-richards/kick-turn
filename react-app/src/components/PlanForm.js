@@ -6,18 +6,43 @@ import { Redirect } from "react-router-dom";
 import { Input, TextArea } from "./formComponents";
 import { addPlan } from "../services/plans";
 import { getFriends } from "../services/friends";
+import { getProblemTypes } from "../services/problemTypes";
+import { getRouteOptions } from "../services/routes";
+import AvyProblem from "./AvyProblem";
 import Button from "./Button";
 
 import "../styles/PlanForm.css";
+import { useFetchResult } from "../hooks";
 
 const initialAvyProblem = {
-  problem_type: "Persistent Slab",
+  problem_type_id: 4,
   aspect_elevation: {
-    NW: [false, true, true],
-    N: [false, true, true],
-    NE: [true, true, true],
+    "N-AT": false,
+    "N-NT": false,
+    "N-BT": false,
+    "NE-AT": false,
+    "NE-NT": false,
+    "NE-BT": false,
+    "E-AT": false,
+    "E-NT": false,
+    "E-BT": false,
+    "SE-AT": false,
+    "SE-NT": false,
+    "SE-BT": false,
+    "S-AT": false,
+    "S-NT": false,
+    "S-BT": false,
+    "SW-AT": false,
+    "SW-NT": false,
+    "SW-BT": false,
+    "W-AT": false,
+    "W-NT": false,
+    "W-BT": false,
+    "NW-AT": false,
+    "NW-NT": false,
+    "NW-BT": false,
   },
-  size: "D2",
+  size: "D2 - Small",
   likelihood: "Likely",
   weak_layer: "Dec. 7th",
 };
@@ -47,11 +72,13 @@ function PlanForm() {
     mindset: "Stepping Out",
     tour_plan: "shred gnar",
     emergency_plan: "don't have one",
-    route_id: 1, // TODO: make me dropdown
+    route_id: 9, // TODO: make me dropdown
     friend_ids: [],
   });
   const [error, setError] = React.useState();
   const [redirect, setRedirect] = React.useState();
+  const problemTypeState = useFetchResult({ fetchResult: getProblemTypes });
+  // const routeState = useFetchResult({ fetchResult: getRouteOptions });
 
   const updateFormValues = (fieldName, fieldValue) => {
     setFormValues({ ...formValues, [fieldName]: fieldValue });
@@ -72,6 +99,7 @@ function PlanForm() {
       let params = {
         ...formValues,
         friend_ids: (formValues.friend_ids || []).map((opt) => opt.value),
+        route_id: formValues.route_id?.value,
       };
       const { id } = await addPlan(params);
       setRedirect(`/plans/${id}`);
@@ -120,94 +148,208 @@ function PlanForm() {
             loadOptions={getFriends}
             placeholder="Search for a friend..."
             onChange={(selected) => updateFormValues("friend_ids", selected)}
+            defaultOptions
             isMulti
           />
         </div>
-        <div>
+        <div style={{ marginBottom: 20 }}>
+          <p
+            style={{
+              display: "flex",
+              flexFlow: "row wrap",
+              alignItems: "center",
+            }}
+          >
+            <strong style={{ marginRight: "1rem" }}>Avalanche Problems</strong>
+            <Button
+              type="button"
+              onClick={() =>
+                updateFormValues("avy_problems", [
+                  ...formValues.avy_problems,
+                  initialAvyProblem,
+                ])
+              }
+            >
+              Add Problem
+            </Button>
+          </p>
           {formValues.avy_problems.map((problem, problemIndex) => (
             <div key={problemIndex} className="avalance-problem-container">
-              <h3>Avalanche Problem {problemIndex + 1}</h3>
-              <div>
-                <label>Aspect/Elevation</label>
-                <input
-                  type="text"
-                  name={`avy_problems[${problemIndex}].aspect_elevation`}
-                  onChange={(e) =>
-                    updateAvyProblem(
-                      problemIndex,
-                      "aspect_elevation",
-                      e.target.value
+              <header className="avalance-problem-container__header">
+                <h3>Problem {problemIndex + 1}</h3>
+                <Button
+                  type="button"
+                  kind="danger"
+                  onClick={() =>
+                    updateFormValues(
+                      "avy_problems",
+                      formValues.avy_problems.filter(
+                        (_p, pIndex) => problemIndex !== pIndex
+                      )
                     )
                   }
-                  value={formValues.avy_problems[problemIndex].aspect_elevation}
-                ></input>
-              </div>
-              {/* <div>
-                <label>Elevation</label>
-                {["Below Treeline", "Near Treeline", "Above Treeline"].map(
-                  (elOption, elOptionIndex) => {
-                    const elFieldId = `avy_problems[${problemIndex}].elevation-#${elOptionIndex}`;
-                    const currentElValues =
-                      formValues.avy_problems[problemIndex].elevation;
-                    const isChecked = currentElValues.some(e => e === elOption);
-                    const onChange = () =>
-                      updateAvyProblem(
-                        problemIndex,
-                        "elevation",
-                        isChecked
-                          ? currentElValues.filter(e => e !== elOption)
-                          : [...currentElValues, elOption]
-                      );
+                >
+                  Remove
+                </Button>
+              </header>
+              <div className="avalance-problem-container__fields">
+                <div>
+                  <AvyProblem
+                    aspect_elevation={problem.aspect_elevation}
+                    onShapeClick={(e) =>
+                      updateAvyProblem(problemIndex, "aspect_elevation", {
+                        ...problem.aspect_elevation,
+                        [e.target.id]: !problem.aspect_elevation[e.target.id],
+                      })
+                    }
+                    style={{ width: "100%" }}
+                    isInteractive
+                  />
+                </div>
+                <div>
+                  <div className="avalance-problem-container__fields__radio-container problem-type-container">
+                    <label>Type</label>
+                    {problemTypeState.isLoading && <p>Loading options...</p>}
+                    {problemTypeState.isRejected && (
+                      <p>Error: {problemTypeState.error.message}</p>
+                    )}
+                    {problemTypeState.isResolved && (
+                      <div className="options-container">
+                        {problemTypeState.result.map(({ id, name }) => {
+                          const elFieldId = `avy_problems[${problemIndex}]-problem_type_id-${id}`;
+                          const currentValue =
+                            formValues.avy_problems[problemIndex]
+                              .problem_type_id;
+                          const isChecked = currentValue === id;
+                          const onChange = () =>
+                            updateAvyProblem(
+                              problemIndex,
+                              "problem_type_id",
+                              id
+                            );
 
-                    return (
-                      <div className="input-container input-container--checkbox">
-                        <input
-                          type="checkbox"
-                          id={elFieldId}
-                          name={elFieldId}
-                          onChange={onChange}
-                          checked={isChecked}
-                        />
-                        <label htmlFor={elFieldId}>{elOption}</label>
+                          return (
+                            <div
+                              key={elFieldId}
+                              className="input-container input-container--radio"
+                            >
+                              <input
+                                type="radio"
+                                id={elFieldId}
+                                name={elFieldId}
+                                onChange={onChange}
+                                checked={isChecked}
+                              />
+                              <label htmlFor={elFieldId}>{name}</label>
+                            </div>
+                          );
+                        })}
                       </div>
-                    );
-                  }
-                )}
-              </div> */}
-              <pre>{JSON.stringify(problem)}</pre>
-              <Button
-                type="button"
-                kind="danger"
-                onClick={() =>
-                  updateFormValues(
-                    "avy_problems",
-                    formValues.avy_problems.filter(
-                      (_p, pIndex) => problemIndex !== pIndex
-                    )
-                  )
-                }
-              >
-                Remove Problem {problemIndex + 1}
-              </Button>
+                    )}
+                  </div>
+                  <div className="avalance-problem-container__fields__radio-container likelihood-container">
+                    <label>Likelihood</label>
+                    <div className="options-container">
+                      {["Not Likely", "Likely", "Very Likely"].map(
+                        (elOption, elOptionIndex) => {
+                          const elFieldId = `avy_problems[${problemIndex}]-likelihood-${elOptionIndex}`;
+                          const currentValue =
+                            formValues.avy_problems[problemIndex].likelihood;
+                          const isChecked = currentValue === elOption;
+                          const onChange = () =>
+                            updateAvyProblem(
+                              problemIndex,
+                              "likelihood",
+                              elOption
+                            );
+
+                          return (
+                            <div
+                              key={elFieldId}
+                              className="input-container input-container--radio"
+                            >
+                              <input
+                                type="radio"
+                                id={elFieldId}
+                                name={elFieldId}
+                                onChange={onChange}
+                                checked={isChecked}
+                              />
+                              <label htmlFor={elFieldId}>{elOption}</label>
+                            </div>
+                          );
+                        }
+                      )}
+                    </div>
+                  </div>
+                  <div className="avalance-problem-container__fields__radio-container size-container">
+                    <label>Size</label>
+                    <div className="options-container">
+                      {[
+                        "D1 - Very Small",
+                        "D2 - Small",
+                        "D3 - Medium",
+                        "D4 - Large",
+                        "D5 - Maximum",
+                      ].map((elOption, elOptionIndex) => {
+                        const elFieldId = `avy_problems[${problemIndex}]-size-${elOptionIndex}`;
+                        const currentValue =
+                          formValues.avy_problems[problemIndex].size;
+                        const isChecked = currentValue === elOption;
+                        const onChange = () =>
+                          updateAvyProblem(problemIndex, "size", elOption);
+
+                        return (
+                          <div
+                            key={elFieldId}
+                            className="input-container input-container--radio"
+                          >
+                            <input
+                              type="radio"
+                              id={elFieldId}
+                              name={elFieldId}
+                              onChange={onChange}
+                              checked={isChecked}
+                            />
+                            <label htmlFor={elFieldId}>{elOption}</label>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <Input
+                    type="text"
+                    name="weak_layer"
+                    label="Weak Layer"
+                    formValues={problem}
+                    setValue={(name, value) =>
+                      updateAvyProblem(problemIndex, name, value)
+                    }
+                  />
+                </div>
+              </div>
             </div>
           ))}
-
-          <Button
-            type="button"
-            style={{ marginBottom: 10 }}
-            onClick={() =>
-              updateFormValues("avy_problems", [
-                ...formValues.avy_problems,
-                initialAvyProblem,
-              ])
+          {!formValues.avy_problems.length && <small>No problems added</small>}
+        </div>
+        <div>
+          <label>Select Route</label>
+          <AsyncSelect
+            className="AsyncSelect"
+            noOptionsMessage={({ inputValue }) =>
+              !!inputValue
+                ? `No routes match "${inputValue}"`
+                : "Your search is empty. Try typing one of your route's name."
             }
-          >
-            Add Avalanche Problem
-          </Button>
+            loadOptions={getRouteOptions}
+            placeholder="Search for a route..."
+            onChange={(selected) => updateFormValues("route_id", selected)}
+            defaultOptions
+          />
         </div>
         <TextArea
           name="avy_observations"
-          label="Avalance Observations"
+          label="Avalanche Observations"
           setValue={updateFormValues}
           formValues={formValues}
         />

@@ -3,7 +3,6 @@ from flask_login import login_required, current_user
 from app.models import db, Plan, Problem, User
 # from app.s3 import upload_file
 from app.forms.tour_plan_form import TourPlanForm
-from app.forms.avy_problem_form import AvyProblemForm
 
 plan_routes = Blueprint('plans', __name__)
 
@@ -54,22 +53,22 @@ def add_plan():
                     emergency_plan=form.data["emergency_plan"],
                     route_id=form.data["route_id"]
                 )
-        # for problem in avy_problems:
-            # avy_form = AvyProblemForm()
-            # if avy_form.validate_on_submit():
-                # new_problem = Problem(
-                #     problem_type=avy_form.data['problem_type'],
-                #     aspect_elevation=avy_form.data['aspect_elevation'],
-                #     size=avy_form.data['size'],
-                #     likelihood=avy_form.data['liklihood'],
-                #     weak_layer=avy_form.data['weak_layer']
-                # )
-                # new_problem.plan = plan
-                # db.session.add(new_problem)
-        db.session.add(plan)
-        plan.users.append(current_user)
 
-        # add friends to plan
+        db.session.add(plan)
+
+        # add problems
+        for problem in request.json['avy_problems']:
+            new_problem = Problem(
+                problem_type_id=problem['problem_type_id'],
+                aspect_elevation=problem['aspect_elevation'],
+                size=problem['size'],
+                likelihood=problem['likelihood'],
+                weak_layer=problem['weak_layer']
+            )
+            plan.avy_problems.append(new_problem)
+
+        # add user + friends to plan
+        plan.users.append(current_user)
         for friend_id in request.json['friend_ids']:
             friend_user = User.query.get(friend_id)
             plan.users.append(friend_user)

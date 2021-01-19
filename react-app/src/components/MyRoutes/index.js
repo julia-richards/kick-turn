@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import * as service from "../../services/routes";
 import { useFetchResult } from "../../hooks";
@@ -16,8 +16,7 @@ const RouteHeader = () => (
 );
 
 const MyRoutes = () => {
-  const fetchRoutes = useCallback(() => service.getMyRoutes(), []);
-  const state = useFetchResult({ fetchResult: fetchRoutes });
+  const state = useFetchResult({ fetchResult: service.getMyRoutes });
 
   if (state.isLoading && !state.hasFetched) {
     return (
