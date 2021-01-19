@@ -1,6 +1,7 @@
 from .db import db
 from sqlalchemy.orm import relationship
-# from ..models.problem import Problem
+from sqlalchemy.dialects.postgresql import JSONB
+
 
 # TODO: change to one to many relationship
 plan_problems = db.Table(
@@ -15,6 +16,7 @@ class Plan(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Date, nullable=False)
+    danger_rating = db.Column(JSONB)
     avy_observations = db.Column(db.String(500))
     snowpack_summary = db.Column(db.String(500))
     temp_now = db.Column(db.Integer)

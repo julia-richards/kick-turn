@@ -1,10 +1,11 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, DateField, TextAreaField, IntegerField, SelectField
+from wtforms import StringField, DateField, TextAreaField, IntegerField, SelectField, FormField
 from wtforms.validators import DataRequired, Email, ValidationError
 
 
 class TourPlanForm(FlaskForm):
     date = DateField('date', validators=[DataRequired()])
+    # danger_rating = FormField('danger rating')
     avy_observations = TextAreaField('avalanche observations', validators=[DataRequired()])
     snowpack_summary = TextAreaField('snowpack summary', validators=[DataRequired()])
     temp_now = IntegerField('temperature now')
@@ -25,4 +26,3 @@ class TourPlanForm(FlaskForm):
     mindset = SelectField('Mindset', choices=[('Stepping Out', 'Stepping Out'), ('Staus Quo', 'Staus Quo'), ('Assessment', 'Assessment'), ('Entrenchment', 'Entrenchment'), ('Stepping Back', 'Stepping Back'), ('Open Season', 'Open Season'), ('Spring Diurnal', 'Spring Diurnal')], validators=[DataRequired()])
     tour_plan = TextAreaField('tour plan', validators=[DataRequired()])
     emergency_plan = TextAreaField('emergency plan', validators=[DataRequired()])
-

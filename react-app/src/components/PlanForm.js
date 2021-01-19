@@ -9,15 +9,11 @@ import Button from "./Button";
 import "../styles/PlanForm.css";
 
 const initialAvyProblem = {
-  type_id: "",
-  aspect: "",
-  elevation: [],
-  danger_rating: "",
-  size: "",
-  likelihood: "",
-  weak_layer: "",
-  trend: "",
-  plans: "",
+  problem_type: "Persistent Slab",
+  aspect_elevation: { NW: "BTL", NW: "NTL", NW: "ATL" },
+  size: "D2",
+  likelihood: "Likely",
+  weak_layer: "Dec. 7th",
 };
 
 function PlanForm() {
@@ -105,32 +101,34 @@ function PlanForm() {
             <div key={problemIndex} className="avalance-problem-container">
               <h3>Avalanche Problem {problemIndex + 1}</h3>
               <div>
-                <label>Aspect</label>
+                <label>Aspect/Elevation</label>
                 <input
                   type="text"
-                  name={`avy_problems[${problemIndex}].aspect`}
+                  name={`avy_problems[${problemIndex}].aspect_elevation`}
                   onChange={(e) =>
-                    updateAvyProblem(problemIndex, "aspect", e.target.value)
+                    updateAvyProblem(
+                      problemIndex,
+                      "aspect_elevation",
+                      e.target.value
+                    )
                   }
-                  value={formValues.avy_problems[problemIndex].aspect}
+                  value={formValues.avy_problems[problemIndex].aspect_elevation}
                 ></input>
               </div>
-              <div>
+              {/* <div>
                 <label>Elevation</label>
                 {["Below Treeline", "Near Treeline", "Above Treeline"].map(
                   (elOption, elOptionIndex) => {
                     const elFieldId = `avy_problems[${problemIndex}].elevation-#${elOptionIndex}`;
                     const currentElValues =
                       formValues.avy_problems[problemIndex].elevation;
-                    const isChecked = currentElValues.some(
-                      (e) => e === elOption
-                    );
+                    const isChecked = currentElValues.some(e => e === elOption);
                     const onChange = () =>
                       updateAvyProblem(
                         problemIndex,
                         "elevation",
                         isChecked
-                          ? currentElValues.filter((e) => e !== elOption)
+                          ? currentElValues.filter(e => e !== elOption)
                           : [...currentElValues, elOption]
                       );
 
@@ -148,7 +146,7 @@ function PlanForm() {
                     );
                   }
                 )}
-              </div>
+              </div> */}
               <pre>{JSON.stringify(problem)}</pre>
               <Button
                 type="button"

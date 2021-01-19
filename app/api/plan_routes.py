@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from app.models import db, Plan, Problem
 # from app.s3 import upload_file
 from app.forms.tour_plan_form import TourPlanForm
+from app.forms.avy_problem_form import AvyProblemForm
 
 plan_routes = Blueprint('plans', __name__)
 
@@ -12,12 +13,14 @@ plan_routes = Blueprint('plans', __name__)
 #     plans = Plan.query.filter_by(user_id)
 #     return {"plans": [plan for p in plans]}
 
+
 # api/plans
 @plan_routes.route('', methods=["GET"])
 @login_required
 def listMyPlans():
     plans = Plan.query.filter(Plan.id.in_([plan.id for plan in current_user.plans])).all()
     return {"plans": [plan.to_dict() for p in plans]}
+
 
 # /api/plans
 @plan_routes.route('', methods=["POST"])
@@ -28,6 +31,7 @@ def add_plan():
     if form.validate_on_submit():
         plan = Plan(
                     date=form.data["date"],
+                    # danger_rating=form.data["danger_rating"],
                     avy_observations=form.data["avy_observations"],
                     snowpack_summary=form.data["snowpack_summary"],
                     temp_now=form.data["temp_now"],
@@ -49,10 +53,17 @@ def add_plan():
                     emergency_plan=form.data["emergency_plan"]
                 )
         # for problem in avy_problems:
-        #     create avy problem form to validate_on_submit
-        #     popuate new problem object for each el in array
-        #     problem_obj.plan = plan
-        #     db.session.add(problem_obj)
+            # avy_form = AvyProblemForm()
+            # if avy_form.validate_on_submit():
+                # new_problem = Problem(
+                #     problem_type=avy_form.data['problem_type'],
+                #     aspect_elevation=avy_form.data['aspect_elevation'],
+                #     size=avy_form.data['size'],
+                #     likelihood=avy_form.data['liklihood'],
+                #     weak_layer=avy_form.data['weak_layer']
+                # )
+                # new_problem.plan = plan
+                # db.session.add(new_problem)
         db.session.add(plan)
         plan.users.append(current_user)
         db.session.commit()

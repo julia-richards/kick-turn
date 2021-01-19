@@ -14,8 +14,8 @@ body {
 
   --primary-light: rgb(130, 170, 255); /* matches react-select */
   --primary-dark: #5874af;
-  --danger-light: #f76464;
-  --danger-dark: #791414;
+  --danger-light: #f58f84;
+  --danger-dark: #db5a6b;
   --disabled-light: #b7bfc6;
 
   --box-shadow: 0 7px 30px -10px rgba(150, 170, 180, 0.5);

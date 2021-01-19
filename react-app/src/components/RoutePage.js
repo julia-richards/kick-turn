@@ -1,13 +1,12 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
-// import ReactMapGL from "react-map-gl";
+import ReactMapGL, { GeoJSONLayer, Feature, Layer } from "react-mapbox-gl";
 import { getRoute } from "../services/routes";
 import { useFetchResult } from "../hooks";
 import Layout from "./Layout";
 import Seo from "./Seo";
 import "../styles/RoutePage.css";
 import MyMap from "./Maps/MyMap.js";
-
 // const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
 const RoutePage = () => {
@@ -51,9 +50,20 @@ const RoutePage = () => {
         </div>
         <div className="route-page__map" style={{ width: "100%", height: 400 }}>
           <pre>
-            route.geo_features: {JSON.stringify(route.geo_features, null, 2)}
+            route.geo_features:{" "}
+            {JSON.stringify(
+              route.geo_features[0].geometry.coordinates,
+              null,
+              2
+            )}
           </pre>
-          <MyMap />
+          <MyMap>
+            <Layer>
+              <Feature
+                coordinates={route.geo_features[0].geometry.coordinates}
+              />
+            </Layer>
+          </MyMap>
         </div>
       </div>
     </Layout>

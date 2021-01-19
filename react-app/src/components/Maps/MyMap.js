@@ -93,7 +93,7 @@ const MyMap = () => {
       width="100%"
       height="100%"
       mapStyle="mapbox://styles/mapbox/light-v9"
-      // mapStyle={mapStyle}
+      features={geoFeatures}
       onViewportChange={setViewport}
       mapboxApiAccessToken={MAPBOX_TOKEN}
     >
