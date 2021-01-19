@@ -1,5 +1,6 @@
 <h1 align="center">
-<img src="https://user-images.githubusercontent.com/43125443/105048844-41db9280-5a29-11eb-9148-db613f3e84b9.png" alt="kicturn-logo"> <h1 algin="center">Kick Turn</h1>
+<img src="https://user-images.githubusercontent.com/43125443/105048844-41db9280-5a29-11eb-9148-db613f3e84b9.png" alt="kicturn-logo"> 
+<h1 align="center">Kick Turn</h1>
 <br>
   Documentation
 </h1>
