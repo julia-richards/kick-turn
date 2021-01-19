@@ -50,7 +50,8 @@ def add_plan():
                     obs_fore_summary=form.data["obs_fore_summary"],
                     mindset=form.data["mindset"],
                     tour_plan=form.data["tour_plan"],
-                    emergency_plan=form.data["emergency_plan"]
+                    emergency_plan=form.data["emergency_plan"],
+                    route_id=form.data["route_id"]
                 )
         # for problem in avy_problems:
             # avy_form = AvyProblemForm()
@@ -79,7 +80,7 @@ def get(id):
     Gets plan by ID
     """
     plan = Plan.query.get(id)
-    return plan.to_dict(), 200
+    return {'plan': plan.to_dict()}, 200
 
 
 # @plan_routes.route('/<int:id>', methods=["GET", "POST", "DELETE"])

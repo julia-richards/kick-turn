@@ -42,4 +42,5 @@ def get(id):
     Gets route by ID
     """
     route = Route.query.get(id)
+    # TODO: send plans
     return route.to_dict(), 200

@@ -8,7 +8,8 @@ plan_problems = db.Table(
     "plan_problems",
     db.Model.metadata,
     db.Column("plan_id", db.Integer, db.ForeignKey("plans.id", ondelete="CASCADE"), primary_key=True),
-    db.Column("problem_id", db.Integer, db.ForeignKey("problems.id", ondelete="CASCADE"), primary_key=True)
+    db.Column("problem_id", db.Integer, db.ForeignKey("problems.id", ondelete="CASCADE"), primary_key=True),
+    extend_existing=True
 )
 
 class Plan(db.Model):
@@ -38,8 +39,9 @@ class Plan(db.Model):
     tour_plan = db.Column(db.String(1000))
     emergency_plan = db.Column(db.String(1000))
     route_id = db.Column(db.Integer, db.ForeignKey('routes.id'))
-    avy_problems = db.relationship("Problem", secondary=plan_problems, back_populates="plans")
 
+    avy_problems = db.relationship("Problem", secondary=plan_problems, back_populates="plans")
+    route = db.relationship("Route", back_populates="plans")
 
 
     def to_dict(self):
@@ -67,5 +69,6 @@ class Plan(db.Model):
            "tour_plan": self.tour_plan,
            "emergency_plan": self.emergency_plan,
            "route_id": self.route_id,
+           "route": self.route.to_dict(),
            "avy_problems": self.avy_problems
             }

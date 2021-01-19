@@ -18,7 +18,8 @@ export const getPlan = (planId) =>
     },
   })
     .then(checkStatus)
-    .then(parseJSON);
+    .then(parseJSON)
+    .then((res) => res.plan);
 
 export const getMyTourPlans = () =>
   fetch(`/api/plans`, {

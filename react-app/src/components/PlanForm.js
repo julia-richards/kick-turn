@@ -41,6 +41,7 @@ function PlanForm() {
     mindset: "Stepping Out",
     tour_plan: "shred gnar",
     emergency_plan: "don't have one",
+    route_id: 1,
   });
   const [error, setError] = React.useState();
   const [redirect, setRedirect] = React.useState();

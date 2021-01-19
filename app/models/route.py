@@ -12,7 +12,8 @@ class Route(db.Model):
     geo_features = db.Column(JSONB, nullable=False)
     viewport = db.Column(JSONB, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    plans = db.relationship("Plan", backref='plan', cascade="all, delete-orphan")
+
+    plans = db.relationship("Plan", back_populates="route")
 
     def to_dict(self):
         return {
@@ -21,6 +22,5 @@ class Route(db.Model):
           "geo_features": self.geo_features,
           "viewport": self.viewport,
           "user_id": self.user_id,
-          "user": self.user.to_dict(),
-          "plans": self.plans
+          "user": self.user.to_dict()
         }

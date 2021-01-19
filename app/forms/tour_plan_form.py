@@ -26,3 +26,4 @@ class TourPlanForm(FlaskForm):
     mindset = SelectField('Mindset', choices=[('Stepping Out', 'Stepping Out'), ('Staus Quo', 'Staus Quo'), ('Assessment', 'Assessment'), ('Entrenchment', 'Entrenchment'), ('Stepping Back', 'Stepping Back'), ('Open Season', 'Open Season'), ('Spring Diurnal', 'Spring Diurnal')], validators=[DataRequired()])
     tour_plan = TextAreaField('tour plan', validators=[DataRequired()])
     emergency_plan = TextAreaField('emergency plan', validators=[DataRequired()])
+    route_id = IntegerField('route')
