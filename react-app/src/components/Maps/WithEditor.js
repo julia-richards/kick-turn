@@ -56,6 +56,40 @@ const WithEditor = ({ viewport, setViewport, onUpdate }) => {
         clickRadius={12}
         mode={modeHandler}
         onUpdate={onUpdate}
+        featureStyle={({ feature, index, state }) =>
+          feature.geometry.type === "LineString" && state === "INACTIVE"
+            ? {
+                stroke: "var(--primary-dark)",
+                strokeDasharray: "4, 2",
+                strokeWidth: 2,
+                fill: "none",
+                fillOpacity: 1,
+              }
+            : feature.geometry.type === "Point" && state === "INACTIVE"
+            ? {
+                stroke: "var(--primary-dark)",
+                strokeDasharray: "4, 2",
+                strokeWidth: 2,
+                fill: "var(--primary-light)",
+                fillOpacity: 0.4,
+                r: 8,
+              }
+            : feature.geometry.type === "LineString"
+            ? {
+                stroke: "var(--primary-dark)",
+                strokeWidth: 2,
+                fill: "none",
+                fillOpacity: 1,
+              }
+            : {
+                stroke: "var(--primary-dark)",
+                strokeDasharray: "4, 2",
+                strokeWidth: 2,
+                fill: "var(--primary-light)",
+                fillOpacity: 0.4,
+                r: 8,
+              }
+        }
       />
       <div
         style={{
