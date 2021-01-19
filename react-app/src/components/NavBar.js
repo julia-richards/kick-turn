@@ -34,6 +34,9 @@ const NavBar = (props) => {
         <>
           <MenuItem to="/login">Login</MenuItem>
           <MenuItem to="/sign-up">Sign Up</MenuItem>
+          <a href="https://github.com/julia-richards/kick-turn">
+            <FontAwesomeIcon icon={faGithub} />
+          </a>
         </>
       )}
     </Menu>
