@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Redirect, Link } from "react-router-dom";
-import { signUp } from "../../services/auth";
+import { signUp, demoLogin } from "../../services/auth";
 import Seo from "../Seo";
 import Button from "../Button";
 import { Input } from "../formComponents";
@@ -67,6 +67,16 @@ const SignUpForm = ({ authenticated, setAuthenticated }) => {
       }
     } else {
       addError("Repeat Password", "must match Password");
+    }
+  };
+
+  const onDemoLogin = async (e) => {
+    e.preventDefault();
+    const user = await demoLogin();
+    if (!user.errors) {
+      setAuthenticated(true);
+    } else {
+      setErrors(user.errors);
     }
   };
 
@@ -162,6 +172,13 @@ const SignUpForm = ({ authenticated, setAuthenticated }) => {
           required
         />
         <Button type="submit">Sign Up</Button>
+        <Button
+          type="button"
+          onClick={onDemoLogin}
+          style={{ marginLeft: "0.75rem" }}
+        >
+          Demo
+        </Button>
         <p>
           Already have an account?
           <br />

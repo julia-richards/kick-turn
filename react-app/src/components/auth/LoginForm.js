@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Redirect, Link } from "react-router-dom";
 import { useAuthenticated } from "../../hooks";
-import { login } from "../../services/auth";
+import { login, demoLogin } from "../../services/auth";
 import { Input } from "../formComponents";
 import Button from "../Button";
 import Seo from "../Seo";
@@ -17,6 +17,16 @@ const LoginForm = () => {
   const onLogin = async (e) => {
     e.preventDefault();
     const user = await login(email, password);
+    if (!user.errors) {
+      setAuthenticated(true);
+    } else {
+      setErrors(user.errors);
+    }
+  };
+
+  const onDemoLogin = async (e) => {
+    e.preventDefault();
+    const user = await demoLogin();
     if (!user.errors) {
       setAuthenticated(true);
     } else {
@@ -61,6 +71,13 @@ const LoginForm = () => {
           onChange={updatePassword}
         />
         <Button type="submit">Login</Button>
+        <Button
+          type="button"
+          onClick={onDemoLogin}
+          style={{ marginLeft: "0.75rem" }}
+        >
+          Demo
+        </Button>
 
         <p>
           Don't have an account yet?
