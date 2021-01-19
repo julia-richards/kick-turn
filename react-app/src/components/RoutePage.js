@@ -1,13 +1,11 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
-import ReactMapGL, { GeoJSONLayer, Feature, Layer } from "react-mapbox-gl";
 import { getRoute } from "../services/routes";
 import { useFetchResult } from "../hooks";
 import Layout from "./Layout";
 import Seo from "./Seo";
 import "../styles/RoutePage.css";
-import MyMap from "./Maps/MyMap.js";
-// const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
+import StaticMap from "./Maps/StaticMap";
 
 const RoutePage = () => {
   const { routeId } = useParams();
@@ -42,28 +40,13 @@ const RoutePage = () => {
           <h1>{route.name}</h1>
           <h4>TODO:</h4>
           <ol>
-            <li>add these features as layer to map</li>
             <li>figure out map center</li>
             <li>add tours...</li>
             <li>add users...</li>
           </ol>
         </div>
-        <div className="route-page__map" style={{ width: "100%", height: 400 }}>
-          <pre>
-            route.geo_features:{" "}
-            {JSON.stringify(
-              route.geo_features[0].geometry.coordinates,
-              null,
-              2
-            )}
-          </pre>
-          <MyMap>
-            <Layer>
-              <Feature
-                coordinates={route.geo_features[0].geometry.coordinates}
-              />
-            </Layer>
-          </MyMap>
+        <div className="route-page__map">
+          <StaticMap features={route.geo_features} />
         </div>
       </div>
     </Layout>

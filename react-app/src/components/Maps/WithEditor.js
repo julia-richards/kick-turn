@@ -6,7 +6,15 @@ import {
   DrawLineStringMode,
   DrawPointMode,
 } from "react-map-gl-draw";
+import Controls from "./Controls";
+
+// see https://github.com/mapbox/mapbox-gl-js/issues/10173#issuecomment-753662795
 import "mapbox-gl/dist/mapbox-gl.css";
+import mapboxgl from "mapbox-gl";
+
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 const MODES = [
   { id: "drawPolyline", text: "Draw Route", handler: DrawLineStringMode },
@@ -14,22 +22,13 @@ const MODES = [
   { id: "editing", text: "Edit Route", handler: EditingMode },
 ];
 
-const DEFAULT_VIEWPORT = {
-  longitude: -107.7232762,
-  latitude: 37.8964126,
-  zoom: 12,
-};
-
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
-const WithEditor = () => {
-  const [viewport, setViewport] = React.useState(DEFAULT_VIEWPORT);
+const WithEditor = ({ viewport, setViewport, onUpdate }) => {
   const [modeId, setModeId] = React.useState("drawPolyline");
   const [modeHandler, setModeHandler] = React.useState(
     new DrawLineStringMode()
   );
-  // const [name, setName] = React.useState("");
-  const [features, setFeatures] = React.useState();
 
   const switchMode = (evt) => {
     const mId = evt.target.value === modeId ? null : evt.target.value;
@@ -47,15 +46,16 @@ const WithEditor = () => {
       {...viewport}
       width="100%"
       height="100%"
-      mapStyle="mapbox://styles/mapbox/satellite-streets-v11"
+      mapStyle="mapbox://styles/mapbox/light-v9"
       onViewportChange={setViewport}
       mapboxApiAccessToken={MAPBOX_TOKEN}
     >
+      <Controls />
       <Editor
         // to make the lines/vertices easier to interact with
         clickRadius={12}
         mode={modeHandler}
-        onUpdate={(e) => setFeatures(e.data)}
+        onUpdate={onUpdate}
       />
       <div
         style={{
@@ -74,7 +74,6 @@ const WithEditor = () => {
           ))}
         </select>
       </div>
-      <pre>{JSON.stringify(features, null, 2)}</pre>
     </ReactMapGL>
   );
 };
