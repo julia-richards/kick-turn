@@ -24,6 +24,7 @@
 .my-friends__list__item {
   margin: 0;
   padding: 1.15rem;
+  box-sizing: border-box;
   box-shadow: var(--box-shadow);
   background-color: #fff;
   width: 100%;

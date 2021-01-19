@@ -43,3 +43,15 @@ export const deleteFriend = (friendId) =>
   })
     .then(checkStatus)
     .then(parseJSON);
+
+export const getFriends = (query) => {
+  const queryString = { query };
+  return fetch(`/api/friends/my-friends?${stringify(queryString)}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(checkStatus)
+    .then(parseJSON)
+    .then((res) => res.options);
+};

@@ -1,16 +1,22 @@
 import React, { useState } from "react";
+import AsyncSelect from "react-select/async";
 import Layout from "./Layout";
 import Seo from "./Seo";
 import { Redirect } from "react-router-dom";
 import { Input, TextArea } from "./formComponents";
 import { addPlan } from "../services/plans";
+import { getFriends } from "../services/friends";
 import Button from "./Button";
 
 import "../styles/PlanForm.css";
 
 const initialAvyProblem = {
   problem_type: "Persistent Slab",
-  aspect_elevation: { NW: "BTL", NW: "NTL", NW: "ATL" },
+  aspect_elevation: {
+    NW: [false, true, true],
+    N: [false, true, true],
+    NE: [true, true, true],
+  },
   size: "D2",
   likelihood: "Likely",
   weak_layer: "Dec. 7th",
@@ -41,7 +47,8 @@ function PlanForm() {
     mindset: "Stepping Out",
     tour_plan: "shred gnar",
     emergency_plan: "don't have one",
-    route_id: 1,
+    route_id: 1, // TODO: make me dropdown
+    friend_ids: [],
   });
   const [error, setError] = React.useState();
   const [redirect, setRedirect] = React.useState();
@@ -62,7 +69,11 @@ function PlanForm() {
   const handleSumbit = async (e) => {
     e.preventDefault();
     try {
-      const { id } = await addPlan(formValues);
+      let params = {
+        ...formValues,
+        friend_ids: (formValues.friend_ids || []).map((opt) => opt.value),
+      };
+      const { id } = await addPlan(params);
       setRedirect(`/plans/${id}`);
     } catch (err) {
       setError(err);
@@ -97,6 +108,21 @@ function PlanForm() {
           formValues={formValues}
           setValue={updateFormValues}
         />
+        <div>
+          <label>Add Friends</label>
+          <AsyncSelect
+            className="AsyncSelect"
+            noOptionsMessage={({ inputValue }) =>
+              !!inputValue
+                ? `No friends match "${inputValue}"`
+                : "Your search is empty. Try typing a friend’s username."
+            }
+            loadOptions={getFriends}
+            placeholder="Search for a friend..."
+            onChange={(selected) => updateFormValues("friend_ids", selected)}
+            isMulti
+          />
+        </div>
         <div>
           {formValues.avy_problems.map((problem, problemIndex) => (
             <div key={problemIndex} className="avalance-problem-container">
@@ -333,7 +359,10 @@ function PlanForm() {
                 );
 
               return (
-                <div className="input-container input-container--checkbox">
+                <div
+                  className="input-container input-container--checkbox"
+                  key={elFieldId}
+                >
                   <input
                     type="checkbox"
                     id={elFieldId}

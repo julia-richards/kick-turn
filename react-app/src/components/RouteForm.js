@@ -1,7 +1,5 @@
 import * as React from "react";
-import ReactMapGL from "react-map-gl";
 import { Redirect } from "react-router-dom";
-import MapWithEditor from "./Maps/WithEditor";
 import Layout from "./Layout";
 import Seo from "./Seo";
 import Button from "./Button";

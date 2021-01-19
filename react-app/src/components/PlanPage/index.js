@@ -4,6 +4,7 @@ import { getPlan } from "../../services/plans";
 import { useFetchResult } from "../../hooks";
 import Layout from "../Layout";
 import Seo from "../Seo";
+import FriendList from "./FriendList";
 import RouteDisplay from "./RouteDisplay";
 import "../../styles/PlanPage.css";
 import {
@@ -76,20 +77,22 @@ const PlanPage = () => {
               <h2>Weather</h2>
               <table>
                 <thead>
-                  <th></th>
-                  {weatherFields.map(({ label, icon }) => (
-                    <th key={label}>
-                      {icon ? (
-                        <FontAwesomeIcon
-                          icon={icon}
-                          alt={label}
-                          title={label}
-                        />
-                      ) : (
-                        label
-                      )}
-                    </th>
-                  ))}
+                  <tr>
+                    <th></th>
+                    {weatherFields.map(({ label, icon }) => (
+                      <th key={label}>
+                        {icon ? (
+                          <FontAwesomeIcon
+                            icon={icon}
+                            alt={label}
+                            title={label}
+                          />
+                        ) : (
+                          label
+                        )}
+                      </th>
+                    ))}
+                  </tr>
                 </thead>
                 <tbody>
                   {[
@@ -145,6 +148,7 @@ const PlanPage = () => {
         </div>
         <div className="plan-page__route">
           <RouteDisplay route={plan.route} />
+          <FriendList friends={plan.users} />
         </div>
       </div>
     </Layout>

@@ -6,11 +6,7 @@ import { faEraser } from "@fortawesome/free-solid-svg-icons";
 const FriendItem = ({ friend, onDeleteFriendClick }) => {
   if (friend.deletedMessage) {
     return (
-      <li
-        key={friend.id}
-        className="my-friends__list__item"
-        style={{ opacity: 0.7 }}
-      >
+      <li className="my-friends__list__item" style={{ opacity: 0.7 }}>
         <div className="picture-frame">
           <img
             className="profile-pic"
@@ -50,13 +46,15 @@ const FriendItem = ({ friend, onDeleteFriendClick }) => {
             {friend.email}
           </a>
         </p>
-        <Button
-          id="remove-button"
-          kind={!!friend.isDeleting ? "disabled" : "danger"}
-          onClick={() => onDeleteFriendClick(friend.id)}
-        >
-          {!!friend.isDeleting ? "Removing..." : "Remove Friend"}
-        </Button>
+        {!!onDeleteFriendClick && (
+          <Button
+            id="remove-button"
+            kind={!!friend.isDeleting ? "disabled" : "danger"}
+            onClick={() => onDeleteFriendClick(friend.id)}
+          >
+            {!!friend.isDeleting ? "Removing..." : "Remove Friend"}
+          </Button>
+        )}
       </div>
     </li>
   );

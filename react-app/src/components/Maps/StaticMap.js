@@ -22,7 +22,7 @@ const StaticMap = ({ features, defaultViewport, style = { height: 400 } }) => {
         {...viewport}
         width="100%"
         height="100%"
-        mapStyle="mapbox://styles/mapbox/light-v9"
+        mapStyle="mapbox://styles/mapbox/outdoors-v11"
         onViewportChange={setViewport}
         mapboxApiAccessToken={MAPBOX_TOKEN}
       >

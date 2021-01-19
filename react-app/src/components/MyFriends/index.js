@@ -97,6 +97,7 @@ const MyFriends = () => {
         >
           {friends.map((friend) => (
             <FriendItem
+              key={friend.id}
               friend={friend}
               onDeleteFriendClick={onDeleteFriendClick}
             />

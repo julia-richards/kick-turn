@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, redirect, request, Flask, send_file
 from flask_login import login_required, current_user
-from app.models import db, Plan, Problem
+from app.models import db, Plan, Problem, User
 # from app.s3 import upload_file
 from app.forms.tour_plan_form import TourPlanForm
 from app.forms.avy_problem_form import AvyProblemForm
@@ -68,6 +68,12 @@ def add_plan():
                 # db.session.add(new_problem)
         db.session.add(plan)
         plan.users.append(current_user)
+
+        # add friends to plan
+        for friend_id in request.json['friend_ids']:
+            friend_user = User.query.get(friend_id)
+            plan.users.append(friend_user)
+
         db.session.commit()
         return plan.to_dict()
     return {'errors': form.errors}, 422
@@ -81,7 +87,9 @@ def get(id):
     Gets plan by ID
     """
     plan = Plan.query.get(id)
-    return {'plan': plan.to_dict()}, 200
+    res = plan.to_dict()
+    non_user_friends = [user.to_dict() for user in plan.users if user != current_user]
+    return {'plan': {**plan.to_dict(), "users":  non_user_friends}}, 200
 
 
 # @plan_routes.route('/<int:id>', methods=["GET", "POST", "DELETE"])

@@ -8,6 +8,10 @@
   margin-bottom: 10px;
 }
 
+.plan-form .AsyncSelect {
+  margin: 5px auto 10px;
+}
+
 .plan-form .weather .weather__grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);

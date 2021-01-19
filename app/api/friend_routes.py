@@ -60,3 +60,17 @@ def deleteFriend(friend_id):
     db.session.commit()
     res = {"message": '{} has been removed.'.format(name)}
     return res, 200
+
+
+# /api/friends/my-friends
+@friend_routes.route('/my-friends', methods=["GET"])
+@login_required
+def myFriends():
+    """
+    Current friends
+    """
+    query = "%{}%".format(request.args.get('query'))
+    friend_ids = [friend.friend_id for friend in current_user.friends]
+    users = User.query.filter(User.username.ilike(query)).filter(User.id.in_(friend_ids)).limit(5).all()
+    res = {"options": [{"label": user.username, "value": user.id} for user in users]}
+    return res, 200
