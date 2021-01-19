@@ -1,6 +1,8 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { push as Menu } from "react-burger-menu";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { useAuthenticated } from "../hooks";
 
 import "../styles/Menu.css";
@@ -23,7 +25,10 @@ const NavBar = (props) => {
         <>
           <MenuItem to="/plans/new">New Tour Plan</MenuItem>
           <MenuItem to="/routes/new">New Route</MenuItem>
-					<MenuItem to="/logout">Logout</MenuItem>
+          <MenuItem to="/logout">Logout</MenuItem>
+          <a href="https://github.com/julia-richards/kick-turn">
+            <FontAwesomeIcon icon={faGithub} />
+          </a>
         </>
       ) : (
         <>
@@ -34,6 +39,5 @@ const NavBar = (props) => {
     </Menu>
   );
 };
-
 
 export default NavBar;
