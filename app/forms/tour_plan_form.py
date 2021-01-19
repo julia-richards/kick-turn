@@ -19,6 +19,7 @@ class TourPlanForm(FlaskForm):
     sky_cover_fore = StringField('sky cover forecast')
     precip_fore = StringField('precipitation forecast')
     weather_contribution = StringField('weather contribution', validators=[DataRequired()])
+    weather_summary = StringField('weather summary')
     trend = SelectField('trend', choices=[('Stepping Out', 'Stepping Out'), ('Improving', 'Improving'), ('Maintaining', 'Maintaining'), ('Deterioration', 'Deterioration')])
     ates = SelectField('ATES (Avalanche Terrain Exposure Scale)', choices=[('Simple', 'Simple'), ('Challening', 'Challening'), ('Complex', 'Complex')], validators=[DataRequired()])
     terrain_avoiding = StringField('terrain avoiding', validators=[DataRequired()])

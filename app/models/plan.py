@@ -32,6 +32,7 @@ class Plan(db.Model):
     precip_fore = db.Column(db.String(150))
     weather_contribution = db.Column(db.String(255))
     weather_summary = db.Column(db.String(255))
+    trend = db.Column(db.String(255))
     ates = db.Column(db.String(50))
     terrain_avoiding = db.Column(db.String(150))
     obs_fore_summary = db.Column(db.String(255))
@@ -47,7 +48,7 @@ class Plan(db.Model):
     def to_dict(self):
         return {
            "id": self.id,
-           "date": self.date,
+           "date": self.date.strftime("%m/%d/%Y"),
            "avy_observations": self.avy_observations,
            "snowpack_summary": self.snowpack_summary,
            "temp_now": self.temp_now,
@@ -62,6 +63,7 @@ class Plan(db.Model):
            "precip_fore": self.precip_fore,
            "weather_contribution": self.weather_contribution,
            "weather_summary": self.weather_summary,
+           "trend": self.trend,
            "ates": self.ates,
            "terrain_avoiding": self.terrain_avoiding,
            "obs_fore_summary": self.obs_fore_summary,

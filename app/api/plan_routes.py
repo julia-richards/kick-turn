@@ -44,6 +44,7 @@ def add_plan():
                     wind_dir_fore=form.data["wind_dir_fore"],
                     sky_cover_fore=form.data["sky_cover_fore"],
                     precip_fore=form.data["precip_fore"],
+                    trend=form.data["trend"],
                     weather_contribution=form.data["weather_contribution"],
                     ates=form.data["ates"],
                     terrain_avoiding=form.data["terrain_avoiding"],

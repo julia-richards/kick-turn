@@ -33,7 +33,6 @@ def upgrade():
     sa.Column('size', sa.String(length=50), nullable=False),
     sa.Column('likelihood', sa.String(length=50), nullable=False),
     sa.Column('weak_layer', sa.String(length=50), nullable=True),
-    sa.Column('trend', sa.String(length=50), nullable=True),
     sa.Column('problem_type_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['problem_type_id'], ['problem_types.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
@@ -64,6 +63,7 @@ def upgrade():
     sa.Column('precip_fore', sa.String(length=150), nullable=True),
     sa.Column('weather_contribution', sa.String(length=255), nullable=True),
     sa.Column('weather_summary', sa.String(length=255), nullable=True),
+    sa.Column('trend', sa.String(length=255), nullable=True),
     sa.Column('ates', sa.String(length=50), nullable=True),
     sa.Column('terrain_avoiding', sa.String(length=150), nullable=True),
     sa.Column('obs_fore_summary', sa.String(length=255), nullable=True),
