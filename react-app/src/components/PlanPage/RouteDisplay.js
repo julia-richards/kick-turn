@@ -11,10 +11,12 @@ const RouteDisplay = ({ route }) => {
 
   return (
     <>
-      <h3>{route.name}</h3>
-      <Link to={`/routes/${route.id}`} className="link-button">
-        <FontAwesomeIcon icon={faExpandArrowsAlt} /> View
-      </Link>
+      <header>
+        <h3>{route.name}</h3>
+        <Link to={`/routes/${route.id}`} className="link-button">
+          <FontAwesomeIcon icon={faExpandArrowsAlt} /> View
+        </Link>
+      </header>
       <div className="route-display__map">
         <StaticMap
           features={route.geo_features}

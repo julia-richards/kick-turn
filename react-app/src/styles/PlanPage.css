@@ -17,5 +17,11 @@
   max-width: 400px;
 }
 
-.plan-page__route {
+.plan-page__route header {
+  display: flex;
+  align-items: center;
+}
+
+.plan-page__route header h3 {
+  margin-right: 1rem;
 }
