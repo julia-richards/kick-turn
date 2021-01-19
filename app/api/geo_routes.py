@@ -16,7 +16,8 @@ def create():
     route = Route(
       user_id=current_user.id,
       name=request.json['name'],
-      geo_features=request.json["geo_features"]
+      geo_features=request.json["geo_features"],
+      viewport=request.json['viewport']
     )
     db.session.add(route)
     db.session.commit()

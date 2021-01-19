@@ -11,18 +11,10 @@ import mapboxgl from "mapbox-gl";
 // eslint-disable-next-line import/no-webpack-loader-syntax
 mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
-const DEFAULT_VIEWPORT = {
-  width: 800,
-  height: 600,
-  longitude: -107.7232762,
-  latitude: 37.8964126,
-  zoom: 12,
-};
-
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
-const StaticMap = ({ features, style = { height: 400 } }) => {
-  const [viewport, setViewport] = React.useState(DEFAULT_VIEWPORT);
+const StaticMap = ({ features, defaultViewport, style = { height: 400 } }) => {
+  const [viewport, setViewport] = React.useState(defaultViewport);
 
   return (
     <div style={style}>

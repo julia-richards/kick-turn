@@ -42,6 +42,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=255), nullable=False),
     sa.Column('geo_features', JSONB(), nullable=False),
+    sa.Column('viewport', JSONB(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
@@ -79,6 +80,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['plan_id'], ['plans.id'], ondelete='CASCADE'),
     sa.ForeignKeyConstraint(['problem_id'], ['problems.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('plan_id', 'problem_id')
+    )
+    op.create_table('user_plans',
+    sa.Column('plan_id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False)
     )
     op.add_column('users', sa.Column('avy_edu', sa.String(length=255), nullable=True))
     # ### end Alembic commands ###

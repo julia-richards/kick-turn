@@ -14,7 +14,10 @@ const RouteItem = ({ route }) => {
         </Link>
       </div>
       <div className="route-item__map">
-        <StaticMap features={route.geo_features} />
+        <StaticMap
+          features={route.geo_features}
+          defaultViewport={route.viewport}
+        />
       </div>
     </li>
   );

@@ -26,7 +26,7 @@ const RouteForm = () => {
 
   const handleSumbit = async (e) => {
     e.preventDefault();
-    const params = { name, geo_features: features };
+    const params = { name, viewport, geo_features: features };
     const { id } = await addRoute(params);
     setRedirect(`/routes/${id}`);
   };

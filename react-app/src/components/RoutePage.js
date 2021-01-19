@@ -40,13 +40,15 @@ const RoutePage = () => {
           <h1>{route.name}</h1>
           <h4>TODO:</h4>
           <ol>
-            <li>figure out map center</li>
             <li>add tours...</li>
             <li>add users...</li>
           </ol>
         </div>
         <div className="route-page__map">
-          <StaticMap features={route.geo_features} />
+          <StaticMap
+            features={route.geo_features}
+            defaultViewport={route.viewport}
+          />
         </div>
       </div>
     </Layout>

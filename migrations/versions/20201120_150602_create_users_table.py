@@ -27,10 +27,6 @@ def upgrade():
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
     )
-    op.create_table('user_plans',
-    sa.Column('plan_id', sa.Integer(), nullable=False),
-    sa.Column('user_id', sa.Integer(), nullable=False)
-    )
     # ### end Alembic commands ###qqqqqqqqq
 
 
