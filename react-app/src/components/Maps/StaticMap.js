@@ -14,7 +14,11 @@ mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worke
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
 const StaticMap = ({ features, defaultViewport, style = { height: 400 } }) => {
-  const [viewport, setViewport] = React.useState(defaultViewport);
+  const [viewport, setViewport] = React.useState({
+    latitude: defaultViewport.latitude,
+    longitude: defaultViewport.longitude,
+    zoom: defaultViewport.zoom,
+  });
 
   return (
     <div style={style}>

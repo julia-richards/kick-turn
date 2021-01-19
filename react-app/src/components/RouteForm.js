@@ -27,7 +27,15 @@ const RouteForm = () => {
     if (!name) return;
     if (!features) return;
 
-    const params = { name, viewport, geo_features: features };
+    const params = {
+      name,
+      viewport: {
+        latitude: viewport.latitude,
+        longitude: viewport.longitude,
+        zoom: viewport.zoom,
+      },
+      geo_features: features,
+    };
     const { id } = await addRoute(params);
     setRedirect(`/routes/${id}`);
   };
