@@ -44,3 +44,15 @@ def get(id):
     route = Route.query.get(id)
     # TODO: send plans
     return route.to_dict(), 200
+
+# /api/routes/:routeId
+@geo_routes.route('/<int:id>', methods=["DELETE"])
+def deleteRoute(id):
+    """
+    Removes route by ID
+    """
+    route = Route.query.get(id)
+    db.session.delete(route)
+    db.session.commit()
+
+    return {"message": "Route has been removed"}, 200

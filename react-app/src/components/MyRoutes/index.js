@@ -76,7 +76,11 @@ const MyRoutes = () => {
           style={isLoading ? { opacity: 0.8 } : {}}
         >
           {routes.map((route) => (
-            <RouteItem route={route} onDeleteRouteClick={onDeleteRouteClick} />
+            <RouteItem
+              key={route.id}
+              route={route}
+              onDeleteRouteClick={onDeleteRouteClick}
+            />
           ))}
         </ul>
       ) : (

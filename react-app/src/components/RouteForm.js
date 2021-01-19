@@ -24,6 +24,9 @@ const RouteForm = () => {
 
   const handleSumbit = async (e) => {
     e.preventDefault();
+    if (!name) return;
+    if (!features) return;
+
     const params = { name, viewport, geo_features: features };
     const { id } = await addRoute(params);
     setRedirect(`/routes/${id}`);
@@ -45,7 +48,9 @@ const RouteForm = () => {
               formValues={{ name }}
               onChange={(e) => setName(e.target.value)}
             />
-            <Button type="submit">Add Route</Button>
+            <Button type="submit" disabled={!name || !features}>
+              Add Route
+            </Button>
           </form>
         </div>
         <div className="route__form-map" style={{ width: "100%", height: 400 }}>

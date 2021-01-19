@@ -14,11 +14,17 @@ const TourPlanItem = ({ tour }) => {
         </Link>
       </div>
       <div className="tour-plan-item__map">
-        <StaticMap
-          features={tour.route.geo_features}
-          defaultViewport={tour.route.viewport}
-          style={{ height: 300 }}
-        />
+        {tour.route ? (
+          <StaticMap
+            features={tour.route.geo_features}
+            defaultViewport={tour.route.viewport}
+            style={{ height: 300 }}
+          />
+        ) : (
+          <p>
+            <strong>Route</strong> not assigned
+          </p>
+        )}
       </div>
     </li>
   );
