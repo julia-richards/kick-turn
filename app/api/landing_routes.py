@@ -23,4 +23,8 @@ def getWeather():
     endpoint = (f'https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&units=imperial&exclude=hourly,daily&appid={api_key}')
     res = requests.get(endpoint, headers=headers)
 
-    return res.json()
+    json = res.json()
+    snow = json['current']['snow']['1h']
+    temp = round(json['current']['temp'], 0)
+
+    return {"snow": snow, "temp": temp}

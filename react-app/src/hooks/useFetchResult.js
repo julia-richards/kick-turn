@@ -16,6 +16,7 @@ function fetchResultReducer(state, action) {
         status: "resolved",
         result: action.result,
         lastFetchedAt: Date.now(),
+        error: null,
       };
     }
     case "started": {

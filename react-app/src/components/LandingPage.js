@@ -41,14 +41,14 @@ const LandingPage = () => {
           <div className="landing__elements-weather__snow">
             <FontAwesomeIcon icon={faSnowflake} />
             <p className="landing__elements-weather__value">
-              {result?.current?.snow[`1h`] || "0"}"
+              {result?.snow || "0"}"
             </p>
             <p className="landing__elements-weath__label">1 hr</p>
           </div>
           <div className="landing__elements-weather__temp">
             <FontAwesomeIcon icon={faTemperatureLow} />
             <p className="landing__elements-weather__value">
-              {result?.current?.temp || 27}°F
+              {result?.temp || 27}°F
             </p>
             <p className="landing__elements-weath__label">Current Temp</p>
           </div>

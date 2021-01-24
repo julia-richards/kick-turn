@@ -1,7 +1,11 @@
 import { checkStatus, parseJSON } from "./helpers";
 import { stringify } from "query-string";
 
-export const getForecast = ({ lat = 37.8099457, lon = -107.6812071 }) => {
+export const getForecast = ({ lat, lon }) => {
+  if (!lat || !lon) {
+    return Promise.reject("missing coords");
+  }
+
   const queryString = stringify({ lat, lon });
   return fetch(`/api/landing?${queryString}`, {
     headers: {

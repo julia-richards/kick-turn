@@ -8,16 +8,13 @@ const useCoords = () => {
     timestamp: Date.now(),
   });
   const watchId = useRef(null);
-  let mounted = true;
 
   const onCoordsLoaded = (event) => {
-    if (mounted) {
-      setCoords({
-        lat: event.coords.latitude,
-        lon: event.coords.longitude,
-        timestamp: Date.now(),
-      });
-    }
+    setCoords({
+      lat: event.coords.latitude,
+      lon: event.coords.longitude,
+      timestamp: Date.now(),
+    });
   };
 
   useEffect(() => {
@@ -25,10 +22,9 @@ const useCoords = () => {
     watchId.current = navigator.geolocation.watchPosition(onCoordsLoaded);
 
     return () => {
-      mounted = false;
       navigator.geolocation.clearWatch(watchId.current);
     };
-  }, [0]);
+  }, []);
 
   return coords;
 };
