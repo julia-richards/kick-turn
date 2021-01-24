@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
 import Layout from "./Layout";
 import Seo from "./Seo";
@@ -13,10 +13,12 @@ import background from "../images/background.svg";
 import fadedMap from "../images/fadedMap.svg";
 
 import { getForecast } from "../services/landing";
-import { useFetchResult } from "../hooks";
+import { useCoords, useFetchResult } from "../hooks";
 
 const LandingPage = () => {
-  const { result } = useFetchResult({ fetchResult: getForecast });
+  const coords = useCoords();
+  const fetchResult = useCallback(() => getForecast(coords), [coords]);
+  const { result } = useFetchResult({ fetchResult });
 
   return (
     <Layout
@@ -34,7 +36,6 @@ const LandingPage = () => {
           <Link to="login" className="welcome__signup-link">
             Go Skiing
           </Link>
-          {/* <pre>{JSON.stringify(result, null, 2)}</pre> */}
         </div>
         <div className="landing__elements-weather">
           <div className="landing__elements-weather__snow">

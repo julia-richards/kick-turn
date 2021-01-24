@@ -16,8 +16,8 @@ def getWeather():
       'Content-Type': 'application/json'
     }
 
-    lat = 37.8099457
-    lon = -107.6812071
+    lat = request.args.get('lat')
+    lon = request.args.get('lon')
     api_key = os.environ.get("WEATHER_API")
 
     endpoint = (f'https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&units=imperial&exclude=hourly,daily&appid={api_key}')
