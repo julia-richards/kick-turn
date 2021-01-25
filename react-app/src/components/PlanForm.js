@@ -531,6 +531,39 @@ function PlanForm() {
           setValue={updateFormValues}
           hint="Synthesize your observations and the avalanche forecast and discuss with your partners."
         />
+        <div>
+          <label>Mindset</label>
+          {[
+            "Stepping Out",
+            "Staus Quo",
+            "Assessment",
+            "Entrenchment",
+            "Stepping Back",
+            "Open Season",
+            "Spring Diurnal",
+          ].map((elOption, elOptionIndex) => {
+            const elFieldId = `mindset-${elOptionIndex}`;
+            const currentValue = formValues.mindset;
+            const isChecked = currentValue === elOption;
+            const onChange = () => updateFormValues("mindset", elOption);
+
+            return (
+              <div
+                key={elFieldId}
+                className="input-container input-container--radio"
+              >
+                <input
+                  type="radio"
+                  id={elFieldId}
+                  name={elFieldId}
+                  onChange={onChange}
+                  checked={isChecked}
+                />
+                <label htmlFor={elFieldId}>{elOption}</label>
+              </div>
+            );
+          })}
+        </div>
         <TextArea
           name="tour_plan"
           formValues={formValues}
