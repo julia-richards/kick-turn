@@ -52,4 +52,5 @@
 
 .tour-plan-item:hover #remove-button {
   display: block;
+  margin-top: 1em;
 }

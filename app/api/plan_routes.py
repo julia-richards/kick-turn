@@ -78,7 +78,7 @@ def add_plan():
     return {'errors': form.errors}, 422
 
 
-# /api/routes/:planId
+# /api/plans/:planId
 @plan_routes.route('/<int:id>', methods=["GET"])
 @login_required
 def get(id):
@@ -89,3 +89,18 @@ def get(id):
     res = plan.to_dict()
     non_user_friends = [user.to_dict() for user in plan.users if user != current_user]
     return {'plan': {**plan.to_dict(), "users":  non_user_friends}}, 200
+
+
+
+# /api/plans/planId
+@plan_routes.route('/<int:id>', methods=["DELETE"])
+@login_required
+def deletePlan(id):
+    """
+    Removes plan by planid
+    """
+    plan = Plan.query.get(id)
+    db.session.delete(plan)
+    db.session.commit()
+    res = {"message": '{} has been removed.'.format(plan.date)}
+    return res, 200

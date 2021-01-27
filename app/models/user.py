@@ -21,7 +21,7 @@ class User(db.Model, UserMixin):
     avy_edu = db.Column(db.String(255))
     hashed_password = db.Column(db.String(255), nullable=False)
     routes = db.relationship("Route", backref='user', cascade="all, delete-orphan")
-    plans = db.relationship('Plan', secondary=user_plans, lazy='subquery', backref=db.backref('users', lazy=True, cascade="all,delete"))
+    plans = db.relationship('Plan', secondary=user_plans, lazy='subquery', backref=db.backref('users', lazy=True))
     friends = db.relationship('Friend', backref='Friend.friend_id', primaryjoin='User.id==Friend.user_id', lazy='dynamic')
 
 

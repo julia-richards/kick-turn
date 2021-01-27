@@ -48,7 +48,6 @@ const MyTourPlans = () => {
   } = state;
 
   const onDeleteTourPlanClick = async (tourId) => {
-    alert("make me work!!");
     updateResult(
       tours.map((t) => (t.id === tourId ? { ...t, isDeleting: true } : t))
     );
