@@ -10,6 +10,7 @@ const useCoords = () => {
   const watchId = useRef(null);
 
   const onCoordsLoaded = (event) => {
+    console.log("loading coords");
     setCoords({
       lat: event.coords.latitude,
       lon: event.coords.longitude,

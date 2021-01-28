@@ -16,7 +16,6 @@ function fetchResultReducer(state, action) {
         status: "resolved",
         result: action.result,
         lastFetchedAt: Date.now(),
-        error: null,
       };
     }
     case "started": {
@@ -53,11 +52,15 @@ const useFetchResult = ({ fetchResult }) => {
   });
 
   useEffect(() => {
-    dispatch({ type: "started" });
-    fetchResult()
-      .then((result) => dispatch({ type: "success", result }))
-      .catch((error) => dispatch({ type: "error", error }));
-  }, [fetchResult]);
+    console.log("hi Im use effect");
+    if (state.status === "idle" || state.status === "invalid") {
+      console.log("state.status is idle or invalid");
+      dispatch({ type: "started" });
+      fetchResult()
+        .then((result) => dispatch({ type: "success", result }))
+        .catch((error) => dispatch({ type: "error", error }));
+    }
+  }, [fetchResult, state.status]);
 
   const updateResult = useCallback(
     (nextResult) => dispatch({ type: "manualUpdate", result: nextResult }),
@@ -68,16 +71,18 @@ const useFetchResult = ({ fetchResult }) => {
     dispatch,
   ]);
 
+  const triggerRefetch = useCallback(() => {
+    dispatch({ type: "didInvalidate" });
+  }, [dispatch]);
+
   const { status, lastFetchedAt } = state;
 
   return {
     isLoading: status === "idle" || status === "pending",
     isResolved: status === "resolved",
     isRejected: status === "rejected",
-    triggerRefetch: () => {
-      dispatch({ type: "didInvalidate" });
-    },
     hasFetched: !!lastFetchedAt,
+    triggerRefetch,
     updateResult, // use carefully! responsible for full shape of 'result'
     onError,
     ...state,

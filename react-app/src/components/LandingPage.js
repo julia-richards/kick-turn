@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "./Layout";
 import Seo from "./Seo";
@@ -18,7 +18,14 @@ import { useCoords, useFetchResult } from "../hooks";
 const LandingPage = () => {
   const coords = useCoords();
   const fetchResult = useCallback(() => getForecast(coords), [coords]);
-  const { result } = useFetchResult({ fetchResult });
+  const { result, triggerRefetch } = useFetchResult({ fetchResult });
+
+  useEffect(() => {
+    console.log("coords", coords);
+    // if (coords.lat !== null) {
+    triggerRefetch();
+    // }
+  }, [coords, triggerRefetch]);
 
   return (
     <Layout
