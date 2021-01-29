@@ -21,7 +21,6 @@ const LandingPage = () => {
   const { result, triggerRefetch } = useFetchResult({ fetchResult });
 
   useEffect(() => {
-    console.log("coords", coords);
     if (coords.lat !== null) {
       triggerRefetch();
     }
@@ -50,7 +49,7 @@ const LandingPage = () => {
             <p className="landing__elements-weather__value">
               {result?.snow || "0"}"
             </p>
-            <p className="landing__elements-weath__label">1 hr</p>
+            <p className="landing__elements-weath__label">24 hr</p>
           </div>
           <div className="landing__elements-weather__temp">
             <FontAwesomeIcon icon={faTemperatureLow} />

@@ -10,7 +10,6 @@ const useCoords = () => {
   const watchId = useRef(null);
 
   const onCoordsLoaded = (event) => {
-    console.log("loading coords");
     setCoords({
       lat: event.coords.latitude,
       lon: event.coords.longitude,
@@ -20,16 +19,7 @@ const useCoords = () => {
 
   useEffect(() => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (e) => {
-          console.log("navigator trigger");
-          onCoordsLoaded(e);
-        },
-        (error) => {
-          console.warn(error.message);
-        },
-        { enableHighAccuracy: false, timeout: 10000, maximumAge: 0 }
-      );
+      navigator.geolocation.getCurrentPosition(onCoordsLoaded);
       watchId.current = navigator.geolocation.watchPosition(onCoordsLoaded);
     }
     return () => {

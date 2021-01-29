@@ -52,9 +52,7 @@ const useFetchResult = ({ fetchResult }) => {
   });
 
   useEffect(() => {
-    console.log("hi Im use effect");
     if (state.status === "idle" || state.status === "invalid") {
-      console.log("state.status is idle or invalid");
       dispatch({ type: "started" });
       fetchResult()
         .then((result) => dispatch({ type: "success", result }))
