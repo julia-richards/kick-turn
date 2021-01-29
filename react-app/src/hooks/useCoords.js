@@ -19,9 +19,19 @@ const useCoords = () => {
   };
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(onCoordsLoaded);
-    watchId.current = navigator.geolocation.watchPosition(onCoordsLoaded);
-
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (e) => {
+          console.log("navigator trigger");
+          onCoordsLoaded(e);
+        },
+        (error) => {
+          console.warn(error.message);
+        },
+        { enableHighAccuracy: false, timeout: 10000, maximumAge: 0 }
+      );
+      watchId.current = navigator.geolocation.watchPosition(onCoordsLoaded);
+    }
     return () => {
       navigator.geolocation.clearWatch(watchId.current);
     };

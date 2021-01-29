@@ -22,9 +22,9 @@ const LandingPage = () => {
 
   useEffect(() => {
     console.log("coords", coords);
-    // if (coords.lat !== null) {
-    triggerRefetch();
-    // }
+    if (coords.lat !== null) {
+      triggerRefetch();
+    }
   }, [coords, triggerRefetch]);
 
   return (
