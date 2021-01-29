@@ -147,7 +147,12 @@ const RoutePage = () => {
           {!!route.plans?.length ? (
             route.plans.map((p) => <TourPlanItem key={p.id} {...p} />)
           ) : (
-            <p>No tour plans made, yet</p>
+            <div>
+              <p>No tour plans made, yet</p>
+              <Link to="/plans/new" className="link-button">
+                Add Plan
+              </Link>
+            </div>
           )}
         </div>
       </div>
