@@ -95,10 +95,11 @@ const MyFriends = () => {
           className="my-friends__list"
           style={isLoading ? { opacity: 0.8 } : {}}
         >
-          {friends.map((friend) => (
+          {friends.map((friend, friendIndex) => (
             <FriendItem
               key={friend.id}
               friend={friend}
+              friendIndex={friendIndex}
               onDeleteFriendClick={onDeleteFriendClick}
             />
           ))}

@@ -3,7 +3,7 @@ import Button from "../Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEraser } from "@fortawesome/free-solid-svg-icons";
 
-const FriendItem = ({ friend, onDeleteFriendClick }) => {
+const FriendItem = ({ friend, friendIndex, onDeleteFriendClick }) => {
   if (friend.deletedMessage) {
     return (
       <li className="my-friends__list__item" style={{ opacity: 0.7 }}>
@@ -12,7 +12,7 @@ const FriendItem = ({ friend, onDeleteFriendClick }) => {
             className="profile-pic"
             alt="Profile Pic"
             src={
-              friend.id === 33
+              friendIndex === 0
                 ? "https://s3.amazonaws.com/website-assets-staging-2a039c6324/profile_pics/354/original/beacon.jpg?1557823635"
                 : `https://placedog.net/${friend.id + 300}`
             }
@@ -35,7 +35,7 @@ const FriendItem = ({ friend, onDeleteFriendClick }) => {
           className="profile-pic"
           alt="Profile Pic"
           src={
-            friend.id === 33
+            friendIndex === 0
               ? "https://s3.amazonaws.com/website-assets-staging-2a039c6324/profile_pics/354/original/beacon.jpg?1557823635"
               : `https://placedog.net/${friend.id + 300}`
           }
