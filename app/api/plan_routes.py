@@ -17,7 +17,7 @@ plan_routes = Blueprint('plans', __name__)
 @plan_routes.route('', methods=["GET"])
 @login_required
 def listMyPlans():
-    plans = Plan.query.filter(Plan.id.in_([plan.id for plan in current_user.plans])).all()
+    plans = Plan.query.filter(Plan.id.in_([plan.id for plan in current_user.plans])).order_by(Plan.id.desc()).all()
     return {"plans": [p.to_dict() for p in plans]}
 
 
