@@ -58,6 +58,7 @@ def get(id):
 
 # /api/routes/:routeId
 @geo_routes.route('/<int:id>', methods=["DELETE"])
+@login_required
 def deleteRoute(id):
     """
     Removes route by ID

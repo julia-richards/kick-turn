@@ -47,7 +47,6 @@ const MyRoutes = () => {
   } = state;
 
   const onDeleteRouteClick = async (routeId) => {
-    alert("make me work!!");
     updateResult(
       routes.map((t) => (t.id === routeId ? { ...t, isDeleting: true } : t))
     );
@@ -55,7 +54,7 @@ const MyRoutes = () => {
       const { message } = await service.deleteRoute(routeId);
       updateResult(
         routes.map((t) =>
-          t.id === routeId ? { ...t, deletedMessage: message } : t
+          t.id === routeId ? { ...t, successMessage: message } : t
         )
       );
       setTimeout(() => {
@@ -78,7 +77,7 @@ const MyRoutes = () => {
             <RouteItem
               key={route.id}
               route={route}
-              onDeleteRouteClick={onDeleteRouteClick}
+              onDeleteRouteClick={() => onDeleteRouteClick(route.id)}
             />
           ))}
         </ul>

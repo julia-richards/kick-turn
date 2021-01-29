@@ -45,6 +45,13 @@
 .route-item .text {
   grid-area: text;
 }
+.route-item__actions {
+  list-style: none;
+  padding: 0;
+}
+.route-item__actions li {
+  margin: 1em 0;
+}
 
 .route-item #remove-button {
   display: none;
