@@ -35,6 +35,17 @@
   z-index: -1;
 }
 
+.landing__elements-welcome::before {
+  content: "";
+  height: 80%;
+  left: 10%;
+  position: absolute;
+  top: 10%;
+  width: 80%;
+  background-color: var(--body);
+  z-index: -2;
+}
+
 .welcome__signup-link {
   display: inline-block;
   position: relative;
