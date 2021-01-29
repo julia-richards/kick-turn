@@ -11,7 +11,11 @@ const FriendItem = ({ friend, onDeleteFriendClick }) => {
           <img
             className="profile-pic"
             alt="Profile Pic"
-            src="https://s3.amazonaws.com/website-assets-staging-2a039c6324/profile_pics/354/original/beacon.jpg?1557823635"
+            src={
+              friend.id === 33
+                ? "https://s3.amazonaws.com/website-assets-staging-2a039c6324/profile_pics/354/original/beacon.jpg?1557823635"
+                : `https://placedog.net/${friend.id + 300}`
+            }
           />
         </div>
         <div className="text">
@@ -30,7 +34,11 @@ const FriendItem = ({ friend, onDeleteFriendClick }) => {
         <img
           className="profile-pic"
           alt="Profile Pic"
-          src="https://s3.amazonaws.com/website-assets-staging-2a039c6324/profile_pics/354/original/beacon.jpg?1557823635"
+          src={
+            friend.id === 33
+              ? "https://s3.amazonaws.com/website-assets-staging-2a039c6324/profile_pics/354/original/beacon.jpg?1557823635"
+              : `https://placedog.net/${friend.id + 300}`
+          }
         />
       </div>
       <div className="text">
